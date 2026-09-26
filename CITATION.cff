@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: >-
+  Si utilizás este software, por favor citalo como se indica
+  a continuación. Para citar la metodología y el instrumento
+  (110 preguntas, guía de entrevista), ver la cita separada
+  en docs/metodologia/ARCHITECTURE.md, sección 3.6, licenciada
+  bajo CC BY-NC-SA 4.0.
+type: software
+title: "FODA Export Misiones"
+abstract: >-
+  Instrumento de diagnóstico de viabilidad exportadora para
+  pymes industriales de Misiones (Argentina), desarrollado en
+  el marco de investigación aplicada y docencia universitaria
+  en la Tecnicatura Superior en Comercio Exterior. Rediseña un
+  cuestionario FODA (110 factores internos y externos,
+  organizados según el modelo Canvas y el análisis PESTEL/Porter)
+  con un motor de cálculo situación×impacto que produce
+  puntajes ponderados 0-10, semáforos por área y una conclusión
+  automática de viabilidad exportadora.
+authors:
+  - family-names: "Galván"
+    given-names: "Hugo César"
+    orcid: "https://orcid.org/0009-0008-0729-8969"
+    affiliation: "Instituto Alfa, Posadas, Misiones, Argentina"
+repository-code: "https://github.com/hcgalvan/foda-export-misiones"
+url: "https://github.com/hcgalvan/foda-export-misiones"
+license: MIT
+keywords:
+  - comercio exterior
+  - viabilidad exportadora
+  - FODA
+  - DAFO
+  - pymes industriales
+  - Misiones
+  - Canvas
+  - PESTEL
+  - cinco fuerzas de Porter
+  - diagnóstico organizacional
+version: "0.1.0"
+date-released: "2026-09-25"
