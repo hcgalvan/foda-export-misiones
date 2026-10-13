@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hcgalvan/foda-export-misiones/data/schema/questionnaire.schema.json",
+  "title": "FODA Export Misiones — Cuestionario",
+  "description": "Esquema del cuestionario (110 ítems, 19 áreas: 10 internas por bloques Canvas + 9 externas PESTEL/Porter). Generado por scripts/xlsx_to_json.py a partir de FormularioFODA + GUIA_ENTREVISTA del Excel original, enriquecido con la clasificación ítem por ítem de docs/clasificacion/*.csv. Ver ARCHITECTURE.md §4.1. version 1.1.0.",
+  "type": "object",
+  "required": ["version", "areasInternas", "areasExternas"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Versión del cuestionario (no del software). Cada assessment.json debe registrar con qué versión se respondió."
+    },
+    "fuente": {
+      "type": "string",
+      "description": "Nombre del archivo Excel del que se generó este JSON (trazabilidad)."
+    },
+    "escalas": {
+      "type": "object",
+      "description": "Etiquetas de las escalas de Situación e Impacto, en el mismo orden que las usa el motor de cálculo (ARCHITECTURE.md §5).",
+      "required": ["situacion", "impacto"],
+      "properties": {
+        "situacion": { "type": "array", "items": { "type": "string" }, "minItems": 5, "maxItems": 5 },
+        "impacto": { "type": "array", "items": { "type": "string" }, "minItems": 4, "maxItems": 4 }
+      }
+    },
+    "areasInternas": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/area" }
+    },
+    "areasExternas": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": { "$ref": "#/$defs/area" }
+    }
+  },
+  "$defs": {
+    "area": {
+      "type": "object",
+      "required": ["id", "nombre", "tipo", "marco", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(I[A-J]|E[A-I])$",
+          "description": "Código de 2 letras: IA..IJ (internas, bloques Canvas) o EA..EI (externas, PESTEL/Porter)."
+        },
+        "nombre": { "type": "string", "minLength": 1 },
+        "tipo": { "type": "string", "enum": ["interno", "externo"] },
+        "marco": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Resumen legible del área. Para internas: 'Canvas — <nombre del bloque>'. Para externas: un conteo agregado de los tipos de clasificación de sus ítems (p. ej. '5 PESTEL puro, 2 Agregado'); NO es una etiqueta única y autorizada — la clasificación real y verificable está en 'clasificacionMarco' de cada ítem."
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/item" }
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "titulo", "criterioFavorable"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(I[A-J]|E[A-I])[1-9][0-9]?$",
+          "description": "Código corto único, p. ej. IA1 o EB8. Coincide con CalculosFoda!C y con GUIA_ENTREVISTA!B."
+        },
+        "orden": {
+          "type": ["integer", "null"],
+          "description": "Número de orden del ítem dentro de su área (1..N), tal como aparece en FormularioFODA."
+        },
+        "titulo": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Título corto del factor, p. ej. 'Definición de segmentos y países objetivo'."
+        },
+        "criterioFavorable": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Texto completo de 'Se considera favorable si...' tal como figura en FormularioFODA, columna B."
+        },
+        "preguntaEntrevista": {
+          "type": ["string", "null"],
+          "description": "Pregunta abierta sugerida para relevar este factor en la entrevista (GUIA_ENTREVISTA, columna E)."
+        },
+        "evidenciaSugerida": {
+          "type": ["string", "null"],
+          "description": "Evidencia o fuente a solicitar a la empresa (GUIA_ENTREVISTA, columna F)."
+        },
+        "quienResponde": {
+          "type": ["string", "null"],
+          "description": "Quién aporta la respuesta (empresario, estudiante, ambos) (GUIA_ENTREVISTA, columna H)."
+        },
+        "lecturaSinExportar": {
+          "type": ["string", "null"],
+          "description": "Cómo leer la Situación de este factor cuando la empresa entrevistada todavía no exporta (GUIA_ENTREVISTA, columna I). Puede ser null si no aplica distinción."
+        },
+        "clasificacionMarco": {
+          "description": "Clasificación ítem por ítem del marco teórico (Canvas para internos, PESTEL/Porter para externos), aportada por el autor en docs/clasificacion/*.csv y verificada 1:1 contra los 110 códigos del cuestionario. null si el CSV correspondiente no estaba disponible al generar este archivo (ver 'Avisos informativos' de xlsx_to_json.py).",
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/clasificacionCanvas" },
+            { "$ref": "#/$defs/clasificacionPestelPorter" }
+          ]
+        },
+        "filaFormularioFoda": {
+          "type": "integer",
+          "description": "Fila en la hoja FormularioFODA del Excel origen, para trazabilidad y depuración."
+        }
+      }
+    },
+    "clasificacionCanvas": {
+      "type": "object",
+      "description": "Clasificación de un ítem interno contra los 9 bloques del Business Model Canvas de Osterwalder (docs/clasificacion/mapeo_Canvas_internos.csv).",
+      "required": ["tipo", "bloquePrincipal"],
+      "additionalProperties": false,
+      "properties": {
+        "tipo": { "type": "string", "enum": ["Canvas puro", "Combinada", "Agregado"] },
+        "bloquePrincipal": {
+          "type": ["string", "null"],
+          "description": "Bloque de Osterwalder donde encaja el ítem. null solo para 'Agregado' (el bloque IJ, transversal, no es uno de los 9 bloques de Osterwalder)."
+        },
+        "bloqueSecundario": {
+          "type": ["string", "null"],
+          "description": "Segundo bloque, solo cuando tipo='Combinada' (el ítem encaja a la vez en dos bloques). null en los demás casos."
+        },
+        "nota": { "type": ["string", "null"], "description": "Justificación breve, solo para 'Combinada' y 'Agregado'." }
+      }
+    },
+    "clasificacionPestelPorter": {
+      "type": "object",
+      "description": "Clasificación de un ítem externo contra PESTEL y las 5 fuerzas de Porter (docs/clasificacion/mapeo_PESTEL_Porter_externos.csv).",
+      "required": ["tipo"],
+      "additionalProperties": false,
+      "properties": {
+        "tipo": { "type": "string", "enum": ["PESTEL puro", "Porter puro", "Combinada", "Agregado"] },
+        "pestel": {
+          "type": ["string", "null"],
+          "description": "Dimensión PESTEL (Político, Económico, Sociocultural, Tecnológico, Ambiental, Legal, o combinación como 'Legal/Ambiental'). null si tipo='Porter puro' o 'Agregado'."
+        },
+        "porter": {
+          "type": ["string", "null"],
+          "description": "Una de las 5 fuerzas de Porter (Amenaza de nuevos entrantes, Poder de negociación de proveedores, Poder de negociación de compradores, Amenaza de sustitutos, Rivalidad entre competidores). null si tipo='PESTEL puro' o 'Agregado'."
+        },
+        "nota": { "type": ["string", "null"], "description": "Justificación breve, solo para 'Combinada' y 'Agregado'." }
+      }
+    }
+  }
+}

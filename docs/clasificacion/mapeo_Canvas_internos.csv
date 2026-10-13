@@ -1,0 +1,65 @@
+codigo,titulo,bloque_formulario,bloque_canvas,tipo,nota
+IA1,Definición de segmentos y países objetivo,1. Segmentos de clientes,Segmentos de clientes,Canvas puro,
+IA2,Conocimiento de las necesidades del cliente externo,1. Segmentos de clientes,Segmentos de clientes,Canvas puro,
+IA3,Concentración de clientes,1. Segmentos de clientes,Segmentos de clientes,Canvas puro,
+IA4,Experiencia previa exportadora,1. Segmentos de clientes,Segmentos de clientes,Canvas puro,
+IA5,Acceso a información de mercados,1. Segmentos de clientes,Segmentos de clientes,Canvas puro,
+IB1,Diferenciación del producto,2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IB2,Adecuación a requisitos del mercado destino,2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IB3,Certificaciones y normas de producto,2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IB4,Competitividad de precio internacional,2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IB5,"Marca, presentación y material comercial",2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IB6,Origen e identidad regional,2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IB7,Amplitud de línea y desarrollo de nuevos productos,2. Propuesta de valor,Propuesta de valor,Canvas puro,
+IC1,Canales de comercialización externos,3. Canales,Canales,Canvas puro,
+IC2,Presencia digital y venta online,3. Canales,Canales,Canvas puro,
+IC3,Promoción internacional,3. Canales,Canales,Canvas puro,
+IC4,Logística y embalaje de exportación,3. Canales,Canales/Actividades clave,Combinada,Mecanismo de entrega + proceso operativo de embalaje
+IC5,Gestión documental y aduanera,3. Canales,Canales/Socios clave,Combinada,Parte del canal de exportación pero depende de un socio externo (despachante)
+ID1,Atención y postventa internacional,4. Relación con clientes,Relación con clientes,Canvas puro,
+ID2,Comunicación en idioma extranjero,4. Relación con clientes,Relación con clientes,Canvas puro,
+ID3,Contratos y condiciones con compradores,4. Relación con clientes,Relación con clientes,Canvas puro,
+ID4,Fidelización y recompra,4. Relación con clientes,Relación con clientes,Canvas puro,
+ID5,Gestión de reclamos y devoluciones,4. Relación con clientes,Relación con clientes,Canvas puro,
+IE1,Evolución de ventas,5. Fuentes de ingresos,Fuentes de ingresos,Canvas puro,
+IE2,Fijación de precio de exportación,5. Fuentes de ingresos,Fuentes de ingresos,Canvas puro,
+IE3,Margen del producto exportable,5. Fuentes de ingresos,Fuentes de ingresos,Canvas puro,
+IE4,Medios y condiciones de cobro,5. Fuentes de ingresos,Fuentes de ingresos,Canvas puro,
+IE5,Diversificación de ingresos,5. Fuentes de ingresos,Fuentes de ingresos,Canvas puro,
+IE6,Resistencia a variaciones cambiarias,5. Fuentes de ingresos,Fuentes de ingresos,Canvas puro,
+IF1,Capacidad instalada y ociosa,6. Recursos clave,Recursos clave,Canvas puro,
+IF2,Estado y tecnología de la maquinaria,6. Recursos clave,Recursos clave,Canvas puro,
+IF3,Personal calificado,6. Recursos clave,Recursos clave,Canvas puro,
+IF4,Formación continua y capacitación en comercio exterior,6. Recursos clave,Recursos clave/Actividades clave,Combinada,El personal es un recurso; la capacitación en sí es un proceso continuo
+IF5,Capital de trabajo y capacidad financiera,6. Recursos clave,Recursos clave,Canvas puro,
+IF6,Sistemas de información y gestión,6. Recursos clave,Recursos clave/Actividades clave,Combinada,El sistema es un recurso tecnológico; su uso para seguir pedidos es una actividad
+IF7,"Infraestructura, depósitos y conservación",6. Recursos clave,Recursos clave,Canvas puro,
+IF8,Habilitaciones y registros oficiales,6. Recursos clave,Recursos clave,Canvas puro,Recurso intangible (licencias/registros) en el sentido de Osterwalder
+IG1,Descripción técnica y estandarización,7. Actividades clave,Actividades clave,Canvas puro,
+IG2,Mantenimiento y continuidad operativa,7. Actividades clave,Actividades clave,Canvas puro,
+IG3,Planificación de producción y abastecimiento,7. Actividades clave,Actividades clave,Canvas puro,
+IG4,Gestión de calidad,7. Actividades clave,Actividades clave,Canvas puro,
+IG5,Trazabilidad y control de stock,7. Actividades clave,Actividades clave,Canvas puro,
+IG6,Cumplimiento de plazos de entrega,7. Actividades clave,Actividades clave,Canvas puro,
+IG7,Mejora de procesos e I+D,7. Actividades clave,Actividades clave,Canvas puro,
+IG8,Gestión ambiental y de residuos,7. Actividades clave,Actividades clave,Canvas puro,
+IG9,Seguridad e higiene laboral,7. Actividades clave,Actividades clave,Canvas puro,
+IH1,Proveedores estratégicos,8. Socios clave,Socios clave,Canvas puro,
+IH2,Alianzas comerciales,8. Socios clave,Socios clave,Canvas puro,
+IH3,Socios logísticos y aduaneros,8. Socios clave,Socios clave,Canvas puro,
+IH4,Apoyo institucional,8. Socios clave,Socios clave,Canvas puro,
+IH5,Socios financieros y de seguros,8. Socios clave,Socios clave,Canvas puro,
+IH6,Tercerización y subcontratación,8. Socios clave,Socios clave,Canvas puro,
+II1,Costos fijos,9. Estructura de costos,Estructura de costos,Canvas puro,
+II2,Punto de equilibrio y escala mínima exportable,9. Estructura de costos,Estructura de costos/Fuentes de ingresos,Combinada,El punto de equilibrio requiere costos e ingresos a la vez
+II3,Sistema de costos de exportación,9. Estructura de costos,Estructura de costos,Canvas puro,
+II4,Costo de materias primas,9. Estructura de costos,Estructura de costos,Canvas puro,
+II5,Costos logísticos y de comercio exterior,9. Estructura de costos,Estructura de costos,Canvas puro,
+II6,Endeudamiento,9. Estructura de costos,Estructura de costos,Canvas puro,
+IJ1,Estrategia y objetivos de largo plazo,10. Transversal: gestión y compromiso exportador,,Agregado,Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder
+IJ2,Compromiso de la dirección,10. Transversal: gestión y compromiso exportador,,Agregado,Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder
+IJ3,Estructura y responsable de comercio exterior,10. Transversal: gestión y compromiso exportador,,Agregado,Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder
+IJ4,Conocimiento de la competencia internacional,10. Transversal: gestión y compromiso exportador,,Agregado,"Espejo interno de EF5 (ámbito externo); atributo de gestión, no de mercado"
+IJ5,Capacidad de anticipación a los cambios,10. Transversal: gestión y compromiso exportador,,Agregado,Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder
+IJ6,Cultura empresarial y estilo de dirección,10. Transversal: gestión y compromiso exportador,,Agregado,Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder
+IJ7,Herramientas de planificación y control,10. Transversal: gestión y compromiso exportador,,Agregado,Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder

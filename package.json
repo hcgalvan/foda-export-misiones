@@ -1,0 +1,13 @@
+{
+  "name": "foda-export-misiones-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Motor de cálculo y tests golden del diagnóstico FODA Export Misiones (Fase 2). Sin dependencias: usa el test runner incorporado de Node (node:test).",
+  "scripts": {
+    "test": "node --test tests/*.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,2045 @@
+{
+  "version": "1.1.0",
+  "fuente": "FODA_Export_Misiones_2026_DEMO.xlsx",
+  "escalas": {
+    "situacion": [
+      "No corresp.",
+      "Muy Desfav.",
+      "Desfavorable",
+      "Favorable",
+      "Muy Favorable"
+    ],
+    "impacto": [
+      "Muy insignif",
+      "Insignificante",
+      "Significante",
+      "Muy Signific."
+    ]
+  },
+  "areasInternas": [
+    {
+      "id": "IA",
+      "nombre": "Segmentos de clientes",
+      "tipo": "interno",
+      "marco": "Canvas — Segmentos de clientes",
+      "items": [
+        {
+          "id": "IA1",
+          "orden": 1,
+          "titulo": "Definición de segmentos y países objetivo",
+          "criterioFavorable": "Se considera favorable si la empresa tiene definidos, con datos, los tipos de cliente externo (importador, distribuidor, industria, retail) y los 2 o 3 países prioritarios.",
+          "preguntaEntrevista": "¿A qué tipo de clientes y en qué países querría vender? ¿Con qué datos lo decidió?",
+          "evidenciaSugerida": "Lista de países y segmentos priorizados; estudio o fuente consultada.",
+          "quienResponde": "Empresario: datos de cartera y experiencia actuales. Estudiante: investigación de países y segmentos candidatos, a validar con el empresario.",
+          "lecturaSinExportar": "Favorable si, aunque nunca exportó, el equipo ya identificó con datos 2-3 países/segmentos candidatos (puede ser trabajo del estudiante avalado por el empresario). Si no hay ese trabajo previo, es Desfavorable real, no 'No corresponde'.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Segmentos de clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 6
+        },
+        {
+          "id": "IA2",
+          "orden": 2,
+          "titulo": "Conocimiento de las necesidades del cliente externo",
+          "criterioFavorable": "Se considera favorable si la empresa conoce qué exige el comprador del exterior (calidad, volumen, plazos, formatos, certificaciones) y no solo lo que pide el mercado interno.",
+          "preguntaEntrevista": "¿Qué le exigiría un comprador de Brasil, Paraguay u otro destino que hoy no le piden en Argentina?",
+          "evidenciaSugerida": "Consultas o cotizaciones recibidas del exterior; fichas de requisitos.",
+          "quienResponde": "Empresario: datos de cartera y experiencia actuales. Estudiante: investigación de países y segmentos candidatos, a validar con el empresario.",
+          "lecturaSinExportar": "Sin exportar, esto casi siempre será Desfavorable o Muy desfavorable: es una brecha real de información, regístrela así en vez de neutralizarla.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Segmentos de clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 7
+        },
+        {
+          "id": "IA3",
+          "orden": 3,
+          "titulo": "Concentración de clientes",
+          "criterioFavorable": "Se considera favorable si ningún cliente supera el 40% de las ventas y la cartera está balanceada entre mercado interno y potencial externo.",
+          "preguntaEntrevista": "¿Qué porcentaje de las ventas representa su mayor cliente? ¿Y los tres mayores?",
+          "evidenciaSugerida": "Ranking de clientes por facturación del último año.",
+          "quienResponde": "Empresario: datos de cartera y experiencia actuales. Estudiante: investigación de países y segmentos candidatos, a validar con el empresario.",
+          "lecturaSinExportar": "No cambia: se responde con la cartera de clientes doméstica actual, exporte o no la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Segmentos de clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 8
+        },
+        {
+          "id": "IA4",
+          "orden": 4,
+          "titulo": "Experiencia previa exportadora",
+          "criterioFavorable": "Se considera favorable si la empresa ya exportó (aunque sea de forma esporádica o indirecta, vía un tercero) o cotizó operaciones al exterior.",
+          "preguntaEntrevista": "¿Exportó directa o indirectamente, o cotizó alguna vez a un cliente del exterior? ¿Qué aprendió?",
+          "evidenciaSugerida": "Facturas de exportación, permisos de embarque o cotizaciones.",
+          "quienResponde": "Empresario: datos de cartera y experiencia actuales. Estudiante: investigación de países y segmentos candidatos, a validar con el empresario.",
+          "lecturaSinExportar": "Si nunca exportó ni cotizó, marque Muy Desfavorable con naturalidad: es la respuesta correcta, no un fracaso del formulario. Su Impacto suele ser menor en un primer proyecto acompañado por una cámara, consorcio o la propia tecnicatura.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Segmentos de clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 9
+        },
+        {
+          "id": "IA5",
+          "orden": 5,
+          "titulo": "Acceso a información de mercados",
+          "criterioFavorable": "Se considera favorable si la empresa consulta fuentes sistemáticas (estadísticas de comercio, cámaras, agencias de promoción, consulados) para elegir destinos y precios.",
+          "preguntaEntrevista": "¿De dónde obtiene información sobre precios, demanda y competidores en el exterior?",
+          "evidenciaSugerida": "Fuentes o informes utilizados; suscripciones o contactos institucionales.",
+          "quienResponde": "Empresario: datos de cartera y experiencia actuales. Estudiante: investigación de países y segmentos candidatos, a validar con el empresario.",
+          "lecturaSinExportar": "Evalúe con lo que el empresario y el equipo estudiante ya reunieron a la fecha de la entrevista, aunque sea incipiente.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Segmentos de clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 10
+        }
+      ]
+    },
+    {
+      "id": "IB",
+      "nombre": "Propuesta de valor",
+      "tipo": "interno",
+      "marco": "Canvas — Propuesta de valor",
+      "items": [
+        {
+          "id": "IB1",
+          "orden": 1,
+          "titulo": "Diferenciación del producto",
+          "criterioFavorable": "Se considera favorable si el producto tiene atributos diferenciales (calidad, diseño, especie o variedad, proceso, origen) que el cliente externo reconoce y valora.",
+          "preguntaEntrevista": "¿Por qué un comprador del exterior le compraría a usted y no a otro proveedor?",
+          "evidenciaSugerida": "Fichas técnicas, muestras, testimonios de clientes, premios.",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 13
+        },
+        {
+          "id": "IB2",
+          "orden": 2,
+          "titulo": "Adecuación a requisitos del mercado destino",
+          "criterioFavorable": "Se considera favorable si el producto (norma técnica, envase, etiquetado, idioma, unidades) está adaptado como mínimo al 80% de lo que exige el destino elegido.",
+          "preguntaEntrevista": "¿Qué cambios necesitaría el producto, el envase o la etiqueta para venderse en el país objetivo?",
+          "evidenciaSugerida": "Comparación de requisitos del destino frente al producto actual.",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 14
+        },
+        {
+          "id": "IB3",
+          "orden": 3,
+          "titulo": "Certificaciones y normas de producto",
+          "criterioFavorable": "Se considera favorable si la empresa posee, o tiene en trámite, las certificaciones que exige el destino (p. ej., FSC/PEFC, orgánico, BPM/HACCP, normas técnicas).",
+          "preguntaEntrevista": "¿Qué certificaciones tiene vigentes y cuáles le piden sus clientes potenciales?",
+          "evidenciaSugerida": "Certificados vigentes con fecha de vencimiento.",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 15
+        },
+        {
+          "id": "IB4",
+          "orden": 4,
+          "titulo": "Competitividad de precio internacional",
+          "criterioFavorable": "Se considera favorable si el precio FOB estimado resulta competitivo frente al de los principales oferentes en el mercado destino.",
+          "preguntaEntrevista": "¿Conoce a qué precio vende la competencia en el destino? ¿Cómo se compara el suyo puesto en frontera o puerto?",
+          "evidenciaSugerida": "Comparativo de precios (fuente pública o listas de compradores).",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 16
+        },
+        {
+          "id": "IB5",
+          "orden": 5,
+          "titulo": "Marca, presentación y material comercial",
+          "criterioFavorable": "Se considera favorable si la marca está registrada y existen catálogo, ficha técnica y sitio web al menos en inglés o portugués.",
+          "preguntaEntrevista": "¿Tiene la marca registrada (y en el país destino)? ¿Cuenta con catálogo en otro idioma?",
+          "evidenciaSugerida": "Constancia de registro de marca; catálogo y sitio web.",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 17
+        },
+        {
+          "id": "IB6",
+          "orden": 6,
+          "titulo": "Origen e identidad regional",
+          "criterioFavorable": "Se considera favorable si el origen misionero/NEA (territorio, tradición, sello o indicación geográfica) agrega valor reconocible al producto.",
+          "preguntaEntrevista": "¿Su producto comunica su origen? ¿Los compradores lo valoran?",
+          "evidenciaSugerida": "Sellos de origen, historia de marca, material promocional.",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 18
+        },
+        {
+          "id": "IB7",
+          "orden": 7,
+          "titulo": "Amplitud de línea y desarrollo de nuevos productos",
+          "criterioFavorable": "Se considera favorable si existe una línea suficiente para exportar y una política de adaptar o desarrollar productos para nuevos mercados.",
+          "preguntaEntrevista": "¿Cuántas líneas o productos podría ofrecer al exterior y qué desarrollos tiene previstos?",
+          "evidenciaSugerida": "Catálogo de productos; proyectos de desarrollo.",
+          "quienResponde": "Empresario, con apoyo del estudiante para comparar el producto contra los requisitos del destino elegido.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Propuesta de valor",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 19
+        }
+      ]
+    },
+    {
+      "id": "IC",
+      "nombre": "Canales",
+      "tipo": "interno",
+      "marco": "Canvas — Canales",
+      "items": [
+        {
+          "id": "IC1",
+          "orden": 1,
+          "titulo": "Canales de comercialización externos",
+          "criterioFavorable": "Se considera favorable si están identificados y evaluados los canales posibles (importador, distribuidor, agente, trading, venta directa, plataformas) y se sabe cuál usar por segmento.",
+          "preguntaEntrevista": "¿A través de quién vendería en el exterior? ¿Qué canales evaluó?",
+          "evidenciaSugerida": "Mapa de canales; contactos iniciales.",
+          "quienResponde": "Empresario: situación comercial/digital actual. Estudiante: propuesta de canales externos, a validar con el empresario.",
+          "lecturaSinExportar": "Es una propuesta, no un hecho: se marca según la investigación del estudiante y la apertura real del empresario a usar ese canal.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Canales",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 22
+        },
+        {
+          "id": "IC2",
+          "orden": 2,
+          "titulo": "Presencia digital y venta online",
+          "criterioFavorable": "Se considera favorable si la empresa tiene sitio web activo y perfiles comerciales, y puede responder consultas del exterior en tiempo razonable.",
+          "preguntaEntrevista": "¿Recibe consultas por web o redes sociales? ¿En qué idioma y con qué demora responde?",
+          "evidenciaSugerida": "Sitio web, métricas de contacto.",
+          "quienResponde": "Empresario: situación comercial/digital actual. Estudiante: propuesta de canales externos, a validar con el empresario.",
+          "lecturaSinExportar": "Se evalúa la situación digital ACTUAL de la empresa (sitio, redes, tiempos de respuesta): es una capacidad transferible, no requiere haber exportado.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Canales",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 23
+        },
+        {
+          "id": "IC3",
+          "orden": 3,
+          "titulo": "Promoción internacional",
+          "criterioFavorable": "Se considera favorable si participa o planea participar en ferias, rondas de negocios, misiones comerciales o campañas de promoción.",
+          "preguntaEntrevista": "¿Participó en ferias o rondas de negocios? ¿Qué presupuesto de promoción tiene?",
+          "evidenciaSugerida": "Registro de ferias y rondas; presupuesto de promoción.",
+          "quienResponde": "Empresario: situación comercial/digital actual. Estudiante: propuesta de canales externos, a validar con el empresario.",
+          "lecturaSinExportar": "Si nunca participó de una feria o ronda de negocios, Desfavorable/Muy desfavorable es la respuesta honesta.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Canales",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 24
+        },
+        {
+          "id": "IC4",
+          "orden": 4,
+          "titulo": "Logística y embalaje de exportación",
+          "criterioFavorable": "Se considera favorable si la empresa sabe cotizar bajo Incoterms, dispone de embalaje apto para transporte internacional y conoce opciones de flete y seguro.",
+          "preguntaEntrevista": "¿Sabe cómo enviaría la mercadería (embalaje, transporte, seguro) y qué Incoterm ofrecería?",
+          "evidenciaSugerida": "Cotizaciones de flete; especificación de embalaje.",
+          "quienResponde": "Empresario: situación comercial/digital actual. Estudiante: propuesta de canales externos, a validar con el empresario.",
+          "lecturaSinExportar": "Se evalúa la capacidad técnica de adaptar embalaje y transporte actuales, aunque nunca se hayan usado para exportar.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "bloquePrincipal": "Canales",
+            "bloqueSecundario": "Actividades clave",
+            "nota": "Mecanismo de entrega + proceso operativo de embalaje"
+          },
+          "filaFormularioFoda": 25
+        },
+        {
+          "id": "IC5",
+          "orden": 5,
+          "titulo": "Gestión documental y aduanera",
+          "criterioFavorable": "Se considera favorable si la empresa conoce o tiene acceso a la documentación de exportación (factura, packing list, certificado de origen, permiso de embarque) y a un despachante.",
+          "preguntaEntrevista": "¿Qué documentos necesita para exportar y quién los gestionaría?",
+          "evidenciaSugerida": "Checklist documental; contacto con despachante.",
+          "quienResponde": "Empresario: situación comercial/digital actual. Estudiante: propuesta de canales externos, a validar con el empresario.",
+          "lecturaSinExportar": "Se evalúa el conocimiento o la disposición a averiguarlo (¿sabe a quién consultar?), no la experiencia previa en despachos.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "bloquePrincipal": "Canales",
+            "bloqueSecundario": "Socios clave",
+            "nota": "Parte del canal de exportación pero depende de un socio externo (despachante)"
+          },
+          "filaFormularioFoda": 26
+        }
+      ]
+    },
+    {
+      "id": "ID",
+      "nombre": "Relación con clientes",
+      "tipo": "interno",
+      "marco": "Canvas — Relación con clientes",
+      "items": [
+        {
+          "id": "ID1",
+          "orden": 1,
+          "titulo": "Atención y postventa internacional",
+          "criterioFavorable": "Se considera favorable si hay un responsable y un procedimiento para atender consultas, pedidos y postventa del exterior con tiempos de respuesta definidos.",
+          "preguntaEntrevista": "¿Quién atendería a un cliente del exterior y en qué plazos?",
+          "evidenciaSugerida": "Procedimiento o responsable designado.",
+          "quienResponde": "Empresario (capacidades transferibles del mercado interno: idioma, contratos, atención, reclamos).",
+          "lecturaSinExportar": "Se evalúa la estructura de atención actual y su capacidad de adaptarse a un cliente a distancia y en otro huso horario.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Relación con clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 29
+        },
+        {
+          "id": "ID2",
+          "orden": 2,
+          "titulo": "Comunicación en idioma extranjero",
+          "criterioFavorable": "Se considera favorable si el personal comercial puede negociar y redactar en inglés y/o portugués, o cuenta con traductor o intérprete.",
+          "preguntaEntrevista": "¿Quién de la empresa puede negociar en portugués o inglés?",
+          "evidenciaSugerida": "Perfil del personal; servicios de traducción contratados.",
+          "quienResponde": "Empresario (capacidades transferibles del mercado interno: idioma, contratos, atención, reclamos).",
+          "lecturaSinExportar": "Capacidad real del personal hoy, exporte o no la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Relación con clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 30
+        },
+        {
+          "id": "ID3",
+          "orden": 3,
+          "titulo": "Contratos y condiciones con compradores",
+          "criterioFavorable": "Se considera favorable si se usan contratos o condiciones de venta escritas (precio, Incoterm, forma de pago, resolución de conflictos) y se evalúa la solvencia del comprador.",
+          "preguntaEntrevista": "¿Usa contratos o condiciones generales de venta? ¿Cómo verifica la solvencia de un comprador?",
+          "evidenciaSugerida": "Modelo de contrato; informes comerciales.",
+          "quienResponde": "Empresario (capacidades transferibles del mercado interno: idioma, contratos, atención, reclamos).",
+          "lecturaSinExportar": "Se evalúa el uso actual de contratos o condiciones de venta con clientes domésticos, como capacidad transferible a un comprador externo.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Relación con clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 31
+        },
+        {
+          "id": "ID4",
+          "orden": 4,
+          "titulo": "Fidelización y recompra",
+          "criterioFavorable": "Se considera favorable si existen mecanismos para sostener la relación (seguimiento, acuerdos de abastecimiento, condiciones especiales) y hay recompra.",
+          "preguntaEntrevista": "¿Qué porcentaje de los clientes vuelve a comprar? ¿Cómo los mantiene?",
+          "evidenciaSugerida": "Tasa de recompra; acuerdos vigentes.",
+          "quienResponde": "Empresario (capacidades transferibles del mercado interno: idioma, contratos, atención, reclamos).",
+          "lecturaSinExportar": "Dato doméstico real: aplica igual exporte o no la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Relación con clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 32
+        },
+        {
+          "id": "ID5",
+          "orden": 5,
+          "titulo": "Gestión de reclamos y devoluciones",
+          "criterioFavorable": "Se considera favorable si hay un procedimiento para reclamos, cambios y devoluciones que resuelve los casos sin pérdida relevante del cliente.",
+          "preguntaEntrevista": "¿Cómo resuelve hoy un reclamo? ¿Podría hacerlo con un cliente a distancia?",
+          "evidenciaSugerida": "Registro de reclamos y tiempos de resolución.",
+          "quienResponde": "Empresario (capacidades transferibles del mercado interno: idioma, contratos, atención, reclamos).",
+          "lecturaSinExportar": "Dato doméstico real: aplica igual exporte o no la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Relación con clientes",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 33
+        }
+      ]
+    },
+    {
+      "id": "IE",
+      "nombre": "Fuentes de ingresos",
+      "tipo": "interno",
+      "marco": "Canvas — Fuentes de ingresos",
+      "items": [
+        {
+          "id": "IE1",
+          "orden": 1,
+          "titulo": "Evolución de ventas",
+          "criterioFavorable": "Se considera favorable si las ventas crecen o se sostienen en términos reales y hay renovación de clientes y nuevos requerimientos.",
+          "preguntaEntrevista": "¿Cómo evolucionaron las ventas en los últimos tres años?",
+          "evidenciaSugerida": "Facturación anual de tres años.",
+          "quienResponde": "Empresario: datos reales de ventas y margen. Estudiante: construcción del costeo/precio de exportación hipotético, a validar con el empresario.",
+          "lecturaSinExportar": "Dato doméstico real: aplica igual exporte o no la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Fuentes de ingresos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 36
+        },
+        {
+          "id": "IE2",
+          "orden": 2,
+          "titulo": "Fijación de precio de exportación",
+          "criterioFavorable": "Se considera favorable si existe un método sistematizado para construir el precio (costo, margen, flete, seguro, comisiones, impuestos) según el Incoterm.",
+          "preguntaEntrevista": "¿Cómo calcularía el precio en dólares de una venta al exterior?",
+          "evidenciaSugerida": "Planilla de costeo de exportación.",
+          "quienResponde": "Empresario: datos reales de ventas y margen. Estudiante: construcción del costeo/precio de exportación hipotético, a validar con el empresario.",
+          "lecturaSinExportar": "Se evalúa si existe (o puede construirse con ayuda del estudiante) un método de costeo, no si ya se aplicó a una venta real.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Fuentes de ingresos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 37
+        },
+        {
+          "id": "IE3",
+          "orden": 3,
+          "titulo": "Margen del producto exportable",
+          "criterioFavorable": "Se considera favorable si el margen de contribución soporta descuentos, comisiones, fletes y derechos de exportación sin quedar por debajo del margen del mercado interno.",
+          "preguntaEntrevista": "¿Qué margen deja el producto hoy y cuánto podría ceder para exportar?",
+          "evidenciaSugerida": "Margen por producto.",
+          "quienResponde": "Empresario: datos reales de ventas y margen. Estudiante: construcción del costeo/precio de exportación hipotético, a validar con el empresario.",
+          "lecturaSinExportar": "Se estima a partir del margen doméstico actual y de cuánto podría ceder la empresa, sin necesidad de una venta de exportación real.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Fuentes de ingresos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 38
+        },
+        {
+          "id": "IE4",
+          "orden": 4,
+          "titulo": "Medios y condiciones de cobro",
+          "criterioFavorable": "Se considera favorable si la empresa conoce y puede operar instrumentos de cobro internacional (transferencia anticipada, cobranza documentaria, carta de crédito, seguro de crédito).",
+          "preguntaEntrevista": "¿Cómo cobraría una venta al exterior y qué riesgo aceptaría?",
+          "evidenciaSugerida": "Instrumentos habilitados con su banco.",
+          "quienResponde": "Empresario: datos reales de ventas y margen. Estudiante: construcción del costeo/precio de exportación hipotético, a validar con el empresario.",
+          "lecturaSinExportar": "Se evalúa el conocimiento y la disposición del empresario y su banco, no una operación ya realizada.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Fuentes de ingresos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 39
+        },
+        {
+          "id": "IE5",
+          "orden": 5,
+          "titulo": "Diversificación de ingresos",
+          "criterioFavorable": "Se considera favorable si los ingresos no dependen de un único producto, cliente o mercado y hay margen para sumar mercados externos.",
+          "preguntaEntrevista": "¿De cuántos productos, clientes o mercados depende su facturación?",
+          "evidenciaSugerida": "Composición de ventas.",
+          "quienResponde": "Empresario: datos reales de ventas y margen. Estudiante: construcción del costeo/precio de exportación hipotético, a validar con el empresario.",
+          "lecturaSinExportar": "Dato doméstico real: aplica igual exporte o no la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Fuentes de ingresos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 40
+        },
+        {
+          "id": "IE6",
+          "orden": 6,
+          "titulo": "Resistencia a variaciones cambiarias",
+          "criterioFavorable": "Se considera favorable si la empresa puede absorber cambios en el tipo de cambio o cubrirse (precios en dólares, costos dolarizados, coberturas).",
+          "preguntaEntrevista": "¿Qué pasa con su rentabilidad si el tipo de cambio se mueve un 10%?",
+          "evidenciaSugerida": "Sensibilidad de márgenes; proporción de costos en dólares.",
+          "quienResponde": "Empresario: datos reales de ventas y margen. Estudiante: construcción del costeo/precio de exportación hipotético, a validar con el empresario.",
+          "lecturaSinExportar": "Dato doméstico real: sensibilidad de costos y márgenes actuales frente al tipo de cambio.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Fuentes de ingresos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 41
+        }
+      ]
+    },
+    {
+      "id": "IF",
+      "nombre": "Recursos clave",
+      "tipo": "interno",
+      "marco": "Canvas — Recursos clave",
+      "items": [
+        {
+          "id": "IF1",
+          "orden": 1,
+          "titulo": "Capacidad instalada y ociosa",
+          "criterioFavorable": "Se considera favorable si existe capacidad ociosa o ampliable de al menos 30% sin comprometer la atención del mercado actual.",
+          "preguntaEntrevista": "¿Qué porcentaje de su capacidad usa hoy? ¿Podría producir un pedido exportable sin frenar al resto?",
+          "evidenciaSugerida": "Capacidad nominal frente a producción real.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 45
+        },
+        {
+          "id": "IF2",
+          "orden": 2,
+          "titulo": "Estado y tecnología de la maquinaria",
+          "criterioFavorable": "Se considera favorable si equipos, líneas y tecnología permiten cumplir volúmenes y estándares de calidad del exterior.",
+          "preguntaEntrevista": "¿Qué equipos limitan calidad o volumen? ¿Qué inversión requeriría reemplazarlos?",
+          "evidenciaSugerida": "Inventario de equipos y antigüedad.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 46
+        },
+        {
+          "id": "IF3",
+          "orden": 3,
+          "titulo": "Personal calificado",
+          "criterioFavorable": "Se considera favorable si la dotación operativa está calificada para los procesos críticos y la rotación es baja.",
+          "preguntaEntrevista": "¿Cuenta con personal formado y estable en los puestos críticos?",
+          "evidenciaSugerida": "Nómina por calificación; índice de rotación.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 47
+        },
+        {
+          "id": "IF4",
+          "orden": 4,
+          "titulo": "Formación continua y capacitación en comercio exterior",
+          "criterioFavorable": "Se considera favorable si existen planes de capacitación en producción, calidad y comercio exterior, y al menos una persona con formación específica.",
+          "preguntaEntrevista": "¿Capacita a su personal? ¿Alguien tiene formación en comercio exterior?",
+          "evidenciaSugerida": "Plan de capacitación; certificados.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": "Actividades clave",
+            "nota": "El personal es un recurso; la capacitación en sí es un proceso continuo"
+          },
+          "filaFormularioFoda": 48
+        },
+        {
+          "id": "IF5",
+          "orden": 5,
+          "titulo": "Capital de trabajo y capacidad financiera",
+          "criterioFavorable": "Se considera favorable si la empresa puede financiar el ciclo exportador (producción, flete, plazo de cobro) sin comprometer su operación.",
+          "preguntaEntrevista": "¿Podría afrontar 60 a 90 días de plazo de cobro y los costos de embarque?",
+          "evidenciaSugerida": "Flujo de fondos; líneas bancarias.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 49
+        },
+        {
+          "id": "IF6",
+          "orden": 6,
+          "titulo": "Sistemas de información y gestión",
+          "criterioFavorable": "Se considera favorable si hay sistemas (gestión, facturación, stock) que permiten emitir facturas de exportación y controlar pedidos.",
+          "preguntaEntrevista": "¿Su sistema permite facturar en moneda extranjera y seguir pedidos?",
+          "evidenciaSugerida": "Sistema utilizado; capturas o reportes.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": "Actividades clave",
+            "nota": "El sistema es un recurso tecnológico; su uso para seguir pedidos es una actividad"
+          },
+          "filaFormularioFoda": 50
+        },
+        {
+          "id": "IF7",
+          "orden": 7,
+          "titulo": "Infraestructura, depósitos y conservación",
+          "criterioFavorable": "Se considera favorable si predios y depósitos aseguran conservación, orden y espacio para consolidar mercadería de exportación.",
+          "preguntaEntrevista": "¿Cómo conserva y almacena el producto terminado? ¿Tiene espacio para consolidar un embarque?",
+          "evidenciaSugerida": "Fotos, planos y condiciones de depósito.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 51
+        },
+        {
+          "id": "IF8",
+          "orden": 8,
+          "titulo": "Habilitaciones y registros oficiales",
+          "criterioFavorable": "Se considera favorable si cuenta con las habilitaciones y registros de establecimiento y producto exigidos (p. ej., SENASA, INAL/ANMAT, registros de exportador ante ARCA).",
+          "preguntaEntrevista": "¿Qué habilitaciones y registros tiene vigentes? ¿Está inscripta como exportadora?",
+          "evidenciaSugerida": "Constancias vigentes.",
+          "quienResponde": "Empresario (recursos productivos, financieros y humanos propios).",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Recursos clave",
+            "bloqueSecundario": null,
+            "nota": "Recurso intangible (licencias/registros) en el sentido de Osterwalder"
+          },
+          "filaFormularioFoda": 52
+        }
+      ]
+    },
+    {
+      "id": "IG",
+      "nombre": "Actividades clave",
+      "tipo": "interno",
+      "marco": "Canvas — Actividades clave",
+      "items": [
+        {
+          "id": "IG1",
+          "orden": 1,
+          "titulo": "Descripción técnica y estandarización",
+          "criterioFavorable": "Se considera favorable si procesos y productos están descriptos (manuales, especificaciones, diagramas de flujo) y son reproducibles lote a lote.",
+          "preguntaEntrevista": "¿Existen procedimientos escritos? ¿Obtiene siempre la misma calidad?",
+          "evidenciaSugerida": "Manuales y diagramas de flujo.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 55
+        },
+        {
+          "id": "IG2",
+          "orden": 2,
+          "titulo": "Mantenimiento y continuidad operativa",
+          "criterioFavorable": "Se considera favorable si hay mantenimiento preventivo sistematizado y no existen paradas críticas recurrentes (fallas, cortes de energía, faltantes).",
+          "preguntaEntrevista": "¿Cuántas paradas no planificadas tuvo el último año?",
+          "evidenciaSugerida": "Registro de paradas; plan de mantenimiento.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 56
+        },
+        {
+          "id": "IG3",
+          "orden": 3,
+          "titulo": "Planificación de producción y abastecimiento",
+          "criterioFavorable": "Se considera favorable si se planifica producción y aprovisionamiento con antelación y pueden comprometerse volúmenes y fechas de entrega.",
+          "preguntaEntrevista": "¿Con cuánta anticipación planifica? ¿Puede comprometer un volumen mensual firme?",
+          "evidenciaSugerida": "Plan de producción.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 57
+        },
+        {
+          "id": "IG4",
+          "orden": 4,
+          "titulo": "Gestión de calidad",
+          "criterioFavorable": "Se considera favorable si existe un sistema de calidad (controles, muestreo, normas como ISO 9001, BPM/HACCP) que asegura estándares constantes.",
+          "preguntaEntrevista": "¿Qué controles de calidad realiza? ¿Tiene alguna norma implementada?",
+          "evidenciaSugerida": "Manual y registros de calidad.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 58
+        },
+        {
+          "id": "IG5",
+          "orden": 5,
+          "titulo": "Trazabilidad y control de stock",
+          "criterioFavorable": "Se considera favorable si el producto se identifica por lote y origen y el inventario está sistematizado y actualizado.",
+          "preguntaEntrevista": "¿Puede rastrear un lote desde la materia prima hasta el cliente?",
+          "evidenciaSugerida": "Registros de lote; inventario.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 59
+        },
+        {
+          "id": "IG6",
+          "orden": 6,
+          "titulo": "Cumplimiento de plazos de entrega",
+          "criterioFavorable": "Se considera favorable si la empresa cumple sus plazos comprometidos (al menos 90% de los pedidos en fecha y completos).",
+          "preguntaEntrevista": "¿Qué porcentaje de los pedidos entrega a tiempo y completos?",
+          "evidenciaSugerida": "Indicador de cumplimiento de entregas.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 60
+        },
+        {
+          "id": "IG7",
+          "orden": 7,
+          "titulo": "Mejora de procesos e I+D",
+          "criterioFavorable": "Se considera favorable si existen planes de mejora de productividad y de desarrollo de procesos con inversión asignada.",
+          "preguntaEntrevista": "¿Qué mejoras implementó y qué proyectos tiene en marcha?",
+          "evidenciaSugerida": "Proyectos e inversiones.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 61
+        },
+        {
+          "id": "IG8",
+          "orden": 8,
+          "titulo": "Gestión ambiental y de residuos",
+          "criterioFavorable": "Se considera favorable si la planta cumple la normativa ambiental, gestiona residuos y efluentes y puede demostrarlo.",
+          "preguntaEntrevista": "¿Cuenta con habilitación ambiental? ¿Cómo gestiona residuos y subproductos?",
+          "evidenciaSugerida": "Permisos y registros ambientales.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 62
+        },
+        {
+          "id": "IG9",
+          "orden": 9,
+          "titulo": "Seguridad e higiene laboral",
+          "criterioFavorable": "Se considera favorable si el ambiente de trabajo es seguro, limpio y organizado, con programa de seguridad e higiene y cobertura de ART.",
+          "preguntaEntrevista": "¿Hay programa de seguridad e higiene? ¿Cuál es su índice de accidentes?",
+          "evidenciaSugerida": "Programa y estadísticas de accidentes.",
+          "quienResponde": "Empresario, con relevamiento en planta del estudiante cuando sea posible.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Actividades clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 63
+        }
+      ]
+    },
+    {
+      "id": "IH",
+      "nombre": "Socios clave",
+      "tipo": "interno",
+      "marco": "Canvas — Socios clave",
+      "items": [
+        {
+          "id": "IH1",
+          "orden": 1,
+          "titulo": "Proveedores estratégicos",
+          "criterioFavorable": "Se considera favorable si la estrategia de compras permite negociar precio y plazo con proveedores confiables, sin depender de uno solo.",
+          "preguntaEntrevista": "¿Cuáles son los proveedores críticos y qué alternativa tiene para cada uno?",
+          "evidenciaSugerida": "Listado de proveedores y porcentaje de compras.",
+          "quienResponde": "Empresario: proveedores y socios actuales. Estudiante: identificación de despachante/forwarder y programas de apoyo.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Socios clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 66
+        },
+        {
+          "id": "IH2",
+          "orden": 2,
+          "titulo": "Alianzas comerciales",
+          "criterioFavorable": "Se considera favorable si existen o son posibles acuerdos con agentes, distribuidores, otras pymes (consorcios de exportación) o traders para llegar al exterior.",
+          "preguntaEntrevista": "¿Trabajaría con un consorcio o un agente? ¿Tiene contactos?",
+          "evidenciaSugerida": "Acuerdos o cartas de intención.",
+          "quienResponde": "Empresario: proveedores y socios actuales. Estudiante: identificación de despachante/forwarder y programas de apoyo.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Socios clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 67
+        },
+        {
+          "id": "IH3",
+          "orden": 3,
+          "titulo": "Socios logísticos y aduaneros",
+          "criterioFavorable": "Se considera favorable si trabaja o puede trabajar con despachante, forwarder y transportistas confiables.",
+          "preguntaEntrevista": "¿Con qué despachante o forwarder trabajaría? ¿Ya pidió cotización?",
+          "evidenciaSugerida": "Cotizaciones recibidas.",
+          "quienResponde": "Empresario: proveedores y socios actuales. Estudiante: identificación de despachante/forwarder y programas de apoyo.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Socios clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 68
+        },
+        {
+          "id": "IH4",
+          "orden": 4,
+          "titulo": "Apoyo institucional",
+          "criterioFavorable": "Se considera favorable si la empresa se vincula con cámaras, agencias de promoción, organismos provinciales o nacionales, INTA y universidades, y accede a programas de apoyo.",
+          "preguntaEntrevista": "¿Participa en alguna cámara o programa de apoyo a exportadores?",
+          "evidenciaSugerida": "Membresías y programas en los que participa.",
+          "quienResponde": "Empresario: proveedores y socios actuales. Estudiante: identificación de despachante/forwarder y programas de apoyo.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Socios clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 69
+        },
+        {
+          "id": "IH5",
+          "orden": 5,
+          "titulo": "Socios financieros y de seguros",
+          "criterioFavorable": "Se considera favorable si mantiene relación con bancos y aseguradoras con productos de comercio exterior (prefinanciación, seguros de carga y de crédito).",
+          "preguntaEntrevista": "¿Su banco opera comercio exterior? ¿Qué líneas utilizó?",
+          "evidenciaSugerida": "Líneas y pólizas vigentes.",
+          "quienResponde": "Empresario: proveedores y socios actuales. Estudiante: identificación de despachante/forwarder y programas de apoyo.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Socios clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 70
+        },
+        {
+          "id": "IH6",
+          "orden": 6,
+          "titulo": "Tercerización y subcontratación",
+          "criterioFavorable": "Se considera favorable si los servicios tercerizados mantienen equilibrio entre conocimiento, costo y control de calidad, sin crear dependencia crítica.",
+          "preguntaEntrevista": "¿Qué procesos terceriza y con qué grado de dependencia?",
+          "evidenciaSugerida": "Contratos de tercerización.",
+          "quienResponde": "Empresario: proveedores y socios actuales. Estudiante: identificación de despachante/forwarder y programas de apoyo.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Socios clave",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 71
+        }
+      ]
+    },
+    {
+      "id": "II",
+      "nombre": "Estructura de costos",
+      "tipo": "interno",
+      "marco": "Canvas — Estructura de costos",
+      "items": [
+        {
+          "id": "II1",
+          "orden": 1,
+          "titulo": "Costos fijos",
+          "criterioFavorable": "Se considera favorable si los costos fijos no aumentaron más del 15% real en el último año y su peso es manejable frente al volumen.",
+          "preguntaEntrevista": "¿Cómo evolucionaron los costos fijos el último año?",
+          "evidenciaSugerida": "Estado de resultados.",
+          "quienResponde": "Empresario (costos, precios y endeudamiento reales), con el estudiante armando el costeo de exportación.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Estructura de costos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 74
+        },
+        {
+          "id": "II2",
+          "orden": 2,
+          "titulo": "Punto de equilibrio y escala mínima exportable",
+          "criterioFavorable": "Se considera favorable si se conoce el punto de equilibrio y el volumen mínimo por embarque que resulta rentable.",
+          "preguntaEntrevista": "¿Cuál es el volumen mínimo por contenedor o camión que sería rentable?",
+          "evidenciaSugerida": "Cálculo del punto de equilibrio.",
+          "quienResponde": "Empresario (costos, precios y endeudamiento reales), con el estudiante armando el costeo de exportación.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "bloquePrincipal": "Estructura de costos",
+            "bloqueSecundario": "Fuentes de ingresos",
+            "nota": "El punto de equilibrio requiere costos e ingresos a la vez"
+          },
+          "filaFormularioFoda": 75
+        },
+        {
+          "id": "II3",
+          "orden": 3,
+          "titulo": "Sistema de costos de exportación",
+          "criterioFavorable": "Se considera favorable si existe un sistema que distribuye costos por producto e incorpora los de comercio exterior (flete, seguro, tasas, comisiones).",
+          "preguntaEntrevista": "¿Sabe cuánto cuesta producir y colocar un producto en destino?",
+          "evidenciaSugerida": "Planilla de costos por producto.",
+          "quienResponde": "Empresario (costos, precios y endeudamiento reales), con el estudiante armando el costeo de exportación.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Estructura de costos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 76
+        },
+        {
+          "id": "II4",
+          "orden": 4,
+          "titulo": "Costo de materias primas",
+          "criterioFavorable": "Se considera favorable si el costo y la disponibilidad de la materia prima son estables, sin fuertes variaciones estacionales o de precio.",
+          "preguntaEntrevista": "¿Cuánto varía el costo de su materia prima durante el año?",
+          "evidenciaSugerida": "Historial de precios de compra.",
+          "quienResponde": "Empresario (costos, precios y endeudamiento reales), con el estudiante armando el costeo de exportación.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Estructura de costos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 77
+        },
+        {
+          "id": "II5",
+          "orden": 5,
+          "titulo": "Costos logísticos y de comercio exterior",
+          "criterioFavorable": "Se considera favorable si los costos de flete, embalaje, despacho y seguros representan un porcentaje del precio compatible con la competitividad.",
+          "preguntaEntrevista": "¿Qué porcentaje del precio representarían fletes y gastos de exportación?",
+          "evidenciaSugerida": "Cotizaciones logísticas.",
+          "quienResponde": "Empresario (costos, precios y endeudamiento reales), con el estudiante armando el costeo de exportación.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Estructura de costos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 78
+        },
+        {
+          "id": "II6",
+          "orden": 6,
+          "titulo": "Endeudamiento",
+          "criterioFavorable": "Se considera favorable si el endeudamiento es menor al activo corriente y no compromete la capacidad de invertir.",
+          "preguntaEntrevista": "¿Cuál es su nivel de endeudamiento y su costo financiero?",
+          "evidenciaSugerida": "Balance y detalle de deudas.",
+          "quienResponde": "Empresario (costos, precios y endeudamiento reales), con el estudiante armando el costeo de exportación.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Canvas puro",
+            "bloquePrincipal": "Estructura de costos",
+            "bloqueSecundario": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 79
+        }
+      ]
+    },
+    {
+      "id": "IJ",
+      "nombre": "Transversal: gestión y compromiso exportador",
+      "tipo": "interno",
+      "marco": "Canvas — Transversal: gestión y compromiso exportador",
+      "items": [
+        {
+          "id": "IJ1",
+          "orden": 1,
+          "titulo": "Estrategia y objetivos de largo plazo",
+          "criterioFavorable": "Se considera favorable si hay una estrategia con visión a más de tres años y objetivos de exportación medibles.",
+          "preguntaEntrevista": "¿Qué lugar tiene la exportación en su plan a 3 o 5 años?",
+          "evidenciaSugerida": "Plan escrito o acta de directorio.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder"
+          },
+          "filaFormularioFoda": 83
+        },
+        {
+          "id": "IJ2",
+          "orden": 2,
+          "titulo": "Compromiso de la dirección",
+          "criterioFavorable": "Se considera favorable si la dirección asigna tiempo, presupuesto y decisiones concretas a la exportación (no solo interés declarativo).",
+          "preguntaEntrevista": "¿Qué recursos está dispuesto a comprometer en los próximos 12 meses?",
+          "evidenciaSugerida": "Presupuesto asignado.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder"
+          },
+          "filaFormularioFoda": 84
+        },
+        {
+          "id": "IJ3",
+          "orden": 3,
+          "titulo": "Estructura y responsable de comercio exterior",
+          "criterioFavorable": "Se considera favorable si existe una persona o equipo responsable de exportar y la estructura y funciones son acordes al volumen de actividad.",
+          "preguntaEntrevista": "¿Quién sería el responsable de exportar? ¿Tiene tiempo para hacerlo?",
+          "evidenciaSugerida": "Organigrama.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder"
+          },
+          "filaFormularioFoda": 85
+        },
+        {
+          "id": "IJ4",
+          "orden": 4,
+          "titulo": "Conocimiento de la competencia internacional",
+          "criterioFavorable": "Se considera favorable si se conocen competidores, capacidades, precios y estrategias en los mercados elegidos.",
+          "preguntaEntrevista": "¿Quiénes serían sus tres competidores en el destino y cómo compiten?",
+          "evidenciaSugerida": "Análisis de competidores.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Espejo interno de EF5 (ámbito externo); atributo de gestión, no de mercado"
+          },
+          "filaFormularioFoda": 86
+        },
+        {
+          "id": "IJ5",
+          "orden": 5,
+          "titulo": "Capacidad de anticipación a los cambios",
+          "criterioFavorable": "Se considera favorable si existen planes de contingencia y análisis de escenarios ante cambios de normas, tipo de cambio y demanda.",
+          "preguntaEntrevista": "¿Qué haría si cambian las reglas de exportación o el tipo de cambio?",
+          "evidenciaSugerida": "Planes de contingencia.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder"
+          },
+          "filaFormularioFoda": 87
+        },
+        {
+          "id": "IJ6",
+          "orden": 6,
+          "titulo": "Cultura empresarial y estilo de dirección",
+          "criterioFavorable": "Se considera favorable si la cultura es abierta al cambio, hay compromiso compartido con una visión y los mandos medios participan en las decisiones.",
+          "preguntaEntrevista": "¿Cómo se toman las decisiones? ¿La organización está abierta a cambiar?",
+          "evidenciaSugerida": "Observación en la entrevista.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder"
+          },
+          "filaFormularioFoda": 88
+        },
+        {
+          "id": "IJ7",
+          "orden": 7,
+          "titulo": "Herramientas de planificación y control",
+          "criterioFavorable": "Se considera favorable si existen presupuesto, tableros de indicadores y herramientas de planificación sistematizadas en cada proceso.",
+          "preguntaEntrevista": "¿Qué indicadores controla todos los meses?",
+          "evidenciaSugerida": "Tablero de indicadores.",
+          "quienResponde": "Dirección de la empresa (empresario o socios): estas preguntas son sobre compromiso y decisión, no requieren datos externos.",
+          "lecturaSinExportar": "Se responde igual, exporte o no la empresa: use la evidencia doméstica disponible como capacidad transferible.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "bloquePrincipal": null,
+            "bloqueSecundario": null,
+            "nota": "Bloque transversal de gobernanza; no es uno de los 9 bloques de Osterwalder"
+          },
+          "filaFormularioFoda": 89
+        }
+      ]
+    }
+  ],
+  "areasExternas": [
+    {
+      "id": "EA",
+      "nombre": "Ámbito Político/Legal y Regulatorio",
+      "tipo": "externo",
+      "marco": "Ámbito externo (4 PESTEL puro, 1 Combinada, 1 Agregado) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EA1",
+          "orden": 1,
+          "titulo": "Política de comercio exterior",
+          "criterioFavorable": "Se considera favorable si las reglas de exportación (autorizaciones, cupos, restricciones) son previsibles y estables y no obstaculizan al sector.",
+          "preguntaEntrevista": "¿Qué cambios normativos afectaron sus operaciones o su decisión de exportar?",
+          "evidenciaSugerida": "Boletín Oficial; normativa de ARCA-Aduana y del organismo sectorial.",
+          "quienResponde": "Estudiante (investigación normativa: Boletín Oficial, aduana, ARCA); validar con contador/despachante si la empresa tiene uno.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Político",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 93
+        },
+        {
+          "id": "EA2",
+          "orden": 2,
+          "titulo": "Acuerdos comerciales y preferencias arancelarias",
+          "criterioFavorable": "Se considera favorable si existen acuerdos vigentes (Mercosur, ALADI u otros) que otorgan preferencias arancelarias al producto en los destinos elegidos.",
+          "preguntaEntrevista": "¿Su producto paga arancel en el destino? ¿Existe alguna preferencia?",
+          "evidenciaSugerida": "Aranceles por posición arancelaria en Market Access Map (ITC) y normativa del Mercosur.",
+          "quienResponde": "Estudiante (investigación normativa: Boletín Oficial, aduana, ARCA); validar con contador/despachante si la empresa tiene uno.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Político/Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 94
+        },
+        {
+          "id": "EA3",
+          "orden": 3,
+          "titulo": "Barreras arancelarias y técnicas del destino",
+          "criterioFavorable": "Se considera favorable si aranceles, cupos, licencias y reglamentos técnicos del destino no impiden ni encarecen de manera significativa el ingreso del producto.",
+          "preguntaEntrevista": "¿Qué exige la aduana del país destino para su producto?",
+          "evidenciaSugerida": "Posición arancelaria del producto; requisitos de importación del destino.",
+          "quienResponde": "Estudiante (investigación normativa: Boletín Oficial, aduana, ARCA); validar con contador/despachante si la empresa tiene uno.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "pestel": "Legal",
+            "porter": "Amenaza de nuevos entrantes",
+            "nota": "Barrera regulatoria que opera como barrera de entrada"
+          },
+          "filaFormularioFoda": 95
+        },
+        {
+          "id": "EA4",
+          "orden": 4,
+          "titulo": "Trámites y aduana",
+          "criterioFavorable": "Se considera favorable si los trámites y controles (permisos, certificados de origen, despacho) son ágiles, digitalizados y de costo razonable.",
+          "preguntaEntrevista": "¿Cuánto tarda y cuánto cuesta un despacho de exportación?",
+          "evidenciaSugerida": "Experiencia de despachantes; tiempos de despacho.",
+          "quienResponde": "Estudiante (investigación normativa: Boletín Oficial, aduana, ARCA); validar con contador/despachante si la empresa tiene uno.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 96
+        },
+        {
+          "id": "EA5",
+          "orden": 5,
+          "titulo": "Promoción y fomento a exportadores",
+          "criterioFavorable": "Se considera favorable si existen programas nacionales, provinciales o sectoriales (asistencia técnica, ferias, financiamiento, reintegros) accesibles para pymes.",
+          "preguntaEntrevista": "¿Conoce programas de apoyo a exportadores? ¿Accedió alguna vez?",
+          "evidenciaSugerida": "Convocatorias vigentes de organismos nacionales y provinciales.",
+          "quienResponde": "Estudiante (investigación normativa: Boletín Oficial, aduana, ARCA); validar con contador/despachante si la empresa tiene uno.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Apoyo institucional; no es variable de PESTEL ni de Porter"
+          },
+          "filaFormularioFoda": 97
+        },
+        {
+          "id": "EA6",
+          "orden": 6,
+          "titulo": "Propiedad intelectual y seguridad jurídica",
+          "criterioFavorable": "Se considera favorable si es posible proteger marcas y patentes y hacer cumplir contratos internacionales (Incoterms, arbitraje) con reglas claras.",
+          "preguntaEntrevista": "¿Registró su marca? ¿Tuvo dificultades para hacer cumplir un contrato?",
+          "evidenciaSugerida": "Registro de marcas; modelos de contrato internacional.",
+          "quienResponde": "Estudiante (investigación normativa: Boletín Oficial, aduana, ARCA); validar con contador/despachante si la empresa tiene uno.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 98
+        }
+      ]
+    },
+    {
+      "id": "EB",
+      "nombre": "Ámbito Económico/Financiero/Cambiario",
+      "tipo": "externo",
+      "marco": "Ámbito externo (6 PESTEL puro, 2 Combinada) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EB1",
+          "orden": 1,
+          "titulo": "Crecimiento económico y ciclo",
+          "criterioFavorable": "Se considera favorable si la economía argentina y las de los destinos crecen o se estabilizan, sin ciclos que reduzcan la demanda de manera abrupta.",
+          "preguntaEntrevista": "¿Cómo influye el ciclo económico sobre sus ventas?",
+          "evidenciaSugerida": "Informes macroeconómicos de organismos oficiales e internacionales.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Económico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 101
+        },
+        {
+          "id": "EB2",
+          "orden": 2,
+          "titulo": "Crecimiento sectorial del rubro",
+          "criterioFavorable": "Se considera favorable si el rubro (forestoindustrial, yerbatero, alimentos, etc.) crece en los destinos objetivo y permite mayores transacciones.",
+          "preguntaEntrevista": "¿Cómo evoluciona la demanda mundial de su producto?",
+          "evidenciaSugerida": "Trade Map (ITC); informes de cámaras sectoriales.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "pestel": "Económico",
+            "porter": "Rivalidad",
+            "nota": "Determinante clásico de intensidad de rivalidad"
+          },
+          "filaFormularioFoda": 102
+        },
+        {
+          "id": "EB3",
+          "orden": 3,
+          "titulo": "Tipo de cambio y competitividad",
+          "criterioFavorable": "Se considera favorable si el esquema cambiario es previsible y sostiene precios competitivos en dólares.",
+          "preguntaEntrevista": "¿Con el tipo de cambio actual, exporta siendo competitivo?",
+          "evidenciaSugerida": "Tipo de cambio real multilateral; costos en dólares.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Económico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 103
+        },
+        {
+          "id": "EB4",
+          "orden": 4,
+          "titulo": "Inflación y costos internos",
+          "criterioFavorable": "Se considera favorable si la inflación no desbalancea salarios e insumos ni erosiona el margen frente al precio internacional.",
+          "preguntaEntrevista": "¿Qué costos suben más rápido que su precio en dólares?",
+          "evidenciaSugerida": "Índices de precios y de costos del sector.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Económico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 104
+        },
+        {
+          "id": "EB5",
+          "orden": 5,
+          "titulo": "Financiamiento y crédito para exportar",
+          "criterioFavorable": "Se considera favorable si hay líneas de crédito y prefinanciación de exportaciones a tasas y plazos que permitan financiar el ciclo exportador.",
+          "preguntaEntrevista": "¿Accede a créditos para producir y exportar? ¿A qué tasa y plazo?",
+          "evidenciaSugerida": "Líneas bancarias públicas y privadas.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Económico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 105
+        },
+        {
+          "id": "EB6",
+          "orden": 6,
+          "titulo": "Cobros y acceso a divisas",
+          "criterioFavorable": "Se considera favorable si las normas de cobro y liquidación de divisas no restringen ni demoran el cobro de exportaciones ni el pago de insumos importados.",
+          "preguntaEntrevista": "¿Tuvo restricciones o demoras para cobrar o pagar operaciones?",
+          "evidenciaSugerida": "Normativa cambiaria del BCRA.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Económico/Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 106
+        },
+        {
+          "id": "EB7",
+          "orden": 7,
+          "titulo": "Impuestos, derechos de exportación y reintegros",
+          "criterioFavorable": "Se considera favorable si la carga tributaria (derechos de exportación, IVA, ingresos brutos, reintegros) no resta competitividad al producto.",
+          "preguntaEntrevista": "¿Cuánto pesan impuestos y derechos sobre su precio de exportación?",
+          "evidenciaSugerida": "Alícuotas vigentes; asesoramiento contable.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Económico/Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 107
+        },
+        {
+          "id": "EB8",
+          "orden": 8,
+          "titulo": "Precios internacionales del producto",
+          "criterioFavorable": "Se considera favorable si los precios internacionales de referencia son estables o favorables y dejan margen a la empresa.",
+          "preguntaEntrevista": "¿Cuál es el precio internacional de referencia y cuánto varía en el año?",
+          "evidenciaSugerida": "Series de precios y estadísticas de comercio.",
+          "quienResponde": "Estudiante (fuentes macroeconómicas y bancarias); el empresario aporta su situación financiera y de acceso al crédito.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "pestel": "Económico",
+            "porter": "Rivalidad",
+            "nota": "Termómetro de intensidad competitiva"
+          },
+          "filaFormularioFoda": 108
+        }
+      ]
+    },
+    {
+      "id": "EC",
+      "nombre": "Ámbito Sociocultural",
+      "tipo": "externo",
+      "marco": "Ámbito externo (4 PESTEL puro, 1 Agregado) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EC1",
+          "orden": 1,
+          "titulo": "Afinidad cultural y hábitos de consumo",
+          "criterioFavorable": "Se considera favorable si el uso, el gusto y los hábitos de consumo del destino coinciden con lo que la empresa ofrece.",
+          "preguntaEntrevista": "¿Se consume su producto en el destino? ¿De qué manera?",
+          "evidenciaSugerida": "Estudios de mercado; consulados y cámaras binacionales.",
+          "quienResponde": "Estudiante (investigación cultural y del sector); el empresario aporta su percepción de clientes actuales del rubro.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Sociocultural",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 111
+        },
+        {
+          "id": "EC2",
+          "orden": 2,
+          "titulo": "Idioma y cercanía cultural",
+          "criterioFavorable": "Se considera favorable si hay cercanía idiomática y cultural (español, portugués, guaraní) con mercados vecinos que facilita negociar.",
+          "preguntaEntrevista": "¿En qué idioma negociaría? ¿Conoce las costumbres comerciales del destino?",
+          "evidenciaSugerida": "Guías de negociación intercultural.",
+          "quienResponde": "Estudiante (investigación cultural y del sector); el empresario aporta su percepción de clientes actuales del rubro.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Sociocultural",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 112
+        },
+        {
+          "id": "EC3",
+          "orden": 3,
+          "titulo": "Valoración del origen y la sustentabilidad",
+          "criterioFavorable": "Se considera favorable si los compradores valoran la trazabilidad, la sustentabilidad y el origen del producto y están dispuestos a pagar por ello.",
+          "preguntaEntrevista": "¿Sus clientes piden información sobre origen o sustentabilidad?",
+          "evidenciaSugerida": "Requisitos de compradores; tendencias de consumo.",
+          "quienResponde": "Estudiante (investigación cultural y del sector); el empresario aporta su percepción de clientes actuales del rubro.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Sociocultural/Ambiental",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 113
+        },
+        {
+          "id": "EC4",
+          "orden": 4,
+          "titulo": "Formación técnica y mano de obra regional",
+          "criterioFavorable": "Se considera favorable si la región ofrece formación técnica y mano de obra calificada suficiente (tecnicaturas, universidades, formación profesional).",
+          "preguntaEntrevista": "¿Le resulta fácil conseguir personal calificado en la región?",
+          "evidenciaSugerida": "Oferta educativa provincial; bolsas de empleo.",
+          "quienResponde": "Estudiante (investigación cultural y del sector); el empresario aporta su percepción de clientes actuales del rubro.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Sociocultural",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 114
+        },
+        {
+          "id": "EC5",
+          "orden": 5,
+          "titulo": "Asociativismo y cultura exportadora regional",
+          "criterioFavorable": "Se considera favorable si hay tradición exportadora, clusters, cámaras y empresas que cooperan (consorcios) en el sector.",
+          "preguntaEntrevista": "¿Existen consorcios, cámaras o cluster de su rubro en la región?",
+          "evidenciaSugerida": "Nómina de cámaras y entes sectoriales.",
+          "quienResponde": "Estudiante (investigación cultural y del sector); el empresario aporta su percepción de clientes actuales del rubro.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Capital social regional; fuera de ambos marcos"
+          },
+          "filaFormularioFoda": 115
+        }
+      ]
+    },
+    {
+      "id": "ED",
+      "nombre": "Ámbito Tecnológico y Digital",
+      "tipo": "externo",
+      "marco": "Ámbito externo (4 PESTEL puro) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "ED1",
+          "orden": 1,
+          "titulo": "Avances tecnológicos del sector",
+          "criterioFavorable": "Se considera favorable si la tecnología disponible (maquinaria, secado, automatización, embalaje) es accesible y mejora costos y calidad.",
+          "preguntaEntrevista": "¿Qué tecnología del sector le permitiría competir mejor y está a su alcance?",
+          "evidenciaSugerida": "Proveedores de tecnología; INTA y centros tecnológicos.",
+          "quienResponde": "Estudiante (investigación tecnológica y digital); el empresario informa su conectividad y sistemas actuales.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Tecnológico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 118
+        },
+        {
+          "id": "ED2",
+          "orden": 2,
+          "titulo": "Conectividad y plataformas de comercio electrónico",
+          "criterioFavorable": "Se considera favorable si la conectividad de la región y las plataformas B2B permiten vender, negociar y hacer seguimiento a distancia.",
+          "preguntaEntrevista": "¿Cómo es la conectividad en su planta y qué plataformas conoce para vender afuera?",
+          "evidenciaSugerida": "Plataformas y marketplaces B2B del rubro.",
+          "quienResponde": "Estudiante (investigación tecnológica y digital); el empresario informa su conectividad y sistemas actuales.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Tecnológico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 119
+        },
+        {
+          "id": "ED3",
+          "orden": 3,
+          "titulo": "Digitalización del comercio exterior",
+          "criterioFavorable": "Se considera favorable si existen trámites electrónicos (firma digital, permisos, certificado de origen digital) que reducen tiempo y costo.",
+          "preguntaEntrevista": "¿Qué trámites de exportación puede hacer hoy de forma electrónica?",
+          "evidenciaSugerida": "Servicios digitales de ARCA-Aduana y ventanilla única.",
+          "quienResponde": "Estudiante (investigación tecnológica y digital); el empresario informa su conectividad y sistemas actuales.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Tecnológico/Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 120
+        },
+        {
+          "id": "ED4",
+          "orden": 4,
+          "titulo": "Trazabilidad y certificación digital",
+          "criterioFavorable": "Se considera favorable si hay herramientas accesibles para demostrar origen y cumplimiento que exigen los compradores.",
+          "preguntaEntrevista": "¿Sus compradores le piden trazabilidad digital? ¿Qué herramientas tiene disponibles?",
+          "evidenciaSugerida": "Requisitos de compradores; herramientas de trazabilidad.",
+          "quienResponde": "Estudiante (investigación tecnológica y digital); el empresario informa su conectividad y sistemas actuales.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Tecnológico",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 121
+        }
+      ]
+    },
+    {
+      "id": "EE",
+      "nombre": "Logística e Infraestructura Regional",
+      "tipo": "externo",
+      "marco": "Ámbito externo (7 Agregado) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EE1",
+          "orden": 1,
+          "titulo": "Red vial y conectividad multimodal",
+          "criterioFavorable": "Se considera favorable si rutas y accesos (p. ej., RN 12 y RN 14) permiten trasladar la carga a frontera y puertos en tiempo y costo razonables.",
+          "preguntaEntrevista": "¿Cómo es hoy el traslado de su mercadería hacia frontera y puertos?",
+          "evidenciaSugerida": "Estado de rutas; tiempos y costos de transporte.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 124
+        },
+        {
+          "id": "EE2",
+          "orden": 2,
+          "titulo": "Pasos de frontera y puentes internacionales",
+          "criterioFavorable": "Se considera favorable si los pasos y puentes (p. ej., Posadas–Encarnación, Bernardo de Irigoyen, Puerto Iguazú) operan sin demoras ni costos excesivos.",
+          "preguntaEntrevista": "¿Qué demoras o costos tiene el paso de frontera que usaría?",
+          "evidenciaSugerida": "Tiempos de cruce; tarifas y horarios operativos.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 125
+        },
+        {
+          "id": "EE3",
+          "orden": 3,
+          "titulo": "Puertos, hidrovía y salida a ultramar",
+          "criterioFavorable": "Se considera favorable si hay acceso eficiente a puertos fluviales y marítimos y a transporte multimodal para destinos de ultramar.",
+          "preguntaEntrevista": "¿Cómo llegaría su carga a un puerto para exportar a ultramar?",
+          "evidenciaSugerida": "Operadores portuarios y navieros; costos de traslado.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 126
+        },
+        {
+          "id": "EE4",
+          "orden": 4,
+          "titulo": "Costo y disponibilidad de fletes",
+          "criterioFavorable": "Se considera favorable si hay oferta de transportistas, contenedores y fletes a costos que no encarecen en exceso el producto.",
+          "preguntaEntrevista": "¿Qué cotizaciones de flete obtuvo y cómo pesan sobre el precio?",
+          "evidenciaSugerida": "Cotizaciones de transportistas y forwarders.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 127
+        },
+        {
+          "id": "EE5",
+          "orden": 5,
+          "titulo": "Servicios aduaneros locales",
+          "criterioFavorable": "Se considera favorable si existen aduana, depósitos fiscales, zonas francas o terminales en la provincia que faciliten el despacho local.",
+          "preguntaEntrevista": "¿Puede despachar su mercadería en la provincia o debe trasladarla a otra aduana?",
+          "evidenciaSugerida": "Oferta de servicios aduaneros y depósitos fiscales.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 128
+        },
+        {
+          "id": "EE6",
+          "orden": 6,
+          "titulo": "Prestadores logísticos regionales",
+          "criterioFavorable": "Se considera favorable si hay despachantes, forwarders y operadores logísticos con capacidad y experiencia en la región.",
+          "preguntaEntrevista": "¿Encuentra despachantes y forwarders con experiencia en su rubro?",
+          "evidenciaSugerida": "Directorio de prestadores logísticos.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 129
+        },
+        {
+          "id": "EE7",
+          "orden": 7,
+          "titulo": "Energía y servicios públicos industriales",
+          "criterioFavorable": "Se considera favorable si energía, gas, agua y telecomunicaciones son estables y de costo competitivo para la industria.",
+          "preguntaEntrevista": "¿Con qué frecuencia sufre cortes o variaciones de tensión? ¿Cuánto pesa la energía en sus costos?",
+          "evidenciaSugerida": "Facturas de energía; registro de cortes.",
+          "quienResponde": "Estudiante (investigación de rutas, pasos de frontera, puertos y prestadores logísticos regionales).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Infraestructura física; no está en PESTEL ni en Porter"
+          },
+          "filaFormularioFoda": 130
+        }
+      ]
+    },
+    {
+      "id": "EF",
+      "nombre": "Mercado y Competencia",
+      "tipo": "externo",
+      "marco": "Ámbito externo (5 Porter puro, 1 Agregado) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EF1",
+          "orden": 1,
+          "titulo": "Barreras de entrada al mercado destino",
+          "criterioFavorable": "Se considera favorable si las barreras de entrada al destino (regulatorias, de distribución, de marca) son superables para una pyme con políticas claras y responsabilidades establecidas.",
+          "preguntaEntrevista": "¿Qué le impediría ingresar al mercado destino?",
+          "evidenciaSugerida": "Análisis del destino; consultas a importadores.",
+          "quienResponde": "Estudiante (investigación de mercado destino y competidores).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Amenaza de nuevos entrantes",
+            "nota": null
+          },
+          "filaFormularioFoda": 133
+        },
+        {
+          "id": "EF2",
+          "orden": 2,
+          "titulo": "Costos de cambio de los clientes externos",
+          "criterioFavorable": "Se considera favorable si a los compradores les cuesta cambiar de proveedor una vez establecida la relación (calidad, servicio, contrato).",
+          "preguntaEntrevista": "¿Qué haría que un comprador no cambie de proveedor?",
+          "evidenciaSugerida": "Contratos y relaciones vigentes del sector.",
+          "quienResponde": "Estudiante (investigación de mercado destino y competidores).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Poder de negociación de compradores",
+            "nota": null
+          },
+          "filaFormularioFoda": 134
+        },
+        {
+          "id": "EF3",
+          "orden": 3,
+          "titulo": "Tamaño y crecimiento del mercado destino",
+          "criterioFavorable": "Se considera favorable si el mercado destino no está saturado, es de tamaño relevante y hay posibilidades de incorporar nuevos productos.",
+          "preguntaEntrevista": "¿Qué tamaño tiene el mercado destino para su producto y cómo evoluciona?",
+          "evidenciaSugerida": "Trade Map (ITC); estadísticas de importación del destino.",
+          "quienResponde": "Estudiante (investigación de mercado destino y competidores).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Rivalidad",
+            "nota": null
+          },
+          "filaFormularioFoda": 135
+        },
+        {
+          "id": "EF4",
+          "orden": 4,
+          "titulo": "Poder negociador de compradores e importadores",
+          "criterioFavorable": "Se considera favorable si los compradores están distribuidos y ninguno tiene poder para imponer precio y condiciones; existe cultura de ganar-ganar.",
+          "preguntaEntrevista": "¿Pocos importadores concentran las compras del destino?",
+          "evidenciaSugerida": "Estructura de importadores y distribuidores del destino.",
+          "quienResponde": "Estudiante (investigación de mercado destino y competidores).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Poder de negociación de compradores",
+            "nota": null
+          },
+          "filaFormularioFoda": 136
+        },
+        {
+          "id": "EF5",
+          "orden": 5,
+          "titulo": "Rivalidad y competidores internacionales",
+          "criterioFavorable": "Se considera favorable si la intensidad competitiva permite un espacio para nuevos oferentes y la empresa puede diferenciarse.",
+          "preguntaEntrevista": "¿Quiénes son los principales proveedores del destino y en qué se diferencian?",
+          "evidenciaSugerida": "Principales proveedores en Trade Map; ferias del sector.",
+          "quienResponde": "Estudiante (investigación de mercado destino y competidores).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Rivalidad",
+            "nota": null
+          },
+          "filaFormularioFoda": 137
+        },
+        {
+          "id": "EF6",
+          "orden": 6,
+          "titulo": "Cambios del mercado e inteligencia comercial",
+          "criterioFavorable": "Se considera favorable si los cambios del mercado no están ocultos y pueden ser comunicados y medidos con fuentes accesibles.",
+          "preguntaEntrevista": "¿Cómo se entera de los cambios en precios o demanda del exterior?",
+          "evidenciaSugerida": "Boletines sectoriales; estadísticas de comercio exterior.",
+          "quienResponde": "Estudiante (investigación de mercado destino y competidores).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Capacidad de monitoreo; no es una fuerza de Porter en sí"
+          },
+          "filaFormularioFoda": 138
+        }
+      ]
+    },
+    {
+      "id": "EG",
+      "nombre": "Proveedores",
+      "tipo": "externo",
+      "marco": "Ámbito externo (3 Porter puro, 1 Agregado) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EG1",
+          "orden": 1,
+          "titulo": "Cantidad de proveedores",
+          "criterioFavorable": "Se considera favorable si la cantidad de proveedores locales y regionales permite negociar precios y condiciones.",
+          "preguntaEntrevista": "¿Cuántos proveedores tiene para cada insumo crítico?",
+          "evidenciaSugerida": "Listado de proveedores por insumo.",
+          "quienResponde": "Empresario (proveedores y materia prima que ya usa), con el estudiante evaluando alternativas si hace falta.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Poder de negociación de proveedores",
+            "nota": null
+          },
+          "filaFormularioFoda": 141
+        },
+        {
+          "id": "EG2",
+          "orden": 2,
+          "titulo": "Calidad y cumplimiento de proveedores",
+          "criterioFavorable": "Se considera favorable si los proveedores cumplen calidad, plazos y certificaciones necesarias para el producto exportable.",
+          "preguntaEntrevista": "¿Sus proveedores cumplen calidad y plazos? ¿Le pueden entregar certificados?",
+          "evidenciaSugerida": "Registro de cumplimiento de proveedores.",
+          "quienResponde": "Empresario (proveedores y materia prima que ya usa), con el estudiante evaluando alternativas si hace falta.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Agregado",
+            "pestel": null,
+            "porter": null,
+            "nota": "Confiabilidad operativa; no es determinante clásico de Porter"
+          },
+          "filaFormularioFoda": 142
+        },
+        {
+          "id": "EG3",
+          "orden": 3,
+          "titulo": "Poder negociador de los proveedores",
+          "criterioFavorable": "Se considera favorable si ningún proveedor es único ni concentra más del 40% de las compras.",
+          "preguntaEntrevista": "¿Hay algún proveedor sin alternativa real o que supere el 40% de sus compras?",
+          "evidenciaSugerida": "Concentración de compras por proveedor.",
+          "quienResponde": "Empresario (proveedores y materia prima que ya usa), con el estudiante evaluando alternativas si hace falta.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Poder de negociación de proveedores",
+            "nota": null
+          },
+          "filaFormularioFoda": 143
+        },
+        {
+          "id": "EG4",
+          "orden": 4,
+          "titulo": "Disponibilidad y estacionalidad de materia prima",
+          "criterioFavorable": "Se considera favorable si la materia prima regional (madera, hoja verde, cítricos, etc.) está disponible en volumen y calidad durante todo el año.",
+          "preguntaEntrevista": "¿Tiene faltantes o picos de precio de su materia prima según la temporada?",
+          "evidenciaSugerida": "Calendario de cosecha; precios históricos de materia prima.",
+          "quienResponde": "Empresario (proveedores y materia prima que ya usa), con el estudiante evaluando alternativas si hace falta.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Poder de negociación de proveedores",
+            "nota": "Escasez de insumo: determinante clásico del poder del proveedor"
+          },
+          "filaFormularioFoda": 144
+        }
+      ]
+    },
+    {
+      "id": "EH",
+      "nombre": "Sustitutos de los Productos Ofrecidos",
+      "tipo": "externo",
+      "marco": "Ámbito externo (2 Porter puro) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EH1",
+          "orden": 1,
+          "titulo": "Costos de los sustitutos",
+          "criterioFavorable": "Se considera favorable si los sustitutos del producto tienen costos más altos que los del producto de la empresa.",
+          "preguntaEntrevista": "¿Qué productos podrían reemplazar al suyo y a qué precio?",
+          "evidenciaSugerida": "Precios de productos sustitutos.",
+          "quienResponde": "Estudiante (investigación de productos sustitutos en el destino).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Amenaza de sustitutos",
+            "nota": null
+          },
+          "filaFormularioFoda": 147
+        },
+        {
+          "id": "EH2",
+          "orden": 2,
+          "titulo": "Cantidad y tendencia de sustitutos",
+          "criterioFavorable": "Se considera favorable si la cantidad de sustitutos y las tendencias de consumo no ponen en riesgo la demanda del producto.",
+          "preguntaEntrevista": "¿Qué alternativas ganan lugar en el consumo de su rubro?",
+          "evidenciaSugerida": "Estudios de tendencias de consumo.",
+          "quienResponde": "Estudiante (investigación de productos sustitutos en el destino).",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Porter puro",
+            "pestel": null,
+            "porter": "Amenaza de sustitutos",
+            "nota": null
+          },
+          "filaFormularioFoda": 148
+        }
+      ]
+    },
+    {
+      "id": "EI",
+      "nombre": "Ámbito Ambiental, Sanitario y Climático",
+      "tipo": "externo",
+      "marco": "Ámbito externo (2 PESTEL puro, 2 Combinada) — ver 'clasificacionMarco' por ítem",
+      "items": [
+        {
+          "id": "EI1",
+          "orden": 1,
+          "titulo": "Regulación ambiental y forestal",
+          "criterioFavorable": "Se considera favorable si la normativa ambiental, forestal y de debida diligencia (nacional y del destino) es clara y la empresa puede cumplirla a un costo razonable.",
+          "preguntaEntrevista": "¿Qué exigencias ambientales o de origen legal del producto piden sus compradores?",
+          "evidenciaSugerida": "Normativa ambiental provincial y nacional; requisitos del destino.",
+          "quienResponde": "Estudiante (normativa ambiental/sanitaria del origen y destino); el empresario informa sus habilitaciones vigentes.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Ambiental/Legal",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 151
+        },
+        {
+          "id": "EI2",
+          "orden": 2,
+          "titulo": "Requisitos sanitarios y fitosanitarios del destino",
+          "criterioFavorable": "Se considera favorable si los requisitos sanitarios y fitosanitarios del destino (SENASA, INAL/ANMAT y autoridades de importación) son claros y alcanzables.",
+          "preguntaEntrevista": "¿Qué exige la autoridad sanitaria del destino para su producto?",
+          "evidenciaSugerida": "Requisitos de organismos sanitarios de origen y destino.",
+          "quienResponde": "Estudiante (normativa ambiental/sanitaria del origen y destino); el empresario informa sus habilitaciones vigentes.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "pestel": "Legal",
+            "porter": "Amenaza de nuevos entrantes",
+            "nota": "Exigencia regulatoria que opera como barrera de entrada"
+          },
+          "filaFormularioFoda": 152
+        },
+        {
+          "id": "EI3",
+          "orden": 3,
+          "titulo": "Certificaciones exigidas por los compradores",
+          "criterioFavorable": "Se considera favorable si las certificaciones que exigen los compradores (forestales, orgánicas, de inocuidad, de calidad) son accesibles en costo y tiempo.",
+          "preguntaEntrevista": "¿Qué certificaciones le piden y cuánto cuestan y tardan?",
+          "evidenciaSugerida": "Entes certificadores; requisitos de compradores.",
+          "quienResponde": "Estudiante (normativa ambiental/sanitaria del origen y destino); el empresario informa sus habilitaciones vigentes.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "Combinada",
+            "pestel": "Legal/Ambiental",
+            "porter": "Poder de negociación de compradores",
+            "nota": "Exigencia normativa impuesta directamente por el comprador"
+          },
+          "filaFormularioFoda": 153
+        },
+        {
+          "id": "EI4",
+          "orden": 4,
+          "titulo": "Riesgo climático y de cosecha",
+          "criterioFavorable": "Se considera favorable si los eventos climáticos (sequías, heladas, lluvias intensas) no afectan de manera recurrente la disponibilidad de materia prima ni la logística.",
+          "preguntaEntrevista": "¿Qué eventos climáticos afectaron su producción o su transporte en los últimos años?",
+          "evidenciaSugerida": "Registros climáticos; seguros agropecuarios.",
+          "quienResponde": "Estudiante (normativa ambiental/sanitaria del origen y destino); el empresario informa sus habilitaciones vigentes.",
+          "lecturaSinExportar": "No depende de si la empresa exporta: describe el entorno o el mercado destino, no a la empresa.",
+          "clasificacionMarco": {
+            "tipo": "PESTEL puro",
+            "pestel": "Ambiental",
+            "porter": null,
+            "nota": null
+          },
+          "filaFormularioFoda": 154
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# Set the default behavior for all files
+* text=auto
+
+# Explicitly enforce LF for scripts, code, documentation, and data files
+*.js text eol=lf
+*.mjs text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

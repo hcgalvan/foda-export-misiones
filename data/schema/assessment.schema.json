@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hcgalvan/foda-export-misiones/data/schema/assessment.schema.json",
+  "title": "FODA Export Misiones — Resultado de una evaluación",
+  "description": "Esquema de una evaluación respondida (una entrevista completa) y sus resultados calculados. Ver ARCHITECTURE.md §4.2. No se genera con xlsx_to_json.py — lo produce el frontend (y luego el backend) en tiempo de uso; este schema se agrega en Fase 1 porque ya está definido en ARCHITECTURE.md y conviene validarlo desde el inicio de Fase 3.",
+  "type": "object",
+  "required": ["id", "empresa", "respuestas", "resultados", "metadata"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "empresa": {
+      "type": "object",
+      "required": ["nombre", "rubro", "perfil", "fecha"],
+      "additionalProperties": false,
+      "properties": {
+        "nombre": { "type": "string" },
+        "empresaId": {
+          "type": ["string", "null"],
+          "description": "Hash estable (nunca el CUIT en texto plano). Opcional — prepara un futuro diseño longitudinal pre-post (ARCHITECTURE.md §6, ítem 7). null salvo que el equipo decida usarlo."
+        },
+        "rubro": { "type": "string" },
+        "mercadosObjetivo": { "type": "array", "items": { "type": "string" } },
+        "perfil": { "type": "string", "enum": ["exporta_actualmente", "no_exporta_evalua_iniciar"] },
+        "relevadoPor": { "type": "string" },
+        "fecha": { "type": "string", "format": "date" },
+        "autorizaRecontacto": {
+          "type": "boolean",
+          "default": false,
+          "description": "Consentimiento informado para un futuro re-contacto con fines de investigación longitudinal. Opcional, default false (ARCHITECTURE.md §6, ítem 7)."
+        }
+      }
+    },
+    "respuestas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["itemId", "situacion", "impacto"],
+        "additionalProperties": false,
+        "properties": {
+          "itemId": { "type": "string", "pattern": "^(I[A-J]|E[A-I])[1-9][0-9]?$" },
+          "situacion": {
+            "type": ["integer", "null"],
+            "minimum": 0,
+            "maximum": 4,
+            "description": "Índice 0-4 sobre la escala Situación (No corresp./Muy Desfav./Desfav./Fav./Muy Fav.). null si no se respondió."
+          },
+          "impacto": {
+            "type": ["integer", "null"],
+            "minimum": 0,
+            "maximum": 3,
+            "description": "Índice 0-3 sobre la escala Impacto (Muy insignif./Insignif./Significante/Muy Signific.). null si no se respondió."
+          },
+          "observacion": { "type": "string" }
+        }
+      }
+    },
+    "resultados": {
+      "type": "object",
+      "required": ["porItem", "porArea", "indiceInterno", "indiceExterno", "veredicto"],
+      "additionalProperties": false,
+      "properties": {
+        "porItem": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["itemId", "puntos0a10"],
+            "properties": {
+              "itemId": { "type": "string" },
+              "puntos0a10": { "type": "number" },
+              "situacionPonderada": { "type": "number" }
+            }
+          }
+        },
+        "porArea": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["areaId", "ambito", "puntaje", "semaforo"],
+            "properties": {
+              "areaId": { "type": "string" },
+              "ambito": { "type": "string", "enum": ["interno", "externo"] },
+              "puntaje": { "type": "number" },
+              "semaforo": { "type": "string", "enum": ["sin datos", "Alarmante", "Regular", "Bueno", "Excelencia"] },
+              "itemsRespondidos": { "type": "integer" },
+              "alertas": { "type": "integer" }
+            }
+          }
+        },
+        "indiceInterno": { "type": "number" },
+        "indiceExterno": { "type": "number" },
+        "cuadranteDominante": { "type": ["string", "null"], "enum": ["FO", "FA", "DO", "DA", null] },
+        "orientacionEstrategica": { "type": ["string", "null"] },
+        "veredicto": {
+          "type": "string",
+          "enum": ["VIABLE", "VIABLE_CON_CONDICIONES", "EMPRESA_NO_LISTA", "ENTORNO_DESFAVORABLE", "NO_VIABLE", "DATOS_INCOMPLETOS"]
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["versionMotor", "versionCuestionario", "creadoEn"],
+      "additionalProperties": false,
+      "properties": {
+        "versionMotor": { "type": "string", "description": "Versión de calc.js con la que se calculó este resultado." },
+        "versionCuestionario": { "type": "string", "description": "Versión de questionnaire.json con la que se respondió (campo 'version' de ese archivo). Ver ARCHITECTURE.md §6, ítem 4." },
+        "creadoEn": { "type": "string", "format": "date-time" },
+        "actualizadoEn": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

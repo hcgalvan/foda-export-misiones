@@ -1,0 +1,1046 @@
+{
+  "fuente": "FODA_Export_Misiones_2026_DEMO.xlsx",
+  "respuestas": {
+    "IA1": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IA2": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "IA3": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IA4": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IA5": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "IB1": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "IB2": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IB3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IB4": {
+      "situacion": 4,
+      "impacto": 2
+    },
+    "IB5": {
+      "situacion": 4,
+      "impacto": 3
+    },
+    "IB6": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IB7": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "IC1": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "IC2": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "IC3": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "IC4": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "IC5": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "ID1": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "ID2": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "ID3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "ID4": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "ID5": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IE1": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "IE2": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IE3": {
+      "situacion": 0,
+      "impacto": 2
+    },
+    "IE4": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IE5": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IE6": {
+      "situacion": 2,
+      "impacto": 0
+    },
+    "IF1": {
+      "situacion": 3,
+      "impacto": 0
+    },
+    "IF2": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "IF3": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IF4": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IF5": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "IF6": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IF7": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "IF8": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "IG1": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "IG2": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IG3": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IG4": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "IG5": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IG6": {
+      "situacion": 3,
+      "impacto": 0
+    },
+    "IG7": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IG8": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IG9": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "IH1": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IH2": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "IH3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IH4": {
+      "situacion": 4,
+      "impacto": 2
+    },
+    "IH5": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "IH6": {
+      "situacion": 4,
+      "impacto": 3
+    },
+    "II1": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "II2": {
+      "situacion": 0,
+      "impacto": 3
+    },
+    "II3": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "II4": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "II5": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "II6": {
+      "situacion": 4,
+      "impacto": 2
+    },
+    "IJ1": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IJ2": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "IJ3": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "IJ4": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "IJ5": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "IJ6": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "IJ7": {
+      "situacion": 0,
+      "impacto": 2
+    },
+    "EA1": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EA2": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EA3": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "EA4": {
+      "situacion": 1,
+      "impacto": 1
+    },
+    "EA5": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EA6": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "EB1": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "EB2": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EB3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EB4": {
+      "situacion": 0,
+      "impacto": 2
+    },
+    "EB5": {
+      "situacion": 2,
+      "impacto": 1
+    },
+    "EB6": {
+      "situacion": 1,
+      "impacto": 0
+    },
+    "EB7": {
+      "situacion": 3,
+      "impacto": 1
+    },
+    "EB8": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "EC1": {
+      "situacion": 2,
+      "impacto": 0
+    },
+    "EC2": {
+      "situacion": 4,
+      "impacto": 2
+    },
+    "EC3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EC4": {
+      "situacion": 3,
+      "impacto": 1
+    },
+    "EC5": {
+      "situacion": 4,
+      "impacto": 3
+    },
+    "ED1": {
+      "situacion": 2,
+      "impacto": 1
+    },
+    "ED2": {
+      "situacion": 1,
+      "impacto": 2
+    },
+    "ED3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "ED4": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EE1": {
+      "situacion": 2,
+      "impacto": 1
+    },
+    "EE2": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EE3": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EE4": {
+      "situacion": 0,
+      "impacto": 1
+    },
+    "EE5": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EE6": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EE7": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EF1": {
+      "situacion": 0,
+      "impacto": 1
+    },
+    "EF2": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EF3": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EF4": {
+      "situacion": 3,
+      "impacto": 1
+    },
+    "EF5": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EF6": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "EG1": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "EG2": {
+      "situacion": 2,
+      "impacto": 2
+    },
+    "EG3": {
+      "situacion": 2,
+      "impacto": 3
+    },
+    "EG4": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "EH1": {
+      "situacion": 4,
+      "impacto": 2
+    },
+    "EH2": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "EI1": {
+      "situacion": 3,
+      "impacto": 2
+    },
+    "EI2": {
+      "situacion": 1,
+      "impacto": 3
+    },
+    "EI3": {
+      "situacion": 3,
+      "impacto": 3
+    },
+    "EI4": {
+      "situacion": 1,
+      "impacto": 2
+    }
+  },
+  "esperado": {
+    "porItem": [
+      {
+        "itemId": "IA1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IA2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IA3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IA4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IA5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IB3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB4",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IB5",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IB6",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB7",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IC2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC3",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC5",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "ID1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "ID2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ID3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ID4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "ID5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IE1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE3",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "IE4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE5",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE6",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF7",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF8",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG7",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG8",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG9",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IH1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IH2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IH3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IH4",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IH5",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IH6",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "II1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "II2",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "II3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "II4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "II5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "II6",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IJ1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IJ2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IJ3",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IJ4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IJ5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IJ6",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IJ7",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "EA1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EA2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EA3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EA4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EA5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EA6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EB1",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EB2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB4",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "EB5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB6",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EB7",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EB8",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EC1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EC2",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "EC3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EC4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EC5",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "ED1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ED2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "ED3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ED4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE4",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "EE5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE6",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE7",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF1",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "EF2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EF5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EG1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EG2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EG3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EG4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EH1",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "EH2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EI1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EI2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EI3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EI4",
+        "puntos0a10": 2.9999000000000002
+      }
+    ],
+    "porArea": [
+      {
+        "areaId": "IA",
+        "puntaje": 6.176370588235295,
+        "semaforo": "Regular",
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 2
+      },
+      {
+        "areaId": "IB",
+        "puntaje": 6.521623913043477,
+        "semaforo": "Regular",
+        "itemsRespondidos": 7,
+        "itemsTotales": 7,
+        "alertas": 4
+      },
+      {
+        "areaId": "IC",
+        "puntaje": 3.8887888888888886,
+        "semaforo": "Alarmante",
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 4
+      },
+      {
+        "areaId": "ID",
+        "puntaje": 5.117547058823529,
+        "semaforo": "Regular",
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 4
+      },
+      {
+        "areaId": "IE",
+        "puntaje": 5.823438235294119,
+        "semaforo": "Regular",
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 2
+      },
+      {
+        "areaId": "IF",
+        "puntaje": 6.153746153846154,
+        "semaforo": "Regular",
+        "itemsRespondidos": 8,
+        "itemsTotales": 8,
+        "alertas": 3
+      },
+      {
+        "areaId": "IG",
+        "puntaje": 5.296196296296295,
+        "semaforo": "Regular",
+        "itemsRespondidos": 9,
+        "itemsTotales": 9,
+        "alertas": 6
+      },
+      {
+        "areaId": "IH",
+        "puntaje": 6.190359523809523,
+        "semaforo": "Regular",
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 3
+      },
+      {
+        "areaId": "II",
+        "puntaje": 5.6499025000000005,
+        "semaforo": "Regular",
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 3
+      },
+      {
+        "areaId": "IJ",
+        "puntaje": 3.7825152173913046,
+        "semaforo": "Alarmante",
+        "itemsRespondidos": 7,
+        "itemsTotales": 7,
+        "alertas": 6
+      },
+      {
+        "areaId": "EA",
+        "puntaje": 5.571328571428571,
+        "semaforo": "Regular",
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 4
+      },
+      {
+        "areaId": "EB",
+        "puntaje": 4.454452272727273,
+        "semaforo": "Alarmante",
+        "itemsRespondidos": 8,
+        "itemsTotales": 8,
+        "alertas": 6
+      },
+      {
+        "areaId": "EC",
+        "puntaje": 7.999873076923077,
+        "semaforo": "Regular",
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 2
+      },
+      {
+        "areaId": "ED",
+        "puntaje": 4.454445454545454,
+        "semaforo": "Alarmante",
+        "itemsRespondidos": 4,
+        "itemsTotales": 4,
+        "alertas": 4
+      },
+      {
+        "areaId": "EE",
+        "puntaje": 4.636268181818182,
+        "semaforo": "Alarmante",
+        "itemsRespondidos": 7,
+        "itemsTotales": 7,
+        "alertas": 7
+      },
+      {
+        "areaId": "EF",
+        "puntaje": 5.11755294117647,
+        "semaforo": "Regular",
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 4
+      },
+      {
+        "areaId": "EG",
+        "puntaje": 5.999899999999999,
+        "semaforo": "Regular",
+        "itemsRespondidos": 4,
+        "itemsTotales": 4,
+        "alertas": 2
+      },
+      {
+        "areaId": "EH",
+        "puntaje": 5.999878571428571,
+        "semaforo": "Regular",
+        "itemsRespondidos": 2,
+        "itemsTotales": 2,
+        "alertas": 1
+      },
+      {
+        "areaId": "EI",
+        "puntaje": 4.999899999999999,
+        "semaforo": "Alarmante",
+        "itemsRespondidos": 4,
+        "itemsTotales": 4,
+        "alertas": 2
+      }
+    ],
+    "indiceInterno": 5.4600488375628595,
+    "indiceExterno": 5.470399896671954,
+    "veredicto": "VIABLE_CON_CONDICIONES"
+  }
+}

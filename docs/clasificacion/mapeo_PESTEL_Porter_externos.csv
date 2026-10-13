@@ -1,0 +1,47 @@
+codigo,titulo,bloque,pestel_dimension,porter_fuerza,tipo,nota
+EA1,Política de comercio exterior,Político/Legal y Regulatorio,Político,,PESTEL puro,
+EA2,Acuerdos comerciales y preferencias arancelarias,Político/Legal y Regulatorio,Político/Legal,,PESTEL puro,
+EA3,Barreras arancelarias y técnicas del destino,Político/Legal y Regulatorio,Legal,Amenaza de nuevos entrantes,Combinada,Barrera regulatoria que opera como barrera de entrada
+EA4,Trámites y aduana,Político/Legal y Regulatorio,Legal,,PESTEL puro,
+EA5,Promoción y fomento a exportadores,Político/Legal y Regulatorio,,,Agregado,Apoyo institucional; no es variable de PESTEL ni de Porter
+EA6,Propiedad intelectual y seguridad jurídica,Político/Legal y Regulatorio,Legal,,PESTEL puro,
+EB1,Crecimiento económico y ciclo,Económico/Financiero/Cambiario,Económico,,PESTEL puro,
+EB2,Crecimiento sectorial del rubro,Económico/Financiero/Cambiario,Económico,Rivalidad,Combinada,Determinante clásico de intensidad de rivalidad
+EB3,Tipo de cambio y competitividad,Económico/Financiero/Cambiario,Económico,,PESTEL puro,
+EB4,Inflación y costos internos,Económico/Financiero/Cambiario,Económico,,PESTEL puro,
+EB5,Financiamiento y crédito para exportar,Económico/Financiero/Cambiario,Económico,,PESTEL puro,
+EB6,Cobros y acceso a divisas,Económico/Financiero/Cambiario,Económico/Legal,,PESTEL puro,
+EB7,"Impuestos, derechos de exportación y reintegros",Económico/Financiero/Cambiario,Económico/Legal,,PESTEL puro,
+EB8,Precios internacionales del producto,Económico/Financiero/Cambiario,Económico,Rivalidad,Combinada,Termómetro de intensidad competitiva
+EC1,Afinidad cultural y hábitos de consumo,Sociocultural,Sociocultural,,PESTEL puro,
+EC2,Idioma y cercanía cultural,Sociocultural,Sociocultural,,PESTEL puro,
+EC3,Valoración del origen y la sustentabilidad,Sociocultural,Sociocultural/Ambiental,,PESTEL puro,
+EC4,Formación técnica y mano de obra regional,Sociocultural,Sociocultural,,PESTEL puro,
+EC5,Asociativismo y cultura exportadora regional,Sociocultural,,,Agregado,Capital social regional; fuera de ambos marcos
+ED1,Avances tecnológicos del sector,Tecnológico y Digital,Tecnológico,,PESTEL puro,
+ED2,Conectividad y plataformas de comercio electrónico,Tecnológico y Digital,Tecnológico,,PESTEL puro,
+ED3,Digitalización del comercio exterior,Tecnológico y Digital,Tecnológico/Legal,,PESTEL puro,
+ED4,Trazabilidad y certificación digital,Tecnológico y Digital,Tecnológico,,PESTEL puro,
+EE1,Red vial y conectividad multimodal,Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EE2,Pasos de frontera y puentes internacionales,Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EE3,"Puertos, hidrovía y salida a ultramar",Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EE4,Costo y disponibilidad de fletes,Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EE5,Servicios aduaneros locales,Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EE6,Prestadores logísticos regionales,Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EE7,Energía y servicios públicos industriales,Logística e Infraestructura Regional,,,Agregado,Infraestructura física; no está en PESTEL ni en Porter
+EF1,Barreras de entrada al mercado destino,Mercado y Competencia,,Amenaza de nuevos entrantes,Porter puro,
+EF2,Costos de cambio de los clientes externos,Mercado y Competencia,,Poder de negociación de compradores,Porter puro,
+EF3,Tamaño y crecimiento del mercado destino,Mercado y Competencia,,Rivalidad,Porter puro,
+EF4,Poder negociador de compradores e importadores,Mercado y Competencia,,Poder de negociación de compradores,Porter puro,
+EF5,Rivalidad y competidores internacionales,Mercado y Competencia,,Rivalidad,Porter puro,
+EF6,Cambios del mercado e inteligencia comercial,Mercado y Competencia,,,Agregado,Capacidad de monitoreo; no es una fuerza de Porter en sí
+EG1,Cantidad de proveedores,Proveedores,,Poder de negociación de proveedores,Porter puro,
+EG2,Calidad y cumplimiento de proveedores,Proveedores,,,Agregado,Confiabilidad operativa; no es determinante clásico de Porter
+EG3,Poder negociador de los proveedores,Proveedores,,Poder de negociación de proveedores,Porter puro,
+EG4,Disponibilidad y estacionalidad de materia prima,Proveedores,,Poder de negociación de proveedores,Porter puro,Escasez de insumo: determinante clásico del poder del proveedor
+EH1,Costos de los sustitutos,Sustitutos de los Productos Ofrecidos,,Amenaza de sustitutos,Porter puro,
+EH2,Cantidad y tendencia de sustitutos,Sustitutos de los Productos Ofrecidos,,Amenaza de sustitutos,Porter puro,
+EI1,Regulación ambiental y forestal,"Ambiental, Sanitario y Climático",Ambiental/Legal,,PESTEL puro,
+EI2,Requisitos sanitarios y fitosanitarios del destino,"Ambiental, Sanitario y Climático",Legal,Amenaza de nuevos entrantes,Combinada,Exigencia regulatoria que opera como barrera de entrada
+EI3,Certificaciones exigidas por los compradores,"Ambiental, Sanitario y Climático",Legal/Ambiental,Poder de negociación de compradores,Combinada,Exigencia normativa impuesta directamente por el comprador
+EI4,Riesgo climático y de cosecha,"Ambiental, Sanitario y Climático",Ambiental,,PESTEL puro,
