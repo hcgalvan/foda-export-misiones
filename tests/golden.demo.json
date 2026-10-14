@@ -1041,6 +1041,15 @@
     ],
     "indiceInterno": 5.4600488375628595,
     "indiceExterno": 5.470399896671954,
-    "veredicto": "VIABLE_CON_CONDICIONES"
+    "veredicto": "VIABLE_CON_CONDICIONES",
+    "matrizFoda": {
+      "cruces": {
+        "FO": 14,
+        "FA": 28,
+        "DO": 12,
+        "DA": 30
+      },
+      "cuadranteDominante": "DA"
+    }
   }
 }

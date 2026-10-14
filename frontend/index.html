@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FODA Export Misiones — Diagnóstico de viabilidad exportadora</title>
+<meta name="description" content="Instrumento de diagnóstico de viabilidad exportadora para pymes industriales de Misiones. Adaptado de la metodología FODA Matemático (Vogel)." />
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script type="module">
+  // Se registra ANTES del script de Alpine (ambos son "deferred" y se
+  // ejecutan en orden de aparición en el documento), para que x-data="fodaApp()"
+  // encuentre la función ya disponible quando Alpine arranca.
+  import { fodaApp } from './src/app.js';
+  window.fodaApp = fodaApp;
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.1/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+
+<style>
+  :root {
+    --azul: #1d4e74;
+    --azul-claro: #e8f1f8;
+    --gris-borde: #d7dce1;
+    --texto: #1f2937;
+    --texto-suave: #5b6572;
+    --radio: 10px;
+    --excelencia: #1d6f42;
+    --bueno: #3f9142;
+    --regular: #c8961e;
+    --alarmante: #c0392b;
+    --sindatos: #9aa0a6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--texto);
+    background: #f6f8fa;
+    padding-bottom: 60px;
+  }
+  header.app-header {
+    background: var(--azul);
+    color: white;
+    padding: 14px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  header.app-header h1 {
+    font-size: 1.05rem;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+  }
+  header.app-header .sub {
+    font-size: 0.75rem;
+    opacity: 0.85;
+  }
+  .barra-progreso-wrap {
+    height: 6px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 4px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .barra-progreso {
+    height: 100%;
+    background: #6fd08c;
+    transition: width 0.3s ease;
+  }
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background: white;
+    border-bottom: 1px solid var(--gris-borde);
+    position: sticky;
+    top: 68px;
+    z-index: 19;
+  }
+  .toolbar button, .toolbar label.btn-like {
+    font-size: 0.8rem;
+    padding: 7px 12px;
+    border-radius: var(--radio);
+    border: 1px solid var(--gris-borde);
+    background: white;
+    cursor: pointer;
+    color: var(--texto);
+  }
+  .toolbar button:hover, .toolbar label.btn-like:hover { background: var(--azul-claro); }
+  .toolbar input[type=file] { display: none; }
+  .mensaje-flash {
+    margin: 8px 16px 0;
+    padding: 8px 12px;
+    background: #eaf7ee;
+    border: 1px solid #b7e2c4;
+    border-radius: var(--radio);
+    font-size: 0.85rem;
+  }
+
+  main.layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (min-width: 980px) {
+    main.layout { grid-template-columns: 1.3fr 1fr; align-items: start; }
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--gris-borde);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .card h2 { font-size: 0.95rem; margin: 0 0 10px; color: var(--azul); }
+
+  .perfil-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  @media (min-width: 640px) {
+    .perfil-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .campo label { display:block; font-size: 0.75rem; color: var(--texto-suave); margin-bottom: 3px; }
+  .campo input, .campo select, .campo textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+  }
+
+  nav.area-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  nav.area-tabs button {
+    flex: 0 0 auto;
+    border: 1px solid var(--gris-borde);
+    background: #fff;
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  nav.area-tabs button.activo { background: var(--azul); color: white; border-color: var(--azul); }
+
+  select.selector-area {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--gris-borde);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  .item-bloque {
+    border: 1px solid var(--gris-borde);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+  .item-bloque .item-titulo { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .item-bloque .item-criterio { font-size: 0.8rem; color: var(--texto-suave); margin-bottom: 10px; }
+
+  .opciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .opciones .opcion {
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 0.72rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .opciones .opcion.sel-situacion.activa { background: var(--azul); color: white; border-color: var(--azul); }
+  .opciones .opcion.sel-impacto.activa { background: #2e6da4; color: white; border-color: #2e6da4; }
+  .opciones-label { font-size: 0.7rem; color: var(--texto-suave); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; }
+
+  .guia-toggle { font-size: 0.72rem; color: var(--azul); cursor: pointer; background: none; border: none; padding: 0; text-decoration: underline; }
+  .guia-caja { margin-top: 8px; background: var(--azul-claro); border-radius: 8px; padding: 10px; font-size: 0.78rem; }
+  .guia-caja dt { font-weight: 600; margin-top: 6px; }
+  .guia-caja dt:first-child { margin-top: 0; }
+  .guia-caja dd { margin: 2px 0 0 0; color: var(--texto-suave); }
+
+  textarea.observacion { margin-top: 8px; min-height: 50px; }
+
+  .nav-areas-botones { display: flex; justify-content: space-between; margin-top: 10px; }
+  .nav-areas-botones button {
+    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--gris-borde); background: white; cursor: pointer; font-size: 0.82rem;
+  }
+  .nav-areas-botones button:disabled { opacity: 0.4; cursor: default; }
+
+  table.tabla-semaforos { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  table.tabla-semaforos td, table.tabla-semaforos th { padding: 4px 6px; text-align: left; border-bottom: 1px solid var(--gris-borde); }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
+
+  .veredicto-banner {
+    border-radius: 10px;
+    padding: 12px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .indices-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .indice-chip { flex: 1; background: #f1f4f7; border-radius: 10px; padding: 8px; text-align: center; }
+  .indice-chip .valor { font-size: 1.3rem; font-weight: 700; }
+  .indice-chip .etiqueta { font-size: 0.68rem; color: var(--texto-suave); }
+
+  .cuadrante-dominante { font-size: 0.82rem; margin-bottom: 10px; padding: 8px; background: #fff7e6; border-radius: 8px; border: 1px solid #f0dca0; }
+
+  canvas { max-width: 100%; }
+  .chart-wrap { height: 220px; margin-bottom: 14px; }
+
+  footer.app-footer {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--texto-suave);
+    padding: 20px;
+  }
+
+  [x-cloak] { display: none !important; }
+
+  @media print {
+    header.app-header, .toolbar, nav.area-tabs, select.selector-area,
+    .item-bloque, .nav-areas-botones, footer.app-footer, .mensaje-flash { display: none !important; }
+    main.layout { grid-template-columns: 1fr !important; }
+    body { background: white; }
+    .card { border: none; box-shadow: none; }
+  }
+</style>
+</head>
+<body x-data="fodaApp()" x-init="init()">
+
+  <header class="app-header">
+    <h1>FODA Export Misiones — Diagnóstico de viabilidad exportadora</h1>
+    <div class="sub" x-show="!cargando">
+      Progreso: <span x-text="progresoTotal.respondidos"></span> / <span x-text="progresoTotal.total"></span> ítems (<span x-text="progresoTotal.pct"></span>%)
+    </div>
+    <div class="barra-progreso-wrap" x-show="!cargando">
+      <div class="barra-progreso" :style="`width:${progresoTotal.pct}%`"></div>
+    </div>
+  </header>
+
+  <div class="toolbar" x-show="!cargando">
+    <button @click="exportarJSON()">⬇ Exportar JSON</button>
+    <label class="btn-like">⬆ Importar JSON
+      <input type="file" accept="application/json" @change="importarJSON($event)" />
+    </label>
+    <button @click="imprimir()">🖨 Imprimir resumen</button>
+    <button @click="reiniciar()">🗑 Reiniciar</button>
+  </div>
+  <div class="mensaje-flash" x-show="mensaje" x-text="mensaje"></div>
+
+  <div x-show="cargando" style="padding:30px; text-align:center; color:#5b6572;">Cargando cuestionario…</div>
+  <div x-show="error" style="padding:20px; margin:16px; background:#fdecea; border:1px solid #f3b4ac; border-radius:10px;" x-text="error"></div>
+
+  <main class="layout" x-show="!cargando && !error" x-cloak>
+
+    <!-- COLUMNA IZQUIERDA: perfil + formulario -->
+    <div>
+      <div class="card">
+        <h2 @click="mostrarPerfil = !mostrarPerfil" style="cursor:pointer; display:flex; justify-content:space-between;">
+          <span>Perfil de la empresa</span>
+          <span x-text="mostrarPerfil ? '▲' : '▼'"></span>
+        </h2>
+        <div class="perfil-grid" x-show="mostrarPerfil" x-collapse>
+          <div class="campo">
+            <label>Nombre / razón social</label>
+            <input type="text" x-model="empresa.nombre" @input="guardarEnLocalStorage()" placeholder="Aserradero Norte S.R.L." />
+          </div>
+          <div class="campo">
+            <label>Rubro</label>
+            <input type="text" x-model="empresa.rubro" @input="guardarEnLocalStorage()" placeholder="Forestal-maderero" />
+          </div>
+          <div class="campo">
+            <label>Perfil exportador</label>
+            <select x-model="empresa.perfil" @change="guardarEnLocalStorage()">
+              <option value="exporta_actualmente">Exporta actualmente</option>
+              <option value="no_exporta_evalua_iniciar">No exporta — evalúa iniciar</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Mercados objetivo (separados por coma)</label>
+            <input type="text" x-model="empresa.mercadosObjetivo" @input="guardarEnLocalStorage()" placeholder="Brasil, Chile" />
+          </div>
+          <div class="campo">
+            <label>Relevado por (equipo/estudiante)</label>
+            <input type="text" x-model="empresa.relevadoPor" @input="guardarEnLocalStorage()" placeholder="Equipo 3" />
+          </div>
+          <div class="campo">
+            <label>Fecha</label>
+            <input type="date" x-model="empresa.fecha" @input="guardarEnLocalStorage()" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Cuestionario</h2>
+
+        <nav class="area-tabs">
+          <button :class="ambitoActual === 'interno' && 'activo'" @click="ambitoActual = 'interno'">Interno (Canvas)</button>
+          <button :class="ambitoActual === 'externo' && 'activo'" @click="ambitoActual = 'externo'">Externo (PESTEL/Porter)</button>
+        </nav>
+
+        <select class="selector-area" x-model="areaActualId" @change="irAArea(areaActualId)">
+          <template x-for="area in areasDelAmbito" :key="area.id">
+            <option :value="area.id" x-text="`${area.id} — ${area.nombre} (${progresoArea(area).respondidos}/${progresoArea(area).total})`"></option>
+          </template>
+        </select>
+
+        <template x-if="areaActual">
+          <div>
+            <h3 style="margin: 4px 0 10px; color:var(--azul);" x-text="`${areaActual.id} — ${areaActual.nombre}`"></h3>
+
+            <template x-for="item in areaActual.items" :key="item.id">
+              <div class="item-bloque">
+                <div class="item-titulo" x-text="`${item.orden}. ${item.titulo}`"></div>
+                <div class="item-criterio" x-text="item.criterioFavorable"></div>
+
+                <div class="opciones-label">Situación</div>
+                <div class="opciones">
+                  <template x-for="(label, idx) in SITUACION_LABELS" :key="idx">
+                    <div class="opcion sel-situacion"
+                         :class="respuestaDe(item.id).situacion === idx && 'activa'"
+                         @click="marcarSituacion(item.id, idx)"
+                         x-text="label"></div>
+                  </template>
+                </div>
+
+                <div class="opciones-label">Impacto</div>
+                <div class="opciones">
+                  <template x-for="(label, idx) in IMPACTO_LABELS" :key="idx">
+                    <div class="opcion sel-impacto"
+                         :class="respuestaDe(item.id).impacto === idx && 'activa'"
+                         @click="marcarImpacto(item.id, idx)"
+                         x-text="label"></div>
+                  </template>
+                </div>
+
+                <button class="guia-toggle" @click="toggleGuia(item.id)" x-text="mostrarGuia[item.id] ? 'Ocultar guía de entrevista' : 'Ver guía de entrevista'"></button>
+                <dl class="guia-caja" x-show="mostrarGuia[item.id]" x-collapse>
+                  <dt>Pregunta sugerida</dt><dd x-text="item.preguntaEntrevista"></dd>
+                  <dt>Evidencia sugerida</dt><dd x-text="item.evidenciaSugerida"></dd>
+                  <dt>Quién responde</dt><dd x-text="item.quienResponde"></dd>
+                  <dt>Si la empresa no exporta aún</dt><dd x-text="item.lecturaSinExportar"></dd>
+                </dl>
+
+                <textarea class="observacion campo" placeholder="Observación (opcional)"
+                          :value="respuestaDe(item.id).observacion"
+                          @input="actualizarObservacion(item.id, $event.target.value)"></textarea>
+              </div>
+            </template>
+
+            <div class="nav-areas-botones">
+              <button @click="irAreaAnterior()" :disabled="indiceAreaActual() === 0">← Área anterior</button>
+              <button @click="irAreaSiguiente()" :disabled="indiceAreaActual() === areas.length - 1">Área siguiente →</button>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: resultados en vivo -->
+    <div>
+      <div class="card">
+        <h2>Resultado</h2>
+
+        <template x-if="resultado">
+          <div>
+            <div class="veredicto-banner" :style="`background:${colorVeredicto(resultado.veredicto)}`" x-text="textoVeredicto(resultado.veredicto)"></div>
+
+            <div class="indices-row">
+              <div class="indice-chip">
+                <div class="valor" x-text="resultado.indiceInterno"></div>
+                <div class="etiqueta">Índice interno</div>
+              </div>
+              <div class="indice-chip">
+                <div class="valor" x-text="resultado.indiceExterno"></div>
+                <div class="etiqueta">Índice externo</div>
+              </div>
+            </div>
+
+            <div class="cuadrante-dominante" x-show="resultado.matrizFoda?.cuadranteDominante">
+              <strong>Cuadrante FODA dominante:</strong> <span x-text="resultado.matrizFoda?.cuadranteDominante"></span><br />
+              <span x-text="resultado.matrizFoda?.orientacionEstrategica"></span>
+            </div>
+
+            <div class="chart-wrap"><canvas x-ref="graficoBarras"></canvas></div>
+            <div class="chart-wrap" x-show="resultado.matrizFoda?.totalCruces > 0"><canvas x-ref="graficoBurbujas"></canvas></div>
+
+            <table class="tabla-semaforos">
+              <thead><tr><th>Área</th><th>Puntaje</th><th>Ítems</th></tr></thead>
+              <tbody>
+                <template x-for="area in resultado.porArea" :key="area.areaId">
+                  <tr>
+                    <td><span class="dot" :style="`background:${colorSemaforo(area.semaforo)}`"></span><span x-text="area.areaId"></span></td>
+                    <td x-text="area.puntaje"></td>
+                    <td x-text="`${area.itemsRespondidos}/${area.itemsTotales}`"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    FODA Export Misiones — Hugo César Galván, Instituto Alfa (Posadas, Misiones). Adaptado de la metodología FODA Matemático (Prof. Mario Héctor Vogel). Licencia del contenido: CC BY-NC-SA 4.0.
+  </footer>
+
+</body>
+</html>

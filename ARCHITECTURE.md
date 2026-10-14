@@ -14,7 +14,7 @@ Este documento consolida las decisiones de arquitectura, stack tecnológico, est
 | Stack tecnológico (Fase 2) | Definida |
 | Propiedad intelectual / DOI (Fase 3) | **Resuelta** — autorización del Prof. Mario Héctor Vogel recibida por escrito (1/10/2026); queda solo un dato de URL confirmado tácitamente (ver §3.2) |
 | Modelo de datos (Fase 4) | `questionnaire.schema.json` **implementado y cerrado** (Fase 1 del plan de trabajo: `scripts/xlsx_to_json.py`, 110 ítems/19 áreas verificados); `assessment.schema.json` definido, pendiente de uso en Fase 3 |
-| Motor de cálculo (Fase 5 de esta sección / Fase 2 del plan de trabajo) | `calcularItem`/`calcularArea`/`calcularViabilidad` **validados contra tests golden** (11/10/2026). `cuadranteDominante` pendiente de decisión — no es automático en el Excel original (§5, §6 ítem 7) |
+| Motor de cálculo (Fase 5 de esta sección / Fase 2 del plan de trabajo) | `calcularItem`/`calcularArea`/`calcularViabilidad` **validados contra tests golden** (11/10/2026). `calcularMatrizFoda` (cuadrante dominante FO/FA/DO/DA) **también validado contra tests golden** (13/10/2026) — resultó ser 100% automático, ver §5 |
 
 ---
 
@@ -306,6 +306,8 @@ El campo `marco` a nivel de ÁREA se mantiene como un resumen agregado legible (
 
 **Corrección/ampliación (11/10/2026) — el épsilon de `CalculosFoda!W`:** al construir los tests golden de Fase 2 se encontró que el Excel real no interpola directamente sobre `V` (% de logro), sino sobre `W = ABS(V) - 0.001` (`CalculosFoda!W`). Es un truco deliberado para evitar ambigüedad de `MATCH`/`VLOOKUP` exactamente en los límites de cada tramo de la tabla `Rango` (20, 40, 60, 80, 100...). Por eso valores que caen justo en un límite de tramo (p. ej. situación "Desfavorable" → 60% de logro exacto) dan en el Excel real `4.9999`, no `5` — de ahí los `.9999` que aparecían en los datos sin que hubiera, al principio, una explicación. `interpolarPuntos` en `calc.js` (§5) ya replica este épsilon. Se documenta como la rareza deliberada que es, no como algo a "limpiar".
 
+**Corrección (13/10/2026) — SÍ existe un "signo" de situación en el Excel, pero en otra hoja:** la corrección del 11/10/2026 decía, de forma demasiado general, que "no existe ningún componente de signo a nivel de ítem en el motor real". Eso es correcto para la ruta `CalculosFoda`/`Rango`/`VIABILIDAD` (puntaje 0-10, semáforo, índices, veredicto — lo que calculan `calcularItem`/`calcularArea`/`calcularViabilidad`), pero es **incorrecto como afirmación general**: existe una ruta paralela, la hoja `CalculoFoda-1` (nombre parecido a `CalculosFoda` a propósito en el Excel original — fuente de confusión), que sí usa un signo real de 4 niveles (`S2:V2` = -1/-0.5/0.5/1 para Muy Desfav./Desfav./Fav./Muy Fav.) para clasificar cada factor en Fortaleza/Debilidad (internos) u Oportunidad/Amenaza (externos). Esta ruta alimenta `PART1 FODA`, `PART2 FODA`, `MATRIZ FODA`, `ResumenFODA!E` (un índice de "situación actual" de -1 a +1, distinto del puntaje 0-10 de VIABILIDAD) y, en definitiva, el cuadrante FODA dominante — ver el hallazgo completo en §5. Se corrige acá en vez de borrar en silencio la afirmación anterior, por la misma regla del proyecto.
+
 ### 4.2 Esquema del resultado — `assessment.schema.json`
 
 ```json
@@ -377,9 +379,12 @@ foda-export-misiones/
 ├── .github/
 │   └── workflows/                 # tests.yml — CI de los tests golden
 └── scripts/
-    ├── xlsx_to_json.py            # convierte el Excel original a questionnaire.json
-    └── golden_extract.py          # extrae valores golden del DEMO para los tests
+    ├── xlsx_to_json.py              # convierte el Excel original a questionnaire.json
+    ├── golden_extract.py            # extrae valores golden del DEMO para los tests
+    └── extraer_dependencias_foda.py # extrae la tabla fija de VariablesFoda -> dependenciasFoda.json
 ```
+
+`frontend/src/data/dependenciasFoda.json` (generado por `extraer_dependencias_foda.py`) se agrega junto a `questionnaire.json` en `frontend/src/data/` — ver §5.
 
 ---
 
@@ -522,19 +527,98 @@ function calcularViabilidad(areasInternas, areasExternas, umbrales = { viable: 7
   };
 }
 
-export { calcularItem, calcularArea, calcularViabilidad, interpolarPuntos };
+// --- Matriz FODA (cuadrante dominante) -- CalculoFoda-1/VariablesFoda/
+// PART2 FODA/MATRIZ FODA. Ver el hallazgo de Fase 3 más abajo: es 100%
+// automático, no requiere carga cualitativa manual.
+
+const SIGNO_SITUACION = [0, -1, -0.5, 0.5, 1]; // CalculoFoda-1!S2:V2
+
+function clasificarFactor(situacionIdx) {
+  if (situacionIdx === 3 || situacionIdx === 4) return 'positivo'; // Fav./Muy Fav. -> Fortaleza/Oportunidad
+  if (situacionIdx === 1 || situacionIdx === 2) return 'negativo'; // Muy Desfav./Desfav. -> Debilidad/Amenaza
+  return null; // "No corresponde" o sin responder -> no participa del cruce
+}
+
+const ORIENTACION_POR_CUADRANTE = {
+  FO: 'Ofensiva: usar las fortalezas para aprovechar las oportunidades del mercado.',
+  FA: 'Defensiva: usar las fortalezas para neutralizar amenazas del entorno.',
+  DO: 'Reorientación: superar debilidades para capturar oportunidades.',
+  DA: 'Supervivencia: reducir debilidades y evitar amenazas; no exportar aún.',
+};
+
+// dependenciasFoda = { idInterno: [idExterno, ...] } -- tabla FIJA extraída de
+// VariablesFoda por scripts/extraer_dependencias_foda.py (no depende de la evaluación).
+function calcularMatrizFoda(questionnaire, respuestasPorItem, dependenciasFoda) {
+  const situacionDe = (id) => respuestasPorItem[id]?.situacion ?? null;
+  const conteo = { FO: 0, FA: 0, DO: 0, DA: 0 };
+  let sinConsiderar = 0;
+
+  for (const [idInterno, externos] of Object.entries(dependenciasFoda)) {
+    const cInterno = clasificarFactor(situacionDe(idInterno));
+    for (const idExterno of externos) {
+      const cExterno = clasificarFactor(situacionDe(idExterno));
+      if (cInterno === 'positivo' && cExterno === 'positivo') conteo.FO++;
+      else if (cInterno === 'positivo' && cExterno === 'negativo') conteo.FA++;
+      else if (cInterno === 'negativo' && cExterno === 'positivo') conteo.DO++;
+      else if (cInterno === 'negativo' && cExterno === 'negativo') conteo.DA++;
+      else sinConsiderar++;
+    }
+  }
+
+  const totalCruces = conteo.FO + conteo.FA + conteo.DO + conteo.DA;
+  const porcentajes = Object.fromEntries(
+    Object.entries(conteo).map(([k, v]) => [k, totalCruces === 0 ? 0 : v / totalCruces])
+  );
+
+  let cuadranteDominante = null;
+  if (totalCruces > 0) {
+    cuadranteDominante = Object.keys(conteo).reduce((max, k) => (conteo[k] > conteo[max] ? k : max), 'FO');
+  }
+
+  return {
+    cruces: conteo,
+    sinConsiderar,
+    totalCruces,
+    porcentajes,
+    cuadranteDominante,
+    orientacionEstrategica: cuadranteDominante ? ORIENTACION_POR_CUADRANTE[cuadranteDominante] : null,
+    // MATRIZ FODA!C24:E27: posiciones FIJAS de la grilla 2x2 (no son datos);
+    // el tamaño sí es dato (% del total).
+    burbujas: [
+      { cuadrante: 'FO', x: 4, y: 6, tamano: porcentajes.FO },
+      { cuadrante: 'FA', x: 8, y: 6, tamano: porcentajes.FA },
+      { cuadrante: 'DO', x: 4, y: 2, tamano: porcentajes.DO },
+      { cuadrante: 'DA', x: 8, y: 2, tamano: porcentajes.DA },
+    ],
+  };
+}
+
+export {
+  calcularItem,
+  calcularArea,
+  calcularViabilidad,
+  interpolarPuntos,
+  calcularMatrizFoda,
+  clasificarFactor,
+};
 ```
 
 **Nota de integridad:** este mismo cálculo debe portarse 1:1 a `backend/engine_replica.py` y recalcularse server-side antes de persistir cada evaluación, para que el dato guardado en SQLite no dependa de que el JS del cliente no haya sido alterado.
 
 **Estado de validación (Fase 2, 11/10/2026):** `calcularItem`, `calcularArea`, `semaforoDe` y `calcularViabilidad` (puntajes por ítem, por área, índices interno/externo y veredicto) están **validados contra tests golden** extraídos del DEMO con tolerancia ≤ 0,01 (ver `scripts/golden_extract.py`, `tests/calc.golden.test.mjs`, `.github/workflows/tests.yml`; 10/10 tests verdes). `calcularViabilidad` no cambió respecto del borrador original: ya reproducía correctamente `VIABILIDAD!C44`. `interpolarPuntos` sí cambió respecto del borrador original: incorpora el épsilon `-0.001` de `CalculosFoda!W` (ver nota en el código arriba) — sin él, un test golden fallaba porque el área IA daba 0 alertas en vez de las 2 reales del DEMO (ítems que caen justo en un límite de tramo, con Excel dando `.9999` y el motor sin épsilon dando el valor "limpio").
 
-**Hallazgo importante — `cuadranteDominante` NO es derivable automáticamente de las 110 respuestas situación/impacto.** Al rastrear de dónde sale el cuadrante FODA dominante (`VIABILIDAD!B53`) se encontró que depende de la hoja `MATRIZ FODA`, que a su vez cuenta celdas de texto no vacías en la hoja `PART2 FODA` (`=SUMPRODUCT(--(LEN('PART2 FODA'!D4:D10)>0))`, por área) — es decir, **alguien tiene que escribir a mano, por área, los "cruces" cualitativos FO/FA/DO/DA** (frases como "nuestra marca registrada [F] nos permite entrar al mercado de EE.UU. [O]"); el cuadrante dominante es el que tiene más cruces escritos, no el que surge de los puntajes 0-10. Esto es una brecha real entre lo que el plan de Fase 3 prometía ("cuadrante FODA dominante" calculado automáticamente) y lo que el instrumento original realmente hace. Dos caminos, a decidir con el autor antes de construir esa parte de la Fase 3 (no bloquea el cierre de la Fase 2, que no incluye `cuadranteDominante` en su criterio de cierre — ver §6, ítem 8):
+**Corrección (Fase 3, 13/10/2026) a un hallazgo de Fase 2 — `cuadranteDominante` SÍ es derivable automáticamente, no requiere carga cualitativa manual.** La entrega de Fase 2 afirmó, sin haberlo verificado con suficiente profundidad, que el cuadrante FODA dominante (`VIABILIDAD!B53`) dependía de texto cualitativo cargado a mano en `PART2 FODA`. El autor señaló (13/10/2026) que `PART2 FODA` es "todo automático" — al releer las fórmulas con más cuidado, tenía razón y la afirmación de Fase 2 era incorrecta. Se deja esta corrección explícita, no se borra en silencio.
 
-1. **Agregar una pantalla cualitativa** equivalente a `PART2 FODA` (el equipo escribe los cruces FO/FA/DO/DA por área) y contar ahí — fiel al Excel, pero es trabajo humano adicional por entrevista, no un cálculo automático del formulario de 110 ítems.
-2. **Aproximación automática** (no está en el Excel original, sería una decisión nueva): usar el semáforo de cada área (≥5 = "fortaleza" si es interna u "oportunidad" si es externa; <5 = "debilidad"/"amenaza") y cruzar automáticamente áreas internas×externas para estimar un cuadrante dominante — más simple de implementar, pero es una métrica *distinta* a la del Excel y así debe aclararse en cualquier publicación (no es "FODA Matemático de Vogel", es una extensión propia).
+Lo que realmente pasa, celda por celda:
 
-Sin resolver esto, `cuadranteDominante`/`orientacionEstrategica` en `assessment.schema.json` (§4.2) deben tratarse como opcionales/`null` — igual que ya estaban tipados.
+1. La hoja `VariablesFoda` es una **tabla fija y estructural del instrumento** (como `Rango`): define, para cada uno de los 64 factores internos, de qué factores externos "depende" (con cuáles se cruza). No depende de ninguna evaluación concreta — es parte del diseño del cuestionario, no un dato a cargar. 9 de los 64 factores internos son "Independientes" (no tienen ningún factor externo asociado y no participan del cruce); los otros 55 tienen entre 1 y 3 dependencias cada uno (93 pares interno-externo en total).
+2. `CalculoFoda-1` (hoja distinta de `CalculosFoda`, ver la corrección de signo más arriba en §4.1) clasifica automáticamente cada factor, a partir de su respuesta de situación, en Fortaleza/Debilidad (si es interno) u Oportunidad/Amenaza (si es externo): Favorable o Muy Favorable → positivo; Muy Desfavorable o Desfavorable → negativo; "No corresponde" o sin responder → ninguno de los dos (no participa del cruce).
+3. `PART2 FODA` cruza, para cada par (interno, externo) de la tabla fija de `VariablesFoda`, las dos clasificaciones automáticas del paso 2, y lo cuenta en la columna que corresponde: Fortaleza+Oportunidad → FO, Fortaleza+Amenaza → FA, Debilidad+Oportunidad → DO, Debilidad+Amenaza → DA, cualquier otro caso → "Variables no consideradas" (no se suma a ningún cuadrante).
+4. `MATRIZ FODA!C15:F15` suma esos cruces por cuadrante (fórmulas `SUMPRODUCT`, no texto tipeado a mano) y `VIABILIDAD!C53` toma el cuadrante con más cruces (`INDEX`/`MATCH` del máximo) como el "cuadrante con mayor peso". `MATRIZ FODA!C24:E27` define además las coordenadas fijas (no derivadas de los datos) y el tamaño (el % del total, eso sí es dato) de las 4 burbujas del gráfico FO/FA/DO/DA.
+
+Implementado en `calcularMatrizFoda` (ver código más abajo), usando una tabla de dependencias extraída de `VariablesFoda` por `scripts/extraer_dependencias_foda.py` → `frontend/src/data/dependenciasFoda.json`. **Validado contra tests golden del DEMO**: cruces FO=14/FA=28/DO=12/DA=30, cuadrante dominante "Debilidades-Amenazas (DA)" → orientación "Supervivencia", coincide exactamente con `MATRIZ FODA`/`VIABILIDAD!C53` del Excel real.
+
+`cuadranteDominante`/`orientacionEstrategica` en `assessment.schema.json` (§4.2) ya no son una incógnita de diseño: son un resultado más del motor, calculado automáticamente igual que el resto.
 
 ---
 
@@ -546,7 +630,7 @@ Sin resolver esto, `cuadranteDominante`/`orientacionEstrategica` en `assessment.
 4. **Versionado del cuestionario**: cada `assessment` debe quedar asociado a la versión de `questionnaire.json` con la que se respondió (campo `versionMotor`).
 5. **Disponibilidad de la VM**: sin SLA; el frontend debería bufferizar en `localStorage` y reintentar el `POST` si la API no responde, para no perder una entrevista de 45 minutos por una caída puntual.
 6. **Dato de dominio de Vogel confirmado solo tácitamente** (§3.2) — si corrige el dato más adelante, actualizar esta sección, el preprint y el `CITATION.cff`.
-7. **`cuadranteDominante`/`orientacionEstrategica` no son derivables automáticamente de las 110 respuestas** (hallazgo de Fase 2, ver §5) — el Excel original los calcula a partir de texto cualitativo cargado a mano en `PART2 FODA`, no de los puntajes. Decisión pendiente antes de construir esa parte de la Fase 3: pantalla cualitativa adicional (fiel al Excel) vs. aproximación automática por semáforo de área (métrica propia, a aclarar como tal). No bloquea el cierre de la Fase 2 (su criterio de cierre es ítem/área/índices/veredicto, no cuadrante).
+7. ~~`cuadranteDominante`/`orientacionEstrategica` no son derivables automáticamente de las 110 respuestas~~ — **resuelto (13/10/2026): sí son automáticos.** Lo que decía este ítem en Fase 2 era un error de análisis, corregido en §5 (`calcularMatrizFoda`, validado contra tests golden del DEMO). No queda ninguna decisión de diseño pendiente acá.
 8. **Optatividad para un futuro diseño longitudinal (pre-post) — NO bloquea ninguna fase actual.** A partir de la sugerencia de Vogel sobre modelos de cambio discontinuo (§3.2.1), queda abierta la posibilidad de, más adelante, re-evaluar a las mismas pymes en una segunda ventana temporal y analizar el cambio con el aparato estadístico que él mismo sugirió (Singer & Willett, 2003) — un estudio distinto y más ambicioso que el diagnóstico actual, de corte transversal. Para no cerrar esa puerta sin costo hoy, alcanza con dos ajustes baratos, sin impacto en el cronograma de las Fases 0-6:
    - **Campo opcional `empresaId`** en `assessment.schema.json` (§4.2) — ya incorporado al esquema.
    - **Campo opcional `autorizaRecontacto`** en `assessment.schema.json` (§4.2) — ya incorporado al esquema.

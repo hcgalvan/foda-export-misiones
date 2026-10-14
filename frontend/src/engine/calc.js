@@ -5,15 +5,25 @@
  * DEMO (ver scripts/golden_extract.py y tests/calc.golden.test.mjs).
  *
  * Replica, celda por celda, las fórmulas de las hojas `CalculosFoda` y
- * `Rango` del Excel original. Ver ARCHITECTURE.md §5 para el detalle de a
- * qué columna de `CalculosFoda` corresponde cada paso.
+ * `Rango` del Excel original (puntaje por ítem/área, semáforo, índices,
+ * veredicto). Ver ARCHITECTURE.md §5 para el detalle de a qué columna de
+ * `CalculosFoda` corresponde cada paso.
  *
- * IMPORTANTE — corrección respecto de un borrador anterior: este motor NO
- * tiene ningún componente de "signo" (favorable/desfavorable) a nivel de
- * ítem. Se verificó contra el Excel que `CalculosFoda!AC` nunca es -1 en la
- * práctica — es un indicador binario de "¿se marcó una opción de
- * situación?", no un signo. Ver ARCHITECTURE.md §4.1 para el detalle de esa
- * corrección.
+ * `CalculosFoda!AC` (usado en calcularItem más abajo) es un indicador
+ * binario de "¿se marcó una opción de situación?", NO un signo
+ * favorable/desfavorable — verificado contra el Excel, nunca vale -1 en la
+ * práctica. Ver ARCHITECTURE.md §4.1.
+ *
+ * Corrección (Fase 3) a una nota anterior de este archivo: acá se había
+ * afirmado, de forma demasiado general, que el motor "no tiene ningún
+ * componente de signo a nivel de ítem". Eso vale para la ruta de cálculo de
+ * VIABILIDAD (arriba), pero es FALSO para la ruta paralela de la matriz FODA
+ * (CalculoFoda-1 / VariablesFoda / PART2 FODA / MATRIZ FODA, más abajo en
+ * este archivo): ahí sí existe un signo real de 4 niveles
+ * (-1/-0.5/0.5/1 según Muy Desfav./Desfav./Fav./Muy Fav.), usado para
+ * clasificar cada factor en Fortaleza/Debilidad (internos) u
+ * Oportunidad/Amenaza (externos) y cruzarlos automáticamente en la matriz
+ * FODA. Ver ARCHITECTURE.md §5 para el detalle completo de este hallazgo.
  */
 
 // Tabla "Rango" del Excel: interpolación de pendiente discontinua, % de logro -> puntos.
@@ -185,11 +195,10 @@ export function calcularViabilidad(areasInternas, areasExternas, umbrales = UMBR
 /**
  * Calcula un assessment completo a partir del cuestionario (questionnaire.json)
  * y un mapa de respuestas { itemId: { situacion, impacto } }.
- * No incluye cuadranteDominante/orientacionEstrategica — ver ARCHITECTURE.md
- * §5 y §6 (ítem 7): el Excel original los deriva de una hoja de carga
- * cualitativa (PART2 FODA), no de las 110 respuestas situación/impacto.
+ * Incluye cuadranteDominante/orientacionEstrategica (ver calcularMatrizFoda
+ * más abajo) cuando se pasa `dependenciasFoda`.
  */
-export function calcularAssessment(questionnaire, respuestasPorItem, umbrales = UMBRALES_DEFAULT) {
+export function calcularAssessment(questionnaire, respuestasPorItem, umbrales = UMBRALES_DEFAULT, dependenciasFoda = null) {
   const calcularAreas = (areas) =>
     areas.map((area) => {
       const respuestasArea = area.items.map((it) => respuestasPorItem[it.id] ?? { situacion: null, impacto: null });
@@ -211,11 +220,118 @@ export function calcularAssessment(questionnaire, respuestasPorItem, umbrales = 
 
   const { indiceInterno, indiceExterno, veredicto } = calcularViabilidad(porAreaInterno, porAreaExterno, umbrales);
 
-  return {
+  const resultado = {
     porItem,
     porArea: [...porAreaInterno, ...porAreaExterno],
     indiceInterno,
     indiceExterno,
     veredicto,
+  };
+
+  if (dependenciasFoda) {
+    resultado.matrizFoda = calcularMatrizFoda(questionnaire, respuestasPorItem, dependenciasFoda);
+  }
+
+  return resultado;
+}
+
+// ---------------------------------------------------------------------------
+// Matriz FODA (cuadrante dominante) — CalculoFoda-1 / VariablesFoda /
+// PART2 FODA / MATRIZ FODA / ResumenFODA del Excel original.
+//
+// Hallazgo de Fase 3 (corrige lo documentado en Fase 2): el cuadrante FODA
+// dominante SÍ es automático. No depende de texto cualitativo cargado a
+// mano — depende de una tabla FIJA del instrumento (`VariablesFoda`, acá
+// `dependenciasFoda.json`) que define, para cada factor interno, con qué
+// factores externos se cruza. El cruce en sí se clasifica automáticamente
+// a partir de las mismas respuestas de situación de los 110 ítems. Ver
+// ARCHITECTURE.md §5 para el detalle completo.
+// ---------------------------------------------------------------------------
+
+// CalculoFoda-1!S2:V2 — signo por opción de situación. Índice 0..4: No
+// corresp. (no cuenta), Muy Desfav., Desfav., Fav., Muy Fav.
+export const SIGNO_SITUACION = [0, -1, -0.5, 0.5, 1];
+
+/**
+ * Clasifica un factor (interno o externo) según su respuesta de situación.
+ * Replica el patrón `OR(H=1,I=1)` (positivo) / `OR(F=1,G=1)` (negativo) de
+ * `PART1 FODA`/`PART2 FODA`: Favorable o Muy Favorable -> 'positivo'
+ * (Fortaleza si es interno, Oportunidad si es externo); Muy Desfavorable o
+ * Desfavorable -> 'negativo' (Debilidad / Amenaza); "No corresponde" o sin
+ * responder -> null (no participa del cruce: "Variable no considerada").
+ */
+export function clasificarFactor(situacionIdx) {
+  if (situacionIdx === 3 || situacionIdx === 4) return 'positivo';
+  if (situacionIdx === 1 || situacionIdx === 2) return 'negativo';
+  return null;
+}
+
+const ORIENTACION_POR_CUADRANTE = {
+  FO: 'Ofensiva: usar las fortalezas para aprovechar las oportunidades del mercado.',
+  FA: 'Defensiva: usar las fortalezas para neutralizar amenazas del entorno.',
+  DO: 'Reorientación: superar debilidades para capturar oportunidades.',
+  DA: 'Supervivencia: reducir debilidades y evitar amenazas; no exportar aún.',
+};
+
+/**
+ * Calcula la matriz FODA (cruces FO/FA/DO/DA), el cuadrante dominante y los
+ * datos del gráfico de burbujas. Replica `MATRIZ FODA!C15:F16`,
+ * `VIABILIDAD!B53` y los puntos fijos del gráfico de burbujas
+ * (`MATRIZ FODA!C24:E27`).
+ *
+ * `dependenciasFoda` = objeto { idItemInterno: [idItemExterno, ...] },
+ * generado por scripts/extraer_dependencias_foda.py desde la hoja
+ * `VariablesFoda` (tabla fija del instrumento, no depende de la evaluación).
+ */
+export function calcularMatrizFoda(questionnaire, respuestasPorItem, dependenciasFoda) {
+  const situacionDe = (itemId) => respuestasPorItem[itemId]?.situacion ?? null;
+
+  const conteo = { FO: 0, FA: 0, DO: 0, DA: 0 };
+  let sinConsiderar = 0;
+
+  for (const [idInterno, externos] of Object.entries(dependenciasFoda)) {
+    const clasifInterno = clasificarFactor(situacionDe(idInterno)); // Fortaleza/Debilidad
+    for (const idExterno of externos) {
+      const clasifExterno = clasificarFactor(situacionDe(idExterno)); // Oportunidad/Amenaza
+      if (clasifInterno === 'positivo' && clasifExterno === 'positivo') conteo.FO++;
+      else if (clasifInterno === 'positivo' && clasifExterno === 'negativo') conteo.FA++;
+      else if (clasifInterno === 'negativo' && clasifExterno === 'positivo') conteo.DO++;
+      else if (clasifInterno === 'negativo' && clasifExterno === 'negativo') conteo.DA++;
+      else sinConsiderar++; // alguno de los dos sin responder o "No corresponde"
+    }
+  }
+
+  const totalCruces = conteo.FO + conteo.FA + conteo.DO + conteo.DA; // sin contar "sin considerar"
+  const porcentajes = {
+    FO: totalCruces === 0 ? 0 : conteo.FO / totalCruces,
+    FA: totalCruces === 0 ? 0 : conteo.FA / totalCruces,
+    DO: totalCruces === 0 ? 0 : conteo.DO / totalCruces,
+    DA: totalCruces === 0 ? 0 : conteo.DA / totalCruces,
+  };
+
+  // VIABILIDAD!C53: INDEX/MATCH del máximo entre los 4 cuadrantes.
+  let cuadranteDominante = null;
+  if (totalCruces > 0) {
+    cuadranteDominante = Object.keys(conteo).reduce((max, k) => (conteo[k] > conteo[max] ? k : max), 'FO');
+  }
+
+  // MATRIZ FODA!C24:E27 — posiciones fijas del gráfico de burbujas (no
+  // surgen de los datos; son el layout fijo de la grilla 2x2 Fortaleza/
+  // Debilidad × Oportunidad/Amenaza). El tamaño sí es dato: % del total.
+  const burbujas = [
+    { cuadrante: 'FO', x: 4, y: 6, tamano: porcentajes.FO },
+    { cuadrante: 'FA', x: 8, y: 6, tamano: porcentajes.FA },
+    { cuadrante: 'DO', x: 4, y: 2, tamano: porcentajes.DO },
+    { cuadrante: 'DA', x: 8, y: 2, tamano: porcentajes.DA },
+  ];
+
+  return {
+    cruces: conteo,
+    sinConsiderar,
+    totalCruces,
+    porcentajes,
+    cuadranteDominante,
+    orientacionEstrategica: cuadranteDominante ? ORIENTACION_POR_CUADRANTE[cuadranteDominante] : null,
+    burbujas,
   };
 }

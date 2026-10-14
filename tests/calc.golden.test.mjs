@@ -22,6 +22,8 @@ import {
   calcularArea,
   calcularViabilidad,
   calcularAssessment,
+  calcularMatrizFoda,
+  clasificarFactor,
   interpolarPuntos,
 } from '../frontend/src/engine/calc.js';
 
@@ -38,6 +40,7 @@ function leerJSON(relPath) {
 
 const golden = leerJSON('tests/golden.demo.json');
 const questionnaire = leerJSON('frontend/src/data/questionnaire.json');
+const dependenciasFoda = leerJSON('frontend/src/data/dependenciasFoda.json');
 
 // --- Tests unitarios de la tabla Rango (tramos conocidos) -----------------
 
@@ -184,4 +187,50 @@ test('escenario sintético: índices en 0 da veredicto DATOS_INCOMPLETOS', () =>
   const conDatos = { puntaje: 8 };
   const r = calcularViabilidad([sinDatos], [conDatos]);
   assert.equal(r.veredicto, 'DATOS_INCOMPLETOS');
+});
+
+// --- Golden: matriz FODA (cuadrante dominante) — escenario DEMO ----------
+//
+// Hallazgo de Fase 3: el cuadrante dominante SÍ es automático (no requiere
+// carga cualitativa manual) — ver la corrección en calc.js y ARCHITECTURE.md
+// §5. Se valida acá contra 'MATRIZ FODA'!C15:F15 y VIABILIDAD!C53 del DEMO.
+
+test('clasificarFactor: Fav./Muy Fav. -> positivo, Muy Desfav./Desfav. -> negativo, resto -> null', () => {
+  assert.equal(clasificarFactor(3), 'positivo');
+  assert.equal(clasificarFactor(4), 'positivo');
+  assert.equal(clasificarFactor(1), 'negativo');
+  assert.equal(clasificarFactor(2), 'negativo');
+  assert.equal(clasificarFactor(0), null);
+  assert.equal(clasificarFactor(null), null);
+  assert.equal(clasificarFactor(undefined), null);
+});
+
+test('calcularMatrizFoda: cruces FO/FA/DO/DA y cuadrante dominante coinciden con MATRIZ FODA (DEMO)', () => {
+  const resultado = calcularMatrizFoda(questionnaire, golden.respuestas, dependenciasFoda);
+  const esperado = golden.esperado.matrizFoda;
+  assert.ok(esperado, 'el golden debe traer matrizFoda (¿se regeneró golden.demo.json tras agregar la hoja MATRIZ FODA?)');
+  assert.equal(resultado.cruces.FO, esperado.cruces.FO, 'cruces FO');
+  assert.equal(resultado.cruces.FA, esperado.cruces.FA, 'cruces FA');
+  assert.equal(resultado.cruces.DO, esperado.cruces.DO, 'cruces DO');
+  assert.equal(resultado.cruces.DA, esperado.cruces.DA, 'cruces DA');
+  assert.equal(resultado.cuadranteDominante, esperado.cuadranteDominante, 'cuadrante dominante');
+});
+
+test('escenario sintético: matriz FODA sin cruces (todo "No corresponde") da cuadranteDominante null', () => {
+  const dependencias = { IA1: ['EA1'] };
+  const respuestas = { IA1: { situacion: 0 }, EA1: { situacion: 0 } };
+  const r = calcularMatrizFoda(questionnaire, respuestas, dependencias);
+  assert.equal(r.totalCruces, 0);
+  assert.equal(r.cuadranteDominante, null);
+  assert.equal(r.sinConsiderar, 1);
+});
+
+test('escenario sintético: Fortaleza + Oportunidad da un cruce FO y orientación Ofensiva', () => {
+  const dependencias = { IA1: ['EA1'] };
+  const respuestas = { IA1: { situacion: 4 }, EA1: { situacion: 3 } }; // Muy Fav. / Fav.
+  const r = calcularMatrizFoda(questionnaire, respuestas, dependencias);
+  assert.equal(r.cruces.FO, 1);
+  assert.equal(r.totalCruces, 1);
+  assert.equal(r.cuadranteDominante, 'FO');
+  assert.match(r.orientacionEstrategica, /Ofensiva/);
 });
