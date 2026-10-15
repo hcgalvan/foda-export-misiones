@@ -15,6 +15,8 @@ Este documento consolida las decisiones de arquitectura, stack tecnológico, est
 | Propiedad intelectual / DOI (Fase 3) | **Resuelta** — autorización del Prof. Mario Héctor Vogel recibida por escrito (1/10/2026); queda solo un dato de URL confirmado tácitamente (ver §3.2) |
 | Modelo de datos (Fase 4) | `questionnaire.schema.json` **implementado y cerrado** (Fase 1 del plan de trabajo: `scripts/xlsx_to_json.py`, 110 ítems/19 áreas verificados); `assessment.schema.json` definido, pendiente de uso en Fase 3 |
 | Motor de cálculo (Fase 5 de esta sección / Fase 2 del plan de trabajo) | `calcularItem`/`calcularArea`/`calcularViabilidad` **validados contra tests golden** (11/10/2026). `calcularMatrizFoda` (cuadrante dominante FO/FA/DO/DA) **también validado contra tests golden** (13/10/2026) — resultó ser 100% automático, ver §5 |
+| Frontend MVP (Fase 3 del plan) | Implementado y verificado con navegador automatizado: las 110 respuestas del DEMO cargadas por la UI reproducen los índices, el veredicto y los cruces FO/FA/DO/DA del Excel |
+| Backend y persistencia (Fase 4 del plan) | **Implementado y probado localmente** (14/10/2026): FastAPI + SQLModel/SQLite, `engine_replica.py` con los mismos tests golden que el JS (15/15), API 8/8, cliente con cola de reintento 7/7, prueba end-to-end navegador↔API (incl. CORS, caída de red, API key inválida). **Pendiente de verificar en la VM real** (consumo junto al bot, túnel, systemd, backup): ver `backend/README_DEPLOY.md` |
 
 ---
 
@@ -358,15 +360,25 @@ foda-export-misiones/
 ├── frontend/
 │   ├── index.html
 │   └── src/
+│       ├── api.js             # cliente de la API + cola de reintento (localStorage)
 │       ├── engine/            # calc.js — motor puro, testeable sin DOM
 │       ├── data/               # questionnaire.json
 │       ├── components/
 │       └── charts/
 ├── backend/
-│   ├── main.py                 # FastAPI
-│   ├── models.py                # SQLModel
+│   ├── main.py                 # FastAPI (CORS restringido, /health)
+│   ├── config.py                # variables de entorno (DB, CORS, API keys)
+│   ├── database.py              # engine/sesión SQLite
+│   ├── models.py                # SQLModel (tabla assessments)
+│   ├── schemas.py               # entrada/salida Pydantic (el cliente NO envía resultados)
+│   ├── auth.py                  # API key por equipo (header X-API-Key)
+│   ├── cuestionario.py          # carga questionnaire.json / dependenciasFoda.json
 │   ├── engine_replica.py        # réplica Python del motor (validación server-side)
-│   └── routers/
+│   ├── routers/                 # assessments.py: POST/GET
+│   ├── tests/                   # test_engine_replica.py (golden), test_api.py
+│   ├── deploy/                  # foda-api.service, foda-tunnel.service, setup_swap.sh, imprimir_url_tunnel.sh
+│   ├── scripts/                 # backup_db.sh
+│   └── README_DEPLOY.md
 ├── docs/
 │   ├── metodologia/             # EXPLICACION.md versionado
 │   ├── atribucion/              # ProfVogel_Galvan_011026.docx, INTERCAMBIO_EMAILS.md
@@ -636,3 +648,9 @@ Implementado en `calcularMatrizFoda` (ver código más abajo), usando una tabla 
    - **Campo opcional `autorizaRecontacto`** en `assessment.schema.json` (§4.2) — ya incorporado al esquema.
    - Agregar una cláusula optativa en el consentimiento informado de la Fase 5 ("¿autoriza a que la cátedra la recontacte en el futuro para una segunda evaluación con fines de investigación?").
    - El diseño del análisis estadístico en sí (qué intervención se usa como punto de corte, qué cohortes, qué software estadístico) se define en un chat/documento aparte cuando exista una segunda ventana de datos real — no antes.
+
+---
+
+## 7. Decisión abierta (Fase 4, 14/10/2026): `assessment.schema.json` vs. salida real del motor
+
+`data/schema/assessment.schema.json` describe `resultados.cuadranteDominante` y `resultados.orientacionEstrategica` como campos sueltos, pero el motor (JS y Python) los entrega anidados en `resultados.matrizFoda` (junto con `cruces`, `porcentajes`, `burbujas`). El schema es anterior al hallazgo de Fase 3 y tiene además `additionalProperties: false`, así que **un JSON exportado hoy no valida contra él**. No se corrigió en silencio: la API persiste la salida real del motor tal cual. Falta decidir (autor) si se actualiza el schema a la forma anidada (recomendado, es solo documentar lo que ya se calcula) antes de congelar versiones en Fase 5.

@@ -8,9 +8,12 @@ import {
   calcularAssessment,
   UMBRALES_DEFAULT,
 } from './engine/calc.js';
+import {
+  leerConfig, guardarConfig, configCompleta, leerCola, guardarEnServidor, vaciarCola,
+} from './api.js';
 
 const CLAVE_LOCALSTORAGE = 'foda-export-misiones:draft-v1';
-const VERSION_MOTOR = '1.0.0-fase3';
+const VERSION_MOTOR = '1.0.0-fase4';
 
 const SITUACION_LABELS = ['No corresp.', 'Muy Desfav.', 'Desfavorable', 'Favorable', 'Muy Favorable'];
 const IMPACTO_LABELS = ['Muy insignif.', 'Insignificante', 'Significante', 'Muy Signific.'];
@@ -64,6 +67,13 @@ export function fodaApp() {
     resultado: null,
     mensaje: '',
 
+    // --- API / cola de reintento (Fase 4) ---------------------------------
+    mostrarConfig: false,
+    apiConfig: { baseUrl: '', apiKey: '' },
+    pendientesEnCola: 0,
+    errorCola: '',
+    guardandoEnServidor: false,
+
     // --- inicialización ---------------------------------------------------
     async init() {
       try {
@@ -74,6 +84,9 @@ export function fodaApp() {
         this.questionnaire = q;
         this.dependenciasFoda = dep;
         this.cargarDeLocalStorage();
+        this.apiConfig = leerConfig();
+        this.refrescarCola();
+        window.addEventListener('online', () => this.reintentarCola(true));
         this.areaActualId = this.areas[0]?.id ?? null;
         this.recalcular();
         this.cargando = false;
@@ -359,6 +372,44 @@ export function fodaApp() {
       };
       reader.readAsText(file);
       event.target.value = '';
+    },
+    // --- guardar en el servidor (Fase 4) -----------------------------------
+    refrescarCola() {
+      const cola = leerCola();
+      this.pendientesEnCola = cola.length;
+      this.errorCola = cola.find((i) => i.ultimoError)?.ultimoError || '';
+    },
+    guardarConfigApi() {
+      this.apiConfig = guardarConfig(this.apiConfig);
+      this.flash('Configuración de la API guardada en este navegador.');
+    },
+    flash(texto) {
+      this.mensaje = texto;
+      setTimeout(() => (this.mensaje = ''), 5000);
+    },
+    async guardarEnServidor() {
+      if (!configCompleta(this.apiConfig)) {
+        this.mostrarConfig = true;
+        this.flash('Primero cargá la URL de la API y la API key en Configuración.');
+        return;
+      }
+      this.guardandoEnServidor = true;
+      const r = await guardarEnServidor(this.apiConfig, this.construirAssessment());
+      this.guardandoEnServidor = false;
+      this.refrescarCola();
+      this.flash(
+        r.pendientes === 0
+          ? 'Evaluación guardada en el servidor (recalculada y verificada).'
+          : 'No se pudo guardar en el servidor: quedó en cola local y se reintenta. ' + this.errorCola
+      );
+    },
+    async reintentarCola(silencioso = false) {
+      if (!configCompleta(this.apiConfig) || leerCola().length === 0) return;
+      const r = await vaciarCola(this.apiConfig);
+      this.refrescarCola();
+      if (!silencioso || r.enviados.length) {
+        this.flash(`Cola: ${r.enviados.length} enviada(s), ${r.pendientes} pendiente(s).`);
+      }
     },
     imprimir() {
       window.print();

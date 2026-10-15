@@ -1,0 +1,40 @@
+# /etc/systemd/system/foda-api.service
+#
+# Servicio systemd para la API FODA Export Misiones, pensado para convivir
+# en la misma VM e2-micro (1 vCPU compartida, 1 GB RAM) que ya corre un bot
+# de Discord -- ver ARCHITECTURE.md §1.2. Límites explícitos de memoria/CPU
+# para no competir por recursos con el otro proceso.
+#
+# Instalación (en la VM, como root o con sudo):
+#   1. Copiar este archivo a /etc/systemd/system/foda-api.service
+#   2. Editar WorkingDirectory/ExecStart/User/Environment con la ruta y el
+#      usuario reales de la VM (los de acá son de ejemplo).
+#   3. sudo systemctl daemon-reload
+#   4. sudo systemctl enable --now foda-api
+#   5. sudo systemctl status foda-api   # confirmar que arrancó bien
+#   6. journalctl -u foda-api -f        # ver logs en vivo
+
+[Unit]
+Description=FODA Export Misiones API
+After=network.target
+
+[Service]
+WorkingDirectory=/home/tuusuario/foda-export-misiones/backend
+ExecStart=/home/tuusuario/foda-export-misiones/backend/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
+MemoryMax=200M
+CPUQuota=40%
+Restart=on-failure
+User=tuusuario
+
+# Variables de entorno de producción (ver backend/config.py para el detalle
+# de cada una). NO se commitea ningún valor real de FODA_API_KEYS -- se
+# setea acá, directamente en la VM, o en un EnvironmentFile aparte
+# (recomendado: /etc/foda-api.env, permisos 600, fuera del repo git).
+#
+# Environment="FODA_DATABASE_URL=sqlite:////home/tuusuario/foda-export-misiones/backend/foda.db"
+# Environment="FODA_CORS_ORIGINS=https://foda-export-misiones.netlify.app"
+# Environment="FODA_API_KEYS=tecnicatura-2026:CAMBIAR-POR-UNA-CLAVE-REAL"
+EnvironmentFile=-/etc/foda-api.env
+
+[Install]
+WantedBy=multi-user.target

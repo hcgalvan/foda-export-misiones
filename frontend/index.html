@@ -240,7 +240,7 @@
   [x-cloak] { display: none !important; }
 
   @media print {
-    header.app-header, .toolbar, nav.area-tabs, select.selector-area,
+    header.app-header, .toolbar, .config-api, nav.area-tabs, select.selector-area,
     .item-bloque, .nav-areas-botones, footer.app-footer, .mensaje-flash { display: none !important; }
     main.layout { grid-template-columns: 1fr !important; }
     body { background: white; }
@@ -266,9 +266,32 @@
       <input type="file" accept="application/json" @change="importarJSON($event)" />
     </label>
     <button @click="imprimir()">🖨 Imprimir resumen</button>
+    <button @click="guardarEnServidor()" :disabled="guardandoEnServidor">☁ Guardar en servidor</button>
+    <button x-show="pendientesEnCola > 0" @click="reintentarCola()" title="Evaluaciones que no se pudieron enviar todavía">
+      ⟳ Reintentar cola (<span x-text="pendientesEnCola"></span>)
+    </button>
+    <button @click="mostrarConfig = !mostrarConfig">⚙ Configuración</button>
     <button @click="reiniciar()">🗑 Reiniciar</button>
   </div>
   <div class="mensaje-flash" x-show="mensaje" x-text="mensaje"></div>
+
+  <section class="card config-api" x-show="mostrarConfig" x-cloak style="margin:8px 16px 0;padding:12px 16px;">
+    <h2 style="margin:0 0 6px;font-size:1rem;">Configuración de la API (opcional)</h2>
+    <p style="margin:0 0 8px;font-size:0.8rem;color:#555;">
+      La app funciona sin servidor. Si querés guardar las evaluaciones en la API, cargá la URL pública
+      (la que informa quien administra la VM; con Quick Tunnel cambia al reiniciar) y la API key de tu equipo.
+      Se guardan solo en este navegador.
+    </p>
+    <div class="perfil-grid">
+      <label>URL de la API
+        <input type="url" placeholder="https://algo-random.trycloudflare.com" x-model="apiConfig.baseUrl" />
+      </label>
+      <label>API key
+        <input type="password" autocomplete="off" x-model="apiConfig.apiKey" />
+      </label>
+    </div>
+    <button @click="guardarConfigApi()" style="margin-top:8px;">Guardar configuración</button>
+  </section>
 
   <div x-show="cargando" style="padding:30px; text-align:center; color:#5b6572;">Cargando cuestionario…</div>
   <div x-show="error" style="padding:20px; margin:16px; background:#fdecea; border:1px solid #f3b4ac; border-radius:10px;" x-text="error"></div>

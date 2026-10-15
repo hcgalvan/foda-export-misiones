@@ -1,0 +1,31 @@
+# /etc/systemd/system/foda-tunnel.service
+#
+# Quick Tunnel de Cloudflare (ARCHITECTURE.md §1.1): expone
+# http://localhost:8000 (la API) en una URL pública HTTPS tipo
+# https://algo-random.trycloudflare.com, sin dominio propio ni
+# configuración de DNS. La URL cambia cada vez que el proceso arranca --
+# por eso corre bajo systemd con Restart=on-failure (se mantiene estable
+# mientras no se caiga ni se reinicie la VM) y por eso el frontend NO la
+# hardcodea (la guarda en localStorage, configurable desde la app).
+#
+# Instalación:
+#   1. curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+#      sudo mv cloudflared /usr/local/bin/ && sudo chmod +x /usr/local/bin/cloudflared
+#   2. Copiar este archivo a /etc/systemd/system/foda-tunnel.service
+#   3. sudo systemctl daemon-reload
+#   4. sudo systemctl enable --now foda-tunnel
+#   5. Ver la URL pública asignada: journalctl -u foda-tunnel -n 50 | grep trycloudflare
+#      (o, más simple, correr deploy/imprimir_url_tunnel.sh)
+
+[Unit]
+Description=Cloudflare Quick Tunnel para FODA Export Misiones API
+After=network.target foda-api.service
+Requires=foda-api.service
+
+[Service]
+ExecStart=/usr/local/bin/cloudflared tunnel --url http://localhost:8000
+Restart=on-failure
+User=tuusuario
+
+[Install]
+WantedBy=multi-user.target
