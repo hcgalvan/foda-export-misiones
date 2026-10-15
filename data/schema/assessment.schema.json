@@ -2,27 +2,64 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/hcgalvan/foda-export-misiones/data/schema/assessment.schema.json",
   "title": "FODA Export Misiones — Resultado de una evaluación",
-  "description": "Esquema de una evaluación respondida (una entrevista completa) y sus resultados calculados. Ver ARCHITECTURE.md §4.2. No se genera con xlsx_to_json.py — lo produce el frontend (y luego el backend) en tiempo de uso; este schema se agrega en Fase 1 porque ya está definido en ARCHITECTURE.md y conviene validarlo desde el inicio de Fase 3.",
+  "description": "Esquema de una evaluación respondida (una entrevista completa) y sus resultados calculados. Ver ARCHITECTURE.md §4.2. No se genera con xlsx_to_json.py — lo produce el frontend (y luego el backend) en tiempo de uso; Actualizado en Fase 4 (15/10/2026): cuadranteDominante/orientacionEstrategica pasan de campos sueltos a resultados.matrizFoda (forma real del motor); se elimina situacionPonderada, que no tiene contraparte en el Excel (ARCHITECTURE.md §4.1).",
   "type": "object",
-  "required": ["id", "empresa", "respuestas", "resultados", "metadata"],
+  "required": [
+    "id",
+    "empresa",
+    "respuestas",
+    "resultados",
+    "metadata"
+  ],
   "additionalProperties": false,
   "properties": {
-    "id": { "type": "string", "format": "uuid" },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
     "empresa": {
       "type": "object",
-      "required": ["nombre", "rubro", "perfil", "fecha"],
+      "required": [
+        "nombre",
+        "rubro",
+        "perfil",
+        "fecha"
+      ],
       "additionalProperties": false,
       "properties": {
-        "nombre": { "type": "string" },
+        "nombre": {
+          "type": "string"
+        },
         "empresaId": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Hash estable (nunca el CUIT en texto plano). Opcional — prepara un futuro diseño longitudinal pre-post (ARCHITECTURE.md §6, ítem 7). null salvo que el equipo decida usarlo."
         },
-        "rubro": { "type": "string" },
-        "mercadosObjetivo": { "type": "array", "items": { "type": "string" } },
-        "perfil": { "type": "string", "enum": ["exporta_actualmente", "no_exporta_evalua_iniciar"] },
-        "relevadoPor": { "type": "string" },
-        "fecha": { "type": "string", "format": "date" },
+        "rubro": {
+          "type": "string"
+        },
+        "mercadosObjetivo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "perfil": {
+          "type": "string",
+          "enum": [
+            "exporta_actualmente",
+            "no_exporta_evalua_iniciar"
+          ]
+        },
+        "relevadoPor": {
+          "type": "string"
+        },
+        "fecha": {
+          "type": "string",
+          "format": "date"
+        },
         "autorizaRecontacto": {
           "type": "boolean",
           "default": false,
@@ -34,40 +71,67 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["itemId", "situacion", "impacto"],
+        "required": [
+          "itemId",
+          "situacion",
+          "impacto"
+        ],
         "additionalProperties": false,
         "properties": {
-          "itemId": { "type": "string", "pattern": "^(I[A-J]|E[A-I])[1-9][0-9]?$" },
+          "itemId": {
+            "type": "string",
+            "pattern": "^(I[A-J]|E[A-I])[1-9][0-9]?$"
+          },
           "situacion": {
-            "type": ["integer", "null"],
+            "type": [
+              "integer",
+              "null"
+            ],
             "minimum": 0,
             "maximum": 4,
             "description": "Índice 0-4 sobre la escala Situación (No corresp./Muy Desfav./Desfav./Fav./Muy Fav.). null si no se respondió."
           },
           "impacto": {
-            "type": ["integer", "null"],
+            "type": [
+              "integer",
+              "null"
+            ],
             "minimum": 0,
             "maximum": 3,
             "description": "Índice 0-3 sobre la escala Impacto (Muy insignif./Insignif./Significante/Muy Signific.). null si no se respondió."
           },
-          "observacion": { "type": "string" }
+          "observacion": {
+            "type": "string"
+          }
         }
       }
     },
     "resultados": {
       "type": "object",
-      "required": ["porItem", "porArea", "indiceInterno", "indiceExterno", "veredicto"],
+      "required": [
+        "porItem",
+        "porArea",
+        "indiceInterno",
+        "indiceExterno",
+        "veredicto"
+      ],
       "additionalProperties": false,
       "properties": {
         "porItem": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["itemId", "puntos0a10"],
+            "required": [
+              "itemId",
+              "puntos0a10"
+            ],
             "properties": {
-              "itemId": { "type": "string" },
-              "puntos0a10": { "type": "number" },
-              "situacionPonderada": { "type": "number" }
+              "itemId": {
+                "type": "string"
+              },
+              "puntos0a10": {
+                "type": "number"
+              }
             }
           }
         },
@@ -75,36 +139,236 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["areaId", "ambito", "puntaje", "semaforo"],
+            "required": [
+              "areaId",
+              "ambito",
+              "puntaje",
+              "semaforo"
+            ],
             "properties": {
-              "areaId": { "type": "string" },
-              "ambito": { "type": "string", "enum": ["interno", "externo"] },
-              "puntaje": { "type": "number" },
-              "semaforo": { "type": "string", "enum": ["sin datos", "Alarmante", "Regular", "Bueno", "Excelencia"] },
-              "itemsRespondidos": { "type": "integer" },
-              "alertas": { "type": "integer" }
+              "areaId": {
+                "type": "string"
+              },
+              "ambito": {
+                "type": "string",
+                "enum": [
+                  "interno",
+                  "externo"
+                ]
+              },
+              "puntaje": {
+                "type": "number"
+              },
+              "semaforo": {
+                "type": "string",
+                "enum": [
+                  "sin datos",
+                  "Alarmante",
+                  "Regular",
+                  "Bueno",
+                  "Excelencia"
+                ]
+              },
+              "itemsRespondidos": {
+                "type": "integer"
+              },
+              "alertas": {
+                "type": "integer"
+              },
+              "itemsTotales": {
+                "type": "integer"
+              }
             }
           }
         },
-        "indiceInterno": { "type": "number" },
-        "indiceExterno": { "type": "number" },
-        "cuadranteDominante": { "type": ["string", "null"], "enum": ["FO", "FA", "DO", "DA", null] },
-        "orientacionEstrategica": { "type": ["string", "null"] },
+        "indiceInterno": {
+          "type": "number"
+        },
+        "indiceExterno": {
+          "type": "number"
+        },
+        "matrizFoda": {
+          "type": "object",
+          "description": "Salida de calcularMatrizFoda (calc.js) / calcular_matriz_foda (engine_replica.py). Cruces de cada factor interno con los externos de los que depende (tabla fija VariablesFoda), clasificados por situación (Fav./Muy Fav. = positivo; Muy Desfav./Desfav. = negativo). Ver ARCHITECTURE.md §5.",
+          "required": [
+            "cruces",
+            "sinConsiderar",
+            "totalCruces",
+            "porcentajes",
+            "cuadranteDominante",
+            "orientacionEstrategica",
+            "burbujas"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "cruces": {
+              "type": "object",
+              "required": [
+                "FO",
+                "FA",
+                "DO",
+                "DA"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "FO": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "FA": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "DO": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "DA": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "sinConsiderar": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Cruces descartados porque algún factor no se respondió o es 'No corresponde' (hoja PART2 FODA: 'Variables no consideradas')."
+            },
+            "totalCruces": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "FO+FA+DO+DA (sin contar sinConsiderar)."
+            },
+            "porcentajes": {
+              "type": "object",
+              "required": [
+                "FO",
+                "FA",
+                "DO",
+                "DA"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "FO": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "FA": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "DO": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "DA": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "description": "Fracción 0-1 de totalCruces por cuadrante (tamaño de burbuja)."
+            },
+            "cuadranteDominante": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "FO",
+                "FA",
+                "DO",
+                "DA",
+                null
+              ],
+              "description": "Cuadrante con más cruces (VIABILIDAD!C53). null si totalCruces = 0."
+            },
+            "orientacionEstrategica": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Texto de orientación del cuadrante dominante. null si no hay cuadrante dominante."
+            },
+            "burbujas": {
+              "type": "array",
+              "description": "Puntos del gráfico de burbujas: posiciones fijas (MATRIZ FODA!C24:E27), tamaño = porcentaje.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "cuadrante",
+                  "x",
+                  "y",
+                  "tamano"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "cuadrante": {
+                    "type": "string",
+                    "enum": [
+                      "FO",
+                      "FA",
+                      "DO",
+                      "DA"
+                    ]
+                  },
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "tamano": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
         "veredicto": {
           "type": "string",
-          "enum": ["VIABLE", "VIABLE_CON_CONDICIONES", "EMPRESA_NO_LISTA", "ENTORNO_DESFAVORABLE", "NO_VIABLE", "DATOS_INCOMPLETOS"]
+          "enum": [
+            "VIABLE",
+            "VIABLE_CON_CONDICIONES",
+            "EMPRESA_NO_LISTA",
+            "ENTORNO_DESFAVORABLE",
+            "NO_VIABLE",
+            "DATOS_INCOMPLETOS"
+          ]
         }
       }
     },
     "metadata": {
       "type": "object",
-      "required": ["versionMotor", "versionCuestionario", "creadoEn"],
+      "required": [
+        "versionMotor",
+        "versionCuestionario",
+        "creadoEn"
+      ],
       "additionalProperties": false,
       "properties": {
-        "versionMotor": { "type": "string", "description": "Versión de calc.js con la que se calculó este resultado." },
-        "versionCuestionario": { "type": "string", "description": "Versión de questionnaire.json con la que se respondió (campo 'version' de ese archivo). Ver ARCHITECTURE.md §6, ítem 4." },
-        "creadoEn": { "type": "string", "format": "date-time" },
-        "actualizadoEn": { "type": "string", "format": "date-time" }
+        "versionMotor": {
+          "type": "string",
+          "description": "Versión de calc.js con la que se calculó este resultado."
+        },
+        "versionCuestionario": {
+          "type": "string",
+          "description": "Versión de questionnaire.json con la que se respondió (campo 'version' de ese archivo). Ver ARCHITECTURE.md §6, ítem 4."
+        },
+        "creadoEn": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "actualizadoEn": {
+          "type": "string",
+          "format": "date-time"
+        }
       }
     }
   }

@@ -10,7 +10,9 @@ frontend/src/api.js       → nuevo (cliente de la API + cola de reintento)
 frontend/src/app.js       → reemplaza el de Fase 3 (botón "Guardar en servidor", Configuración, cola)
 frontend/index.html       → reemplaza el de Fase 3 (botones y panel de Configuración)
 tests/api.test.mjs        → nuevo
-ARCHITECTURE.md           → reemplaza el que tenías (§0, §4.3 y §7 nueva)
+ARCHITECTURE.md           → reemplaza el que tenías (§0, §4.2, §4.3 y §7)
+data/schema/assessment.schema.json → reemplaza el de Fase 1 (forma anidada `resultados.matrizFoda`)
+backend/tests/test_schema.py       → nuevo (ya incluido en backend/)
 ```
 
 Agregá a `.gitignore` (si no está): `*.db`, `.env`, `venv/`, `__pycache__/`, `.pytest_cache/`.
@@ -25,13 +27,13 @@ Agregá a `.gitignore` (si no está): `*.db`, `.env`, `venv/`, `__pycache__/`, `
 
 ## Qué se verificó (y qué no)
 
-Verificado acá: `node --test tests/*.mjs` → 21/21 (14 motor + 7 cliente API); `pytest` en `backend/` → 23/23 (15 golden del motor Python contra el mismo `golden.demo.json` + 8 de API); prueba end-to-end con navegador real: cargar el DEMO por la UI → guardar en servidor → queda en SQLite con `VIABLE_CON_CONDICIONES` y cuadrante `DA`, más los tres casos de falla (API caída → cola, reintento OK, API key mala → 401 en cola). Consumo local ≈ 67 MB RSS.
+Verificado acá: `node --test tests/*.mjs` → 21/21 (14 motor + 7 cliente API); `pytest` en `backend/` → 28/28 (15 golden del motor Python contra el mismo `golden.demo.json` + 8 de API + 5 de schema; los de schema necesitan `jsonschema`, incluido en requirements); prueba end-to-end con navegador real: cargar el DEMO por la UI → guardar en servidor → queda en SQLite con `VIABLE_CON_CONDICIONES` y cuadrante `DA`, más los tres casos de falla (API caída → cola, reintento OK, API key mala → 401 en cola). Consumo local ≈ 67 MB RSS.
 
 **No verificado: nada de lo que corre en la VM** (systemd, túnel, swap, backup, consumo junto al bot). Eso es el cierre real de Fase 4: seguí `backend/README_DEPLOY.md` y avisame los números.
 
-## Decisión abierta para vos
+## Schema alineado (resuelto 15/10/2026)
 
-`assessment.schema.json` no coincide con lo que calcula el motor (el schema trae `cuadranteDominante` suelto; el motor lo devuelve dentro de `matrizFoda`), y con `additionalProperties: false` un JSON exportado no valida. No lo toqué en silencio: ver `ARCHITECTURE.md §7`. Recomiendo actualizar el schema a la forma anidada antes del piloto.
+`assessment.schema.json` ahora describe la forma real del motor: `resultados.matrizFoda` anidado (cruces, sinConsiderar, totalCruces, porcentajes, cuadranteDominante, orientacionEstrategica, burbujas). Se quitó `situacionPonderada` (no existe en el Excel) y se agregó `itemsTotales`. `backend/tests/test_schema.py` valida la salida real del motor contra el schema. Total `pytest`: 28/28. Detalle en `ARCHITECTURE.md §7`.
 
 ## Aviso de privacidad
 

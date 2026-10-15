@@ -13,7 +13,7 @@ Este documento consolida las decisiones de arquitectura, stack tecnológico, est
 | Arquitectura (Fase 1) | Definida |
 | Stack tecnológico (Fase 2) | Definida |
 | Propiedad intelectual / DOI (Fase 3) | **Resuelta** — autorización del Prof. Mario Héctor Vogel recibida por escrito (1/10/2026); queda solo un dato de URL confirmado tácitamente (ver §3.2) |
-| Modelo de datos (Fase 4) | `questionnaire.schema.json` **implementado y cerrado** (Fase 1 del plan de trabajo: `scripts/xlsx_to_json.py`, 110 ítems/19 áreas verificados); `assessment.schema.json` definido, pendiente de uso en Fase 3 |
+| Modelo de datos (Fase 4) | `questionnaire.schema.json` **implementado y cerrado** (Fase 1 del plan de trabajo: `scripts/xlsx_to_json.py`, 110 ítems/19 áreas verificados); `assessment.schema.json` **alineado con la salida real del motor** (15/10/2026, ver §7) |
 | Motor de cálculo (Fase 5 de esta sección / Fase 2 del plan de trabajo) | `calcularItem`/`calcularArea`/`calcularViabilidad` **validados contra tests golden** (11/10/2026). `calcularMatrizFoda` (cuadrante dominante FO/FA/DO/DA) **también validado contra tests golden** (13/10/2026) — resultó ser 100% automático, ver §5 |
 | Frontend MVP (Fase 3 del plan) | Implementado y verificado con navegador automatizado: las 110 respuestas del DEMO cargadas por la UI reproducen los índices, el veredicto y los cruces FO/FA/DO/DA del Excel |
 | Backend y persistencia (Fase 4 del plan) | **Implementado y probado localmente** (14/10/2026): FastAPI + SQLModel/SQLite, `engine_replica.py` con los mismos tests golden que el JS (15/15), API 8/8, cliente con cola de reintento 7/7, prueba end-to-end navegador↔API (incl. CORS, caída de red, API key inválida). **Pendiente de verificar en la VM real** (consumo junto al bot, túnel, systemd, backup): ver `backend/README_DEPLOY.md` |
@@ -333,12 +333,19 @@ El campo `marco` a nivel de ÁREA se mantiene como un resumen agregado legible (
       { "itemId": "IA1", "puntos0a10": 7.2 }
     ],
     "porArea": [
-      { "areaId": "IA", "ambito": "interno", "puntaje": 6.8, "semaforo": "Regular", "itemsRespondidos": 5, "alertas": 1 }
+      { "areaId": "IA", "ambito": "interno", "puntaje": 6.8, "semaforo": "Regular", "itemsRespondidos": 5, "itemsTotales": 5, "alertas": 1 }
     ],
     "indiceInterno": 6.4,
     "indiceExterno": 5.9,
-    "cuadranteDominante": "DO",
-    "orientacionEstrategica": "Reorientación",
+    "matrizFoda": {
+      "cruces": { "FO": 14, "FA": 28, "DO": 12, "DA": 30 },
+      "sinConsiderar": 9,
+      "totalCruces": 84,
+      "porcentajes": { "FO": 0.167, "FA": 0.333, "DO": 0.143, "DA": 0.357 },
+      "cuadranteDominante": "DA",
+      "orientacionEstrategica": "Supervivencia: reducir debilidades y evitar amenazas; no exportar aún.",
+      "burbujas": [ { "cuadrante": "FO", "x": 4, "y": 6, "tamano": 0.167 } ]
+    },
     "veredicto": "VIABLE_CON_CONDICIONES"
   },
   "metadata": { "versionMotor": "1.0.0", "creadoEn": "...", "actualizadoEn": "..." }
@@ -651,6 +658,6 @@ Implementado en `calcularMatrizFoda` (ver código más abajo), usando una tabla 
 
 ---
 
-## 7. Decisión abierta (Fase 4, 14/10/2026): `assessment.schema.json` vs. salida real del motor
+## 7. Schema de resultados alineado con el motor — **resuelto** (15/10/2026)
 
-`data/schema/assessment.schema.json` describe `resultados.cuadranteDominante` y `resultados.orientacionEstrategica` como campos sueltos, pero el motor (JS y Python) los entrega anidados en `resultados.matrizFoda` (junto con `cruces`, `porcentajes`, `burbujas`). El schema es anterior al hallazgo de Fase 3 y tiene además `additionalProperties: false`, así que **un JSON exportado hoy no valida contra él**. No se corrigió en silencio: la API persiste la salida real del motor tal cual. Falta decidir (autor) si se actualiza el schema a la forma anidada (recomendado, es solo documentar lo que ya se calcula) antes de congelar versiones en Fase 5.
+`data/schema/assessment.schema.json` describía `resultados.cuadranteDominante` y `resultados.orientacionEstrategica` como campos sueltos, pero el motor (JS y Python) los entrega anidados en `resultados.matrizFoda` (con `cruces`, `sinConsiderar`, `totalCruces`, `porcentajes`, `burbujas`). Como el schema tenía `additionalProperties: false`, un JSON exportado no validaba. El autor decidió (15/10/2026) actualizarlo a la forma anidada. Cambios: se agrega `resultados.matrizFoda` (opcional, con su estructura completa), se quitan los dos campos sueltos, se agrega `porArea[].itemsTotales` y se elimina `porItem[].situacionPonderada` (sin contraparte en el Excel, ver §4.1). `backend/tests/test_schema.py` valida que la salida real del motor (escenarios DEMO, vacío y "No corresponde") cumpla el schema y que la forma plana vieja ya no valide, para que no vuelvan a divergir. Los JSON exportados antes de este cambio con la forma plana no validan; en el estado actual del proyecto no hay evaluaciones reales guardadas, así que no hace falta migrar nada.
