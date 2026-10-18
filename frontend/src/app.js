@@ -10,6 +10,7 @@ import {
 } from './engine/calc.js';
 import {
   leerConfig, guardarConfig, configCompleta, leerCola, guardarEnServidor, vaciarCola,
+  listarResumen, obtener, probarConexion,
 } from './api.js';
 
 const CLAVE_LOCALSTORAGE = 'foda-export-misiones:draft-v1';
@@ -25,6 +26,12 @@ const COLOR_SEMAFORO = {
   'Alarmante': '#c0392b',
   'sin datos': '#9aa0a6',
 };
+
+function nuevoId() {
+  return crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = (Math.random() * 16) | 0; return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16); });
+}
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function vacio() {
   return {
@@ -59,6 +66,9 @@ export function fodaApp() {
     dependenciasFoda: null,
     empresa: vacio().empresa,
     respuestas: {},
+    // Id estable de ESTA evaluación (UUID). Es lo que permite que guardar dos
+    // veces actualice en vez de duplicar, y abrirla desde otra estación.
+    assessmentId: nuevoId(),
     areaActualId: null,
     ambitoActual: 'interno', // 'interno' | 'externo'
     mostrarGuia: {}, // { itemId: bool }
@@ -73,6 +83,12 @@ export function fodaApp() {
     pendientesEnCola: 0,
     errorCola: '',
     guardandoEnServidor: false,
+    resultadoPrueba: null,
+    probando: false,
+    mostrarGuardadas: false,
+    guardadas: [],
+    cargandoGuardadas: false,
+    errorGuardadas: '',
 
     // --- inicialización ---------------------------------------------------
     async init() {
@@ -104,6 +120,7 @@ export function fodaApp() {
         const data = JSON.parse(raw);
         this.empresa = { ...vacio().empresa, ...(data.empresa || {}) };
         this.respuestas = data.respuestas || {};
+        if (UUID_RE.test(data.assessmentId || '')) this.assessmentId = data.assessmentId;
       } catch (e) {
         console.warn('No se pudo leer el borrador guardado en este navegador:', e);
       }
@@ -113,7 +130,7 @@ export function fodaApp() {
       try {
         localStorage.setItem(
           CLAVE_LOCALSTORAGE,
-          JSON.stringify({ empresa: this.empresa, respuestas: this.respuestas })
+          JSON.stringify({ empresa: this.empresa, respuestas: this.respuestas, assessmentId: this.assessmentId })
         );
       } catch (e) {
         console.warn('No se pudo guardar el borrador en este navegador:', e);
@@ -312,7 +329,7 @@ export function fodaApp() {
           observacion: r.observacion || '',
         }));
       return {
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        id: this.assessmentId,
         empresa: {
           ...this.empresa,
           mercadosObjetivo: String(this.empresa.mercadosObjetivo || '')
@@ -363,6 +380,7 @@ export function fodaApp() {
             };
           }
           this.respuestas = nuevasRespuestas;
+          this.assessmentId = UUID_RE.test(data.id || '') ? data.id : nuevoId();
           this.onCambio();
           this.mensaje = 'Evaluación importada correctamente.';
           setTimeout(() => (this.mensaje = ''), 4000);
@@ -397,9 +415,10 @@ export function fodaApp() {
       const r = await guardarEnServidor(this.apiConfig, this.construirAssessment());
       this.guardandoEnServidor = false;
       this.refrescarCola();
+      if (this.mostrarGuardadas) this.refrescarGuardadas();
       this.flash(
         r.pendientes === 0
-          ? 'Evaluación guardada en el servidor (recalculada y verificada).'
+          ? 'Evaluación guardada en el servidor (recalculada y verificada). Si ya existía, se actualizó.'
           : 'No se pudo guardar en el servidor: quedó en cola local y se reintenta. ' + this.errorCola
       );
     },
@@ -411,6 +430,54 @@ export function fodaApp() {
         this.flash(`Cola: ${r.enviados.length} enviada(s), ${r.pendientes} pendiente(s).`);
       }
     },
+    // --- evaluaciones guardadas en el servidor (listar / abrir) ------------
+    async probarConexionApi() {
+      this.probando = true;
+      this.resultadoPrueba = await probarConexion(this.apiConfig);
+      this.probando = false;
+    },
+    async abrirGuardadas() {
+      this.mostrarGuardadas = !this.mostrarGuardadas;
+      if (this.mostrarGuardadas) await this.refrescarGuardadas();
+    },
+    async refrescarGuardadas() {
+      if (!configCompleta(this.apiConfig)) {
+        this.errorGuardadas = 'Primero cargá la URL de la API y la API key en Configuración.';
+        this.guardadas = [];
+        return;
+      }
+      this.cargandoGuardadas = true;
+      this.errorGuardadas = '';
+      const r = await listarResumen(this.apiConfig);
+      this.cargandoGuardadas = false;
+      if (r.ok) this.guardadas = r.data;
+      else { this.guardadas = []; this.errorGuardadas = r.error; }
+    },
+    hayRespuestasLocales() {
+      return Object.values(this.respuestas).some((r) => r.situacion != null || r.impacto != null);
+    },
+    async abrirDesdeServidor(id) {
+      if (this.hayRespuestasLocales() && id !== this.assessmentId &&
+          !confirm('Abrir esta evaluación reemplaza lo que hay cargado en este navegador. Si no lo guardaste en el servidor ni lo exportaste, se pierde. ¿Continuar?')) return;
+      const r = await obtener(this.apiConfig, id);
+      if (!r.ok) { this.flash('No se pudo abrir: ' + r.error); return; }
+      const data = r.data;
+      this.empresa = {
+        ...vacio().empresa,
+        ...data.empresa,
+        relevadoPor: data.empresa.relevadoPor || '',
+        mercadosObjetivo: Array.isArray(data.empresa?.mercadosObjetivo) ? data.empresa.mercadosObjetivo.join(', ') : '',
+      };
+      const nuevas = {};
+      for (const x of data.respuestas || []) {
+        nuevas[x.itemId] = { situacion: x.situacion, impacto: x.impacto, observacion: x.observacion || '' };
+      }
+      this.respuestas = nuevas;
+      this.assessmentId = data.id;
+      this.mostrarGuardadas = false;
+      this.onCambio();
+      this.flash('Evaluación abierta desde el servidor: ' + (data.empresa?.nombre || data.id));
+    },
     imprimir() {
       window.print();
     },
@@ -419,6 +486,7 @@ export function fodaApp() {
       const limpio = vacio();
       this.empresa = limpio.empresa;
       this.respuestas = {};
+      this.assessmentId = nuevoId();
       localStorage.removeItem(CLAVE_LOCALSTORAGE);
       this.onCambio();
     },

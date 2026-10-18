@@ -240,7 +240,7 @@
   [x-cloak] { display: none !important; }
 
   @media print {
-    header.app-header, .toolbar, .config-api, nav.area-tabs, select.selector-area,
+    header.app-header, .toolbar, .config-api, .guardadas, nav.area-tabs, select.selector-area,
     .item-bloque, .nav-areas-botones, footer.app-footer, .mensaje-flash { display: none !important; }
     main.layout { grid-template-columns: 1fr !important; }
     body { background: white; }
@@ -267,6 +267,7 @@
     </label>
     <button @click="imprimir()">🖨 Imprimir resumen</button>
     <button @click="guardarEnServidor()" :disabled="guardandoEnServidor">☁ Guardar en servidor</button>
+    <button @click="abrirGuardadas()">📂 Evaluaciones guardadas</button>
     <button x-show="pendientesEnCola > 0" @click="reintentarCola()" title="Evaluaciones que no se pudieron enviar todavía">
       ⟳ Reintentar cola (<span x-text="pendientesEnCola"></span>)
     </button>
@@ -274,6 +275,44 @@
     <button @click="reiniciar()">🗑 Reiniciar</button>
   </div>
   <div class="mensaje-flash" x-show="mensaje" x-text="mensaje"></div>
+
+  <section class="card guardadas" x-show="mostrarGuardadas" x-cloak style="margin:8px 16px 0;padding:12px 16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <h2 style="margin:0;font-size:1rem;">Evaluaciones guardadas en el servidor (tu equipo)</h2>
+      <button @click="refrescarGuardadas()" :disabled="cargandoGuardadas" style="font-size:0.8rem;padding:6px 10px;">⟳ Actualizar</button>
+    </div>
+    <p x-show="cargandoGuardadas" style="font-size:0.85rem;">Cargando…</p>
+    <p x-show="errorGuardadas" x-text="errorGuardadas" style="font-size:0.85rem;color:#c0392b;"></p>
+    <p x-show="!cargandoGuardadas && !errorGuardadas && guardadas.length === 0" style="font-size:0.85rem;color:#555;">
+      Todavía no hay evaluaciones guardadas con esta API key.
+    </p>
+    <div style="overflow-x:auto;">
+      <table x-show="guardadas.length > 0" style="width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:8px;">
+        <thead>
+          <tr style="text-align:left;border-bottom:1px solid #ddd;">
+            <th style="padding:4px 6px;">Empresa</th><th style="padding:4px 6px;">Rubro</th>
+            <th style="padding:4px 6px;">Fecha</th><th style="padding:4px 6px;">Veredicto</th>
+            <th style="padding:4px 6px;">Últ. cambio</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="g in guardadas" :key="g.id">
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:4px 6px;" x-text="g.nombre || '(sin nombre)'"></td>
+              <td style="padding:4px 6px;" x-text="g.rubro"></td>
+              <td style="padding:4px 6px;" x-text="g.fecha"></td>
+              <td style="padding:4px 6px;" x-text="textoVeredicto(g.veredicto)"></td>
+              <td style="padding:4px 6px;" x-text="new Date(g.actualizadoEn).toLocaleString('es-AR')"></td>
+              <td style="padding:4px 6px;">
+                <button @click="abrirDesdeServidor(g.id)" style="font-size:0.78rem;padding:4px 8px;"
+                        x-text="g.id === assessmentId ? 'Recargar' : 'Abrir'"></button>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <section class="card config-api" x-show="mostrarConfig" x-cloak style="margin:8px 16px 0;padding:12px 16px;">
     <h2 style="margin:0 0 6px;font-size:1rem;">Configuración de la API (opcional)</h2>
@@ -291,6 +330,15 @@
       </label>
     </div>
     <button @click="guardarConfigApi()" style="margin-top:8px;">Guardar configuración</button>
+    <button @click="probarConexionApi()" :disabled="probando" style="margin-top:8px;">Probar conexión</button>
+    <ul x-show="resultadoPrueba" style="margin:8px 0 0;padding-left:18px;font-size:0.82rem;">
+      <template x-for="paso in (resultadoPrueba ? resultadoPrueba.pasos : [])" :key="paso">
+        <li x-text="paso"></li>
+      </template>
+    </ul>
+    <p x-show="resultadoPrueba" style="margin:6px 0 0;font-weight:600;font-size:0.85rem;"
+       :style="{color: resultadoPrueba && resultadoPrueba.ok ? '#1d6f42' : '#c0392b'}"
+       x-text="resultadoPrueba && resultadoPrueba.ok ? '✔ Conexión correcta' : '✖ Hay un problema (ver arriba)'"></p>
   </section>
 
   <div x-show="cargando" style="padding:30px; text-align:center; color:#5b6572;">Cargando cuestionario…</div>

@@ -19,9 +19,10 @@ GET /assessments/{id}
 
 from __future__ import annotations
 
+import uuid
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlmodel import Session, select
 
 from auth import equipo_actual
@@ -30,7 +31,7 @@ from cuestionario import dependencias_foda, questionnaire, respuestas_a_mapa
 from database import obtener_sesion
 from engine_replica import calcular_assessment
 from models import Assessment
-from schemas import AssessmentIn, AssessmentOut
+from schemas import AssessmentIn, AssessmentOut, AssessmentResumen
 
 router = APIRouter(prefix="/assessments", tags=["assessments"])
 
@@ -76,6 +77,90 @@ def crear_assessment(
     session.commit()
     session.refresh(registro)
     return _a_out(registro)
+
+
+def _id_valido(assessment_id: str) -> str:
+    try:
+        return str(uuid.UUID(assessment_id))
+    except ValueError:
+        raise HTTPException(
+            status_code=422,
+            detail="El id debe ser un UUID.",
+        )
+
+
+@router.put("/{assessment_id}", response_model=AssessmentOut)
+def guardar_assessment(
+    assessment_id: str,
+    body: AssessmentIn,
+    response: Response,
+    equipo_id: str = Depends(equipo_actual),
+    session: Session = Depends(obtener_sesion),
+) -> AssessmentOut:
+    """Upsert idempotente: el id lo elige el cliente (uno por evaluación).
+    Si ya existe en este equipo se ACTUALIZA (200); si no, se crea (201).
+    Evita duplicados cuando se aprieta "Guardar" varias veces o se
+    reintenta la cola. Siempre recalcula `resultados` en el servidor."""
+    assessment_id = _id_valido(assessment_id)
+    resultados = calcular_assessment(
+        questionnaire(), respuestas_a_mapa(body.respuestas), dependencias_foda=dependencias_foda()
+    )
+    ahora = datetime.now(timezone.utc)
+    registro = session.get(Assessment, assessment_id)
+    if registro is None:
+        registro = Assessment(id=assessment_id, equipo_id=equipo_id, creado_en=ahora,
+                              empresa={}, respuestas=[], resultados={},
+                              version_motor="", version_cuestionario="")
+        response.status_code = status.HTTP_201_CREATED
+    elif registro.equipo_id != equipo_id:
+        # No se revela si existe en otro equipo.
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ese id ya está en uso.")
+    registro.empresa = body.empresa.model_dump(mode="json")
+    registro.respuestas = [r.model_dump() for r in body.respuestas]
+    registro.resultados = resultados
+    registro.version_motor = VERSION_MOTOR
+    registro.version_cuestionario = body.versionCuestionario
+    registro.actualizado_en = ahora
+    session.add(registro)
+    session.commit()
+    session.refresh(registro)
+    return _a_out(registro)
+
+
+@router.get("/resumen", response_model=list[AssessmentResumen])
+def listar_resumen(
+    limit: int = 100,
+    offset: int = 0,
+    equipo_id: str = Depends(equipo_actual),
+    session: Session = Depends(obtener_sesion),
+) -> list[AssessmentResumen]:
+    limit = max(1, min(limit, 500))
+    consulta = (
+        select(Assessment)
+        .where(Assessment.equipo_id == equipo_id)
+        .order_by(Assessment.actualizado_en.desc())
+        .offset(offset)
+        .limit(limit)
+    )
+    filas = []
+    for a in session.exec(consulta).all():
+        res = a.resultados or {}
+        filas.append(
+            AssessmentResumen(
+                id=a.id,
+                nombre=str(a.empresa.get("nombre", "")),
+                rubro=str(a.empresa.get("rubro", "")),
+                perfil=str(a.empresa.get("perfil", "")),
+                fecha=str(a.empresa.get("fecha", "")),
+                veredicto=str(res.get("veredicto", "")),
+                indiceInterno=float(res.get("indiceInterno", 0)),
+                indiceExterno=float(res.get("indiceExterno", 0)),
+                cuadranteDominante=(res.get("matrizFoda") or {}).get("cuadranteDominante"),
+                creadoEn=a.creado_en.isoformat(),
+                actualizadoEn=a.actualizado_en.isoformat(),
+            )
+        )
+    return filas
 
 
 @router.get("", response_model=list[AssessmentOut])

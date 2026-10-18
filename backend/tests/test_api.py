@@ -129,3 +129,67 @@ def test_cors_permite_solo_origen_configurado(client):
         headers={"Origin": "https://evil.example.com", "Access-Control-Request-Method": "POST"},
     )
     assert "access-control-allow-origin" not in mal.headers
+
+
+# --- Fase 4b: upsert por id (PUT) y listado liviano ---------------------------
+
+import uuid  # noqa: E402
+
+
+def test_put_crea_y_luego_actualiza_sin_duplicar(client):
+    aid = str(uuid.uuid4())
+    r1 = client.put(f"/assessments/{aid}", json=_body(), headers=HEADERS_A)
+    assert r1.status_code == 201 and r1.json()["id"] == aid
+    cambiado = _body()
+    cambiado["empresa"]["nombre"] = "Nombre corregido"
+    r2 = client.put(f"/assessments/{aid}", json=cambiado, headers=HEADERS_A)
+    assert r2.status_code == 200
+    assert r2.json()["empresa"]["nombre"] == "Nombre corregido"
+    assert r2.json()["metadata"]["creadoEn"] == r1.json()["metadata"]["creadoEn"]
+    ids = [a["id"] for a in client.get("/assessments?limit=200", headers=HEADERS_A).json()]
+    assert ids.count(aid) == 1
+
+
+def test_put_recalcula_en_el_servidor(client):
+    aid = str(uuid.uuid4())
+    r = client.put(f"/assessments/{aid}", json=_body(), headers=HEADERS_A)
+    assert r.json()["resultados"]["veredicto"] == GOLDEN["esperado"]["veredicto"]
+
+
+def test_put_id_de_otro_equipo_da_409_y_no_lo_pisa(client):
+    aid = str(uuid.uuid4())
+    client.put(f"/assessments/{aid}", json=_body(), headers=HEADERS_A)
+    r = client.put(f"/assessments/{aid}", json=_body(), headers=HEADERS_B)
+    assert r.status_code == 409
+    assert client.get(f"/assessments/{aid}", headers=HEADERS_A).json()["empresa"]["nombre"] == "Empresa Demo SA"
+
+
+def test_put_id_invalido_da_422(client):
+    assert client.put("/assessments/no-es-uuid", json=_body(), headers=HEADERS_A).status_code == 422
+
+
+def test_put_sin_api_key_o_con_key_mala(client):
+    aid = str(uuid.uuid4())
+    assert client.put(f"/assessments/{aid}", json=_body(), headers={"X-API-Key": "x"}).status_code == 401
+
+
+def test_resumen_es_liviano_ordenado_y_aislado_por_equipo(client):
+    aid = str(uuid.uuid4())
+    client.put(f"/assessments/{aid}", json=_body(), headers=HEADERS_A)
+    filas = client.get("/assessments/resumen", headers=HEADERS_A).json()
+    fila = next(f for f in filas if f["id"] == aid)
+    assert fila["nombre"] == "Empresa Demo SA"
+    assert fila["veredicto"] == GOLDEN["esperado"]["veredicto"]
+    assert fila["cuadranteDominante"] == GOLDEN["esperado"]["matrizFoda"]["cuadranteDominante"]
+    assert "respuestas" not in fila and "resultados" not in fila
+    assert aid not in [f["id"] for f in client.get("/assessments/resumen", headers=HEADERS_B).json()]
+    assert client.get("/assessments/resumen").status_code == 422
+
+
+def test_cors_permite_put(client):
+    r = client.options(
+        "/assessments/x",
+        headers={"Origin": "https://foda-test.netlify.app", "Access-Control-Request-Method": "PUT",
+                 "Access-Control-Request-Headers": "X-API-Key,Content-Type"},
+    )
+    assert "PUT" in r.headers.get("access-control-allow-methods", "")

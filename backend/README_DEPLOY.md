@@ -88,6 +88,27 @@ En la máquina de desarrollo el proceso ocupó ~67 MB de RSS tras guardar una ev
 
 Publicar la carpeta `frontend/`. En el navegador de cada equipo: ⚙ Configuración → URL del túnel + API key → "Guardar en servidor". Sin configuración la app sigue funcionando offline.
 
+## Actualizar el backend después de un cambio
+
+```bash
+cd ~/foda-export-misiones && git pull
+cd backend && ./venv/bin/pip install -r requirements.txt
+sudo systemctl restart foda-api
+curl http://127.0.0.1:8000/health
+```
+
+El túnel no hace falta reiniciarlo (la URL no cambia). Las tablas existentes se conservan: este cambio no modifica el esquema de la base.
+
+## Borrar datos de prueba antes del piloto
+
+```bash
+sudo apt-get install -y sqlite3
+sqlite3 ~/foda-export-misiones/backend/foda.db "select id, json_extract(empresa,'$.nombre'), actualizado_en from assessments;"
+sqlite3 ~/foda-export-misiones/backend/foda.db "delete from assessments where id = '<ID>';"
+```
+
+Hacé un backup antes de borrar (`scripts/backup_db.sh`).
+
 ## Probar localmente (sin VM)
 
 ```bash

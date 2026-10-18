@@ -56,3 +56,20 @@ class AssessmentOut(BaseModel):
     metadata: dict[str, Any]
 
     model_config = {"from_attributes": True}
+
+
+class AssessmentResumen(BaseModel):
+    """Fila liviana para listar (sin las 110 respuestas ni los resultados
+    completos): lo justo para elegir cuál abrir."""
+
+    id: str
+    nombre: str
+    rubro: str
+    perfil: str
+    fecha: str
+    veredicto: str
+    indiceInterno: float
+    indiceExterno: float
+    cuadranteDominante: Optional[str] = None
+    creadoEn: str
+    actualizadoEn: str

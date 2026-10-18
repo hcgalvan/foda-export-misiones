@@ -16,7 +16,7 @@ Este documento consolida las decisiones de arquitectura, stack tecnológico, est
 | Modelo de datos (Fase 4) | `questionnaire.schema.json` **implementado y cerrado** (Fase 1 del plan de trabajo: `scripts/xlsx_to_json.py`, 110 ítems/19 áreas verificados); `assessment.schema.json` **alineado con la salida real del motor** (15/10/2026, ver §7) |
 | Motor de cálculo (Fase 5 de esta sección / Fase 2 del plan de trabajo) | `calcularItem`/`calcularArea`/`calcularViabilidad` **validados contra tests golden** (11/10/2026). `calcularMatrizFoda` (cuadrante dominante FO/FA/DO/DA) **también validado contra tests golden** (13/10/2026) — resultó ser 100% automático, ver §5 |
 | Frontend MVP (Fase 3 del plan) | Implementado y verificado con navegador automatizado: las 110 respuestas del DEMO cargadas por la UI reproducen los índices, el veredicto y los cruces FO/FA/DO/DA del Excel |
-| Backend y persistencia (Fase 4 del plan) | **Implementado y probado localmente** (14/10/2026): FastAPI + SQLModel/SQLite, `engine_replica.py` con los mismos tests golden que el JS (15/15), API 8/8, cliente con cola de reintento 7/7, prueba end-to-end navegador↔API (incl. CORS, caída de red, API key inválida). **Pendiente de verificar en la VM real** (consumo junto al bot, túnel, systemd, backup): ver `backend/README_DEPLOY.md` |
+| Backend y persistencia (Fase 4 del plan) | **Implementado y probado localmente** (14/10/2026): FastAPI + SQLModel/SQLite, `engine_replica.py` con los mismos tests golden que el JS (15/15), API 8/8, cliente con cola de reintento 7/7, prueba end-to-end navegador↔API (incl. CORS, caída de red, API key inválida). **Verificado en la VM real (15/10/2026):** API y túnel como servicios systemd, consumo de la API ≈ 54 MB (pico 64 MB, límite 200 MB), guardado desde Netlify OK. **Pendiente:** backup con restauración probada. 18/10/2026: se agregó identidad estable por evaluación (`PUT /assessments/{id}` idempotente), listado liviano (`GET /assessments/resumen`) y, en el frontend, "Evaluaciones guardadas" + "Probar conexión" (ver §8) |
 
 ---
 
@@ -661,3 +661,22 @@ Implementado en `calcularMatrizFoda` (ver código más abajo), usando una tabla 
 ## 7. Schema de resultados alineado con el motor — **resuelto** (15/10/2026)
 
 `data/schema/assessment.schema.json` describía `resultados.cuadranteDominante` y `resultados.orientacionEstrategica` como campos sueltos, pero el motor (JS y Python) los entrega anidados en `resultados.matrizFoda` (con `cruces`, `sinConsiderar`, `totalCruces`, `porcentajes`, `burbujas`). Como el schema tenía `additionalProperties: false`, un JSON exportado no validaba. El autor decidió (15/10/2026) actualizarlo a la forma anidada. Cambios: se agrega `resultados.matrizFoda` (opcional, con su estructura completa), se quitan los dos campos sueltos, se agrega `porArea[].itemsTotales` y se elimina `porItem[].situacionPonderada` (sin contraparte en el Excel, ver §4.1). `backend/tests/test_schema.py` valida que la salida real del motor (escenarios DEMO, vacío y "No corresponde") cumpla el schema y que la forma plana vieja ya no valide, para que no vuelvan a divergir. Los JSON exportados antes de este cambio con la forma plana no validan; en el estado actual del proyecto no hay evaluaciones reales guardadas, así que no hace falta migrar nada.
+
+---
+
+## 8. Identidad de la evaluación y ida y vuelta con el servidor (18/10/2026)
+
+**Problema detectado en la prueba real:** el MVP solo *escribía* en el servidor (`POST` creaba un registro nuevo cada vez, sin listar ni abrir). Con la misma URL y API key, otra estación no veía nada, y apretar "Guardar" dos veces (o reintentar la cola) duplicaba la evaluación.
+
+**Decisión:** cada evaluación tiene un **id estable (UUID)** generado en el navegador (`assessmentId`, persistido en el borrador, en el JSON exportado y en el servidor).
+
+| Endpoint | Uso |
+|---|---|
+| `PUT /assessments/{id}` | Guardar. Idempotente: crea (201) o actualiza (200); recalcula `resultados` en el servidor. Si el id pertenece a otro equipo: 409 |
+| `GET /assessments/resumen` | Lista liviana del equipo (nombre, rubro, fecha, veredicto, índices, cuadrante, fechas), ordenada por último cambio |
+| `GET /assessments/{id}` | Evaluación completa, para abrirla en cualquier estación |
+| `POST /assessments` | Se mantiene (crea con id generado por el servidor); el frontend ya no lo usa |
+
+Frontend: la cola de reintento guarda **una sola entrada por id** (la versión más nueva reemplaza a la vieja). "Evaluaciones guardadas" lista y abre desde el servidor; "Probar conexión" distingue túnel/URL caída, CORS y API key inválida. Importar un JSON conserva su `id`; "Reiniciar" genera uno nuevo.
+
+**Límites conocidos (no resueltos a propósito):** (1) si dos estaciones editan la *misma* evaluación, gana la última en guardar (sin control de versiones); (2) no hay borrado desde la app; (3) el aislamiento es por equipo (API key), no por usuario (ver §6, ítem 1).

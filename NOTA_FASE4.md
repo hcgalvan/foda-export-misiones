@@ -17,9 +17,13 @@ backend/tests/test_schema.py       → nuevo (ya incluido en backend/)
 
 Agregá a `.gitignore` (si no está): `*.db`, `.env`, `venv/`, `__pycache__/`, `.pytest_cache/`.
 
+## Actualización 18/10/2026 — ida y vuelta con el servidor
+
+Faltaba que el frontend **leyera** lo guardado. Ahora: botón 📂 *Evaluaciones guardadas* (lista y abre desde el servidor con la misma URL + key), *Probar conexión* en ⚙ Configuración, y guardado idempotente por id (`PUT`): guardar dos veces actualiza, no duplica. Detalle y límites en `ARCHITECTURE.md §8`. Archivos que cambian: `backend/` (routers, schemas, main, tests), `frontend/index.html`, `frontend/src/app.js`, `frontend/src/api.js`, `tests/api.test.mjs`. Tests: `pytest` 35/35 y `node --test` 26/26, más una prueba con dos navegadores aislados (dos "PC") contra el backend real.
+
 ## Qué hace
 
-- `POST /assessments`: el frontend manda empresa + respuestas; **el servidor recalcula todo con `engine_replica.py`** y persiste. Si el cliente manda un `resultados` inventado, se ignora (hay un test que lo verifica).
+- `PUT /assessments/{id}` (y `POST` sin id): el frontend manda empresa + respuestas; **el servidor recalcula todo con `engine_replica.py`** y persiste. Si el cliente manda un `resultados` inventado, se ignora (hay un test que lo verifica).
 - `GET /assessments` y `GET /assessments/{id}`: solo ven lo de su propio equipo (API key por equipo en el header `X-API-Key`).
 - CORS restringido al dominio de Netlify por variable de entorno; `/health` para chequear el proceso.
 - Frontend: si no hay API configurada o no hay red, la evaluación queda en una **cola local** y se reintenta (al apretar el botón o al volver la conexión). Un error 401/422 queda en la cola marcado, sin perderse.
