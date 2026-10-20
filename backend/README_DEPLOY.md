@@ -19,7 +19,7 @@ El backend lee `questionnaire.json` y `dependenciasFoda.json` de `../frontend/sr
 ## 2. Swap de 2 GB (una sola vez)
 
 ```bash
-chmod +x deploy/setup_swap.sh scripts/backup_db.sh deploy/imprimir_url_tunnel.sh
+chmod +x deploy/setup_swap.sh deploy/imprimir_url_tunnel.sh
 sudo ./deploy/setup_swap.sh
 ```
 
@@ -61,17 +61,68 @@ sudo systemctl daemon-reload && sudo systemctl enable --now foda-tunnel
 
 La URL cambia cada vez que el túnel arranca. Antes de cada jornada de entrevistas corré `imprimir_url_tunnel.sh` y, si cambió, cada equipo la actualiza en la app (⚙ Configuración). No hace falta re-deploy de Netlify.
 
-## 6. Backup diario
+## 6. Backup diario a Google Cloud Storage + restauración probada
+
+Los scripts (`scripts/backup_db.py`, `scripts/restore_db.py`) usan solo Python estándar: **no necesitan el comando `sqlite3`**. Sí necesitan `gcloud` en la VM (en una VM de GCP ya viene instalado).
+
+**Qué hace el backup:** copia consistente de la base (aunque la API esté escribiendo) → verifica `integrity_check` y que el JSON de todas las filas sea válido → comprime → manifiesto con SHA-256 → sube a `gs://backup-bot-academico/foda/` y comprueba el tamaño remoto. Si algo falla, sale con código ≠ 0 y queda escrito en el log. Código 2 = el backup local está bien pero falló la subida.
+
+### 6.1 Verificar que la VM puede escribir en el bucket (una vez)
 
 ```bash
-sudo apt-get install -y sqlite3
-mkdir -p ~/foda-backups
-crontab -e
-# agregar:
-0 3 * * * /home/tuusuario/foda-export-misiones/backend/scripts/backup_db.sh /home/tuusuario/foda-export-misiones/backend/foda.db /home/tuusuario/foda-backups >> /home/tuusuario/foda-backups/backup.log 2>&1
+gcloud storage ls gs://backup-bot-academico/
+echo prueba > /tmp/prueba.txt
+gcloud storage cp /tmp/prueba.txt gs://backup-bot-academico/foda/prueba.txt
+gcloud storage rm gs://backup-bot-academico/foda/prueba.txt
 ```
 
-Conserva 14 días (`DIAS_A_CONSERVAR=30` para cambiarlo). **Probá una restauración** (copiar un backup a otro nombre y abrirlo con `sqlite3`) antes de confiar en él. Los backups tienen datos de empresas: nunca al repo público.
+Si da `403` o "insufficient scopes": la cuenta de servicio de la VM no tiene permiso de escritura. Es **permiso de la VM** (no del script). Se arregla en Compute Engine → editar la VM (apagada) → "Acceso a las API de Cloud" → Storage: *Lectura y escritura*, y en el bucket dar a esa cuenta de servicio el rol *Storage Object Admin* (o *Creator + Viewer*). Como el bucket lo usa tu bot, probablemente ya está resuelto: confirmalo con el comando anterior.
+
+Además, en la consola → bucket → pestaña *Permisos*, comprobá que **no** esté público (`allUsers`/`allAuthenticatedUsers`): tendrá datos de empresas.
+
+### 6.2 Primer backup manual
+
+```bash
+mkdir -p ~/foda-backups
+cd ~/foda-export-misiones/backend/scripts
+python3 backup_db.py --db ~/foda-export-misiones/backend/foda.db --dir ~/foda-backups --gcs gs://backup-bot-academico/foda
+echo "código de salida: $?"          # debe ser 0
+gcloud storage ls gs://backup-bot-academico/foda/
+```
+
+### 6.3 Restauración de prueba (no toca la base viva)
+
+```bash
+python3 restore_db.py verificar latest --gcs gs://backup-bot-academico/foda
+```
+
+Debe terminar con `VERIFICACIÓN OK: N evaluaciones ... integrity_check = ok, JSON válido` y `Modo verificar: no se tocó la base viva`. Esto descarga el último backup **desde Google**, lo descomprime en una carpeta temporal y lo inspecciona. Es la prueba de que el backup sirve de verdad.
+
+### 6.4 Restauración real (ensayo del desastre)
+
+Solo cuando quieras recuperar datos, o una vez para ensayar (no hay riesgo: la base actual se guarda aparte):
+
+```bash
+python3 restore_db.py aplicar latest --gcs gs://backup-bot-academico/foda --db ~/foda-export-misiones/backend/foda.db
+```
+
+Detiene `foda-api`, mueve la base actual a `foda.db.pre-restore-<fecha>`, instala la restaurada, reinicia y consulta `/health`. Para volver atrás: detener el servicio, mover la `.pre-restore-...` de vuelta a `foda.db` y reiniciar. Para restaurar uno específico en vez de `latest`: `gs://backup-bot-academico/foda/foda_YYYYMMDD_HHMMSS.db.gz`. (`aplicar` usa `sudo systemctl`; hace falta sudo sin contraseña o correrlo con tu usuario habitual en la VM de GCP, que ya lo tiene.)
+
+### 6.5 Programarlo (cron, 03:00 hora de la VM)
+
+```bash
+crontab -e
+# agregar (una sola línea):
+0 3 * * * PATH=/usr/local/bin:/usr/bin:/bin /usr/bin/python3 /home/hcgalvantech/foda-export-misiones/backend/scripts/backup_db.py --db /home/hcgalvantech/foda-export-misiones/backend/foda.db --dir /home/hcgalvantech/foda-backups --gcs gs://backup-bot-academico/foda >> /home/hcgalvantech/foda-backups/backup.log 2>&1
+```
+
+Al día siguiente: `tail -5 ~/foda-backups/backup.log` y `gcloud storage ls gs://backup-bot-academico/foda/`. (Si `gcloud` está en otra ruta, mirá `which gcloud` y ajustá el `PATH`.)
+
+### 6.6 Retención
+
+Local: 14 días (`--keep-days 30` para cambiarlo). En Google los archivos **no se borran solos** (pesan unos pocos KB cada uno). Si querés limpieza automática, crear una regla de ciclo de vida **solo para el prefijo `foda/`** (para no tocar los backups del bot): en el bucket → *Ciclo de vida* → agregar regla → Eliminar objetos con antigüedad > 90 días → condición *Prefijo: foda/*. Revisá la vista previa antes de guardar.
+
+Los backups contienen datos de empresas: nunca al repo público.
 
 ## 7. Medir el consumo junto al bot (cierre de Fase 4)
 
@@ -107,7 +158,7 @@ sqlite3 ~/foda-export-misiones/backend/foda.db "select id, json_extract(empresa,
 sqlite3 ~/foda-export-misiones/backend/foda.db "delete from assessments where id = '<ID>';"
 ```
 
-Hacé un backup antes de borrar (`scripts/backup_db.sh`).
+Hacé un backup antes de borrar (sección 6.2).
 
 ## Probar localmente (sin VM)
 

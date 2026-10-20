@@ -16,7 +16,7 @@ Este documento consolida las decisiones de arquitectura, stack tecnológico, est
 | Modelo de datos (Fase 4) | `questionnaire.schema.json` **implementado y cerrado** (Fase 1 del plan de trabajo: `scripts/xlsx_to_json.py`, 110 ítems/19 áreas verificados); `assessment.schema.json` **alineado con la salida real del motor** (15/10/2026, ver §7) |
 | Motor de cálculo (Fase 5 de esta sección / Fase 2 del plan de trabajo) | `calcularItem`/`calcularArea`/`calcularViabilidad` **validados contra tests golden** (11/10/2026). `calcularMatrizFoda` (cuadrante dominante FO/FA/DO/DA) **también validado contra tests golden** (13/10/2026) — resultó ser 100% automático, ver §5 |
 | Frontend MVP (Fase 3 del plan) | Implementado y verificado con navegador automatizado: las 110 respuestas del DEMO cargadas por la UI reproducen los índices, el veredicto y los cruces FO/FA/DO/DA del Excel |
-| Backend y persistencia (Fase 4 del plan) | **Implementado y probado localmente** (14/10/2026): FastAPI + SQLModel/SQLite, `engine_replica.py` con los mismos tests golden que el JS (15/15), API 8/8, cliente con cola de reintento 7/7, prueba end-to-end navegador↔API (incl. CORS, caída de red, API key inválida). **Verificado en la VM real (15/10/2026):** API y túnel como servicios systemd, consumo de la API ≈ 54 MB (pico 64 MB, límite 200 MB), guardado desde Netlify OK. **Pendiente:** backup con restauración probada. 18/10/2026: se agregó identidad estable por evaluación (`PUT /assessments/{id}` idempotente), listado liviano (`GET /assessments/resumen`) y, en el frontend, "Evaluaciones guardadas" + "Probar conexión" (ver §8) |
+| Backend y persistencia (Fase 4 del plan) | **Implementado y probado localmente** (14/10/2026): FastAPI + SQLModel/SQLite, `engine_replica.py` con los mismos tests golden que el JS (15/15), API 8/8, cliente con cola de reintento 7/7, prueba end-to-end navegador↔API (incl. CORS, caída de red, API key inválida). **Verificado en la VM real (15/10/2026):** API y túnel como servicios systemd, consumo de la API ≈ 54 MB (pico 64 MB, límite 200 MB), guardado desde Netlify OK. **19/10/2026:** backup diario a Cloud Storage (`backup_db.py`) y restauración (`restore_db.py`: `verificar` / `aplicar`) implementados y probados con un gcloud simulado (pytest 46/46). **Pendiente (en la VM):** confirmar permisos de escritura en `gs://backup-bot-academico`, activar el cron y correr una restauración `verificar` desde el bucket real; con eso se cierra Fase 4. 18/10/2026: se agregó identidad estable por evaluación (`PUT /assessments/{id}` idempotente), listado liviano (`GET /assessments/resumen`) y, en el frontend, "Evaluaciones guardadas" + "Probar conexión" (ver §8) |
 
 ---
 
@@ -384,7 +384,7 @@ foda-export-misiones/
 │   ├── routers/                 # assessments.py: POST/GET
 │   ├── tests/                   # test_engine_replica.py (golden), test_api.py
 │   ├── deploy/                  # foda-api.service, foda-tunnel.service, setup_swap.sh, imprimir_url_tunnel.sh
-│   ├── scripts/                 # backup_db.sh
+│   ├── scripts/                 # backup_db.py, backup_lib.py, restore_db.py
 │   └── README_DEPLOY.md
 ├── docs/
 │   ├── metodologia/             # EXPLICACION.md versionado
