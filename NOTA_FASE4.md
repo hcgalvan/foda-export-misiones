@@ -29,6 +29,10 @@ Reemplaza `scripts/backup_db.sh` (se borra) por `scripts/backup_db.py`, `scripts
 
 **NO verificado (lo cerrás vos en la VM):** permisos reales de escritura en `gs://backup-bot-academico`, el cron, y una restauración desde el bucket real. Los comandos exactos están en §6.1–6.5.
 
+## Actualización 27/10/2026 — Reporte imprimible
+
+Nuevos: `frontend/reporte.html`, `frontend/src/report.js`, `tests/report.test.mjs`, `tests/fixtures/ejemplo_prueba_1.json`. Cambia: `frontend/index.html` (botón "📄 Reporte"), `ARCHITECTURE.md` (§9). `node --test tests/*.mjs` → 34/34. Ver `ARCHITECTURE.md §9` (incluye decisiones abiertas).
+
 ## Qué hace
 
 - `PUT /assessments/{id}` (y `POST` sin id): el frontend manda empresa + respuestas; **el servidor recalcula todo con `engine_replica.py`** y persiste. Si el cliente manda un `resultados` inventado, se ignora (hay un test que lo verifica).

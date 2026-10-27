@@ -680,3 +680,15 @@ Implementado en `calcularMatrizFoda` (ver código más abajo), usando una tabla 
 Frontend: la cola de reintento guarda **una sola entrada por id** (la versión más nueva reemplaza a la vieja). "Evaluaciones guardadas" lista y abre desde el servidor; "Probar conexión" distingue túnel/URL caída, CORS y API key inválida. Importar un JSON conserva su `id`; "Reiniciar" genera uno nuevo.
 
 **Límites conocidos (no resueltos a propósito):** (1) si dos estaciones editan la *misma* evaluación, gana la última en guardar (sin control de versiones); (2) no hay borrado desde la app; (3) el aislamiento es por equipo (API key), no por usuario (ver §6, ítem 1).
+
+## 9. Reporte "Diagnóstico de viabilidad exportadora" (27/10/2026)
+
+**Qué es.** Página `frontend/reporte.html` + módulo `frontend/src/report.js`, sin librerías nuevas. Se abre con el botón "📄 Reporte" de la app (toma la evaluación cargada en ese navegador) o con "Abrir un JSON exportado". "Imprimir / guardar como PDF" usa el diálogo del navegador (A4). Contenido: ficha de la empresa, veredicto con índices, gráfico y tabla por área, matriz FODA con cuadrante dominante, factores clave (debilidades, amenazas, fortalezas, oportunidades), criterio favorable de las principales debilidades, observaciones, Anexo A (110 ítems) y Anexo B (sin responder / "No corresponde"), nota metodológica con la atribución a Vogel.
+
+**Principio.** El reporte **recalcula** con `calc.js` a partir de las respuestas (no confía en el bloque `resultados` del archivo) y avisa si difiere de lo guardado. Test `tests/report.test.mjs` (8 casos) usa el JSON real exportado desde Netlify el 27/10/2026 (`tests/fixtures/ejemplo_prueba_1.json`, empresa ficticia "Prueba 1"): índices 5,50 / 5,34, `VIABLE_CON_CONDICIONES`, cuadrante `DA` y las 19 áreas coinciden con lo que calculó la app.
+
+**Decisiones abiertas (del autor).**
+1. *Textos de lectura por veredicto* (`TEXTO_VEREDICTO` en `report.js`) y los títulos de sección son redacción del asistente: el autor debe validarlos o reemplazarlos antes de publicar. No están en el Excel.
+2. *Orden de los factores clave*: impacto desc., luego puntaje asc. (debilidades/amenazas) o desc. (fortalezas/oportunidades); se muestran 8 por tipo. Es criterio de presentación, no del modelo, y el propio reporte lo declara.
+3. *"No corresponde" en el puntaje*: el motor (validado contra el Excel) computa un ítem con situación "No corresp." con peso 1 (≈1 punto, cuenta como alerta y entra en la ponderación del área), pero lo excluye de la matriz FODA ("sin considerar"). Es una rareza heredada del Excel; se reproduce y el reporte la advierte. Decidir si se mantiene o si "No corresponde" debe salir del promedio del área.
+4. El reporte no incluye aún recomendaciones de acción redactadas: lista el "criterio favorable" del instrumento como guía.

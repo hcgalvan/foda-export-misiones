@@ -1,0 +1,1345 @@
+{
+  "id": "43830dfc-aca5-422e-b6ee-3d1c65a8dfa5",
+  "empresa": {
+    "nombre": "Prueba 1",
+    "rubro": "Industria Forestal",
+    "mercadosObjetivo": [
+      "Brasil"
+    ],
+    "perfil": "no_exporta_evalua_iniciar",
+    "relevadoPor": "Equipo 1",
+    "fecha": "2026-10-27",
+    "autorizaRecontacto": false
+  },
+  "respuestas": [
+    {
+      "itemId": "IA1",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IA2",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IA3",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IA4",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IA5",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB1",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB2",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB3",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB4",
+      "situacion": 4,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB5",
+      "situacion": 4,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB6",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IB7",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IC1",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IC2",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IC3",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IC4",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IC5",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "ID1",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "ID2",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "ID3",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "ID4",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "ID5",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IE1",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IE2",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IE3",
+      "situacion": 0,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IE4",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IE5",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IE6",
+      "situacion": 2,
+      "impacto": 0,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF1",
+      "situacion": 3,
+      "impacto": 0,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF2",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF3",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF4",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF5",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF6",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF7",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IF8",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG1",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG2",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG3",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG4",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG5",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG6",
+      "situacion": 3,
+      "impacto": 0,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG7",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG8",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IG9",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IH1",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IH2",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IH3",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IH4",
+      "situacion": 4,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IH5",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IH6",
+      "situacion": 4,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "II1",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "II2",
+      "situacion": 0,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "II3",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "II4",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "II5",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "II6",
+      "situacion": 4,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ1",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ2",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ3",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ4",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ5",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ6",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "IJ7",
+      "situacion": 0,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EA1",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EA2",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EA3",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EA4",
+      "situacion": 1,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "EA5",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EA6",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB1",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB2",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB3",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB4",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB5",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB6",
+      "situacion": 1,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB7",
+      "situacion": 3,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "EB8",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EC1",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EC2",
+      "situacion": 4,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EC3",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EC4",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EC5",
+      "situacion": 4,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "ED1",
+      "situacion": 2,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "ED2",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "ED3",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "ED4",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE1",
+      "situacion": 2,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE2",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE3",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE4",
+      "situacion": 1,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE5",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE6",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EE7",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EF1",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EF2",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EF3",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EF4",
+      "situacion": 3,
+      "impacto": 1,
+      "observacion": ""
+    },
+    {
+      "itemId": "EF5",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EF6",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EG1",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EG2",
+      "situacion": 2,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EG3",
+      "situacion": 2,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EG4",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EH1",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EH2",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EI1",
+      "situacion": 3,
+      "impacto": 2,
+      "observacion": ""
+    },
+    {
+      "itemId": "EI2",
+      "situacion": 1,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EI3",
+      "situacion": 3,
+      "impacto": 3,
+      "observacion": ""
+    },
+    {
+      "itemId": "EI4",
+      "situacion": 1,
+      "impacto": 2,
+      "observacion": ""
+    }
+  ],
+  "resultados": {
+    "porItem": [
+      {
+        "itemId": "IA1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IA2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IA3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IA4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IA5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IB3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB4",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IB5",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IB6",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IB7",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IC2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC3",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IC5",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "ID1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "ID2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ID3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "ID4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "ID5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IE1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE3",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "IE4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE5",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IE6",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IF7",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IF8",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG2",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IG7",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG8",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IG9",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IH1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IH2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IH3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IH4",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IH5",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IH6",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "II1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "II2",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "II3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "II4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "II5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "II6",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "IJ1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IJ2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IJ3",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IJ4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "IJ5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "IJ6",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "IJ7",
+        "puntos0a10": 0.9999499999999999
+      },
+      {
+        "itemId": "EA1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EA2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EA3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EA4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EA5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EA6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EB1",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EB2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EB6",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EB7",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EB8",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EC1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EC2",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "EC3",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EC4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EC5",
+        "puntos0a10": 9.999849999999999
+      },
+      {
+        "itemId": "ED1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ED2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "ED3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "ED4",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE1",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE4",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EE5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE6",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EE7",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF1",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EF2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EF4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EF5",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EF6",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EG1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EG2",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EG3",
+        "puntos0a10": 4.9999
+      },
+      {
+        "itemId": "EG4",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EH1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EH2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EI1",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EI2",
+        "puntos0a10": 2.9999000000000002
+      },
+      {
+        "itemId": "EI3",
+        "puntos0a10": 6.999899999999999
+      },
+      {
+        "itemId": "EI4",
+        "puntos0a10": 2.9999000000000002
+      }
+    ],
+    "porArea": [
+      {
+        "areaId": "IA",
+        "ambito": "interno",
+        "puntaje": 6.18,
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 2,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IB",
+        "ambito": "interno",
+        "puntaje": 6.52,
+        "itemsRespondidos": 7,
+        "itemsTotales": 7,
+        "alertas": 4,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IC",
+        "ambito": "interno",
+        "puntaje": 3.89,
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 4,
+        "semaforo": "Alarmante"
+      },
+      {
+        "areaId": "ID",
+        "ambito": "interno",
+        "puntaje": 5.47,
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 3,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IE",
+        "ambito": "interno",
+        "puntaje": 5.82,
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 2,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IF",
+        "ambito": "interno",
+        "puntaje": 6.19,
+        "itemsRespondidos": 8,
+        "itemsTotales": 8,
+        "alertas": 3,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IG",
+        "ambito": "interno",
+        "puntaje": 5.3,
+        "itemsRespondidos": 9,
+        "itemsTotales": 9,
+        "alertas": 6,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IH",
+        "ambito": "interno",
+        "puntaje": 6.19,
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 3,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "II",
+        "ambito": "interno",
+        "puntaje": 5.65,
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 3,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "IJ",
+        "ambito": "interno",
+        "puntaje": 3.78,
+        "itemsRespondidos": 7,
+        "itemsTotales": 7,
+        "alertas": 6,
+        "semaforo": "Alarmante"
+      },
+      {
+        "areaId": "EA",
+        "ambito": "externo",
+        "puntaje": 5.57,
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 4,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "EB",
+        "ambito": "externo",
+        "puntaje": 4.92,
+        "itemsRespondidos": 8,
+        "itemsTotales": 8,
+        "alertas": 6,
+        "semaforo": "Alarmante"
+      },
+      {
+        "areaId": "EC",
+        "ambito": "externo",
+        "puntaje": 7.06,
+        "itemsRespondidos": 5,
+        "itemsTotales": 5,
+        "alertas": 2,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "ED",
+        "ambito": "externo",
+        "puntaje": 4.45,
+        "itemsRespondidos": 4,
+        "itemsTotales": 4,
+        "alertas": 4,
+        "semaforo": "Alarmante"
+      },
+      {
+        "areaId": "EE",
+        "ambito": "externo",
+        "puntaje": 4.82,
+        "itemsRespondidos": 7,
+        "itemsTotales": 7,
+        "alertas": 7,
+        "semaforo": "Alarmante"
+      },
+      {
+        "areaId": "EF",
+        "ambito": "externo",
+        "puntaje": 5.56,
+        "itemsRespondidos": 6,
+        "itemsTotales": 6,
+        "alertas": 3,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "EG",
+        "ambito": "externo",
+        "puntaje": 6,
+        "itemsRespondidos": 4,
+        "itemsTotales": 4,
+        "alertas": 2,
+        "semaforo": "Regular"
+      },
+      {
+        "areaId": "EH",
+        "ambito": "externo",
+        "puntaje": 4.71,
+        "itemsRespondidos": 2,
+        "itemsTotales": 2,
+        "alertas": 1,
+        "semaforo": "Alarmante"
+      },
+      {
+        "areaId": "EI",
+        "ambito": "externo",
+        "puntaje": 5,
+        "itemsRespondidos": 4,
+        "itemsTotales": 4,
+        "alertas": 2,
+        "semaforo": "Alarmante"
+      }
+    ],
+    "indiceInterno": 5.5,
+    "indiceExterno": 5.34,
+    "veredicto": "VIABLE_CON_CONDICIONES",
+    "matrizFoda": {
+      "cruces": {
+        "FO": 17,
+        "FA": 29,
+        "DO": 12,
+        "DA": 32
+      },
+      "sinConsiderar": 3,
+      "totalCruces": 90,
+      "porcentajes": {
+        "FO": 0.18888888888888888,
+        "FA": 0.32222222222222224,
+        "DO": 0.13333333333333333,
+        "DA": 0.35555555555555557
+      },
+      "cuadranteDominante": "DA",
+      "orientacionEstrategica": "Supervivencia: reducir debilidades y evitar amenazas; no exportar aún.",
+      "burbujas": [
+        {
+          "cuadrante": "FO",
+          "x": 4,
+          "y": 6,
+          "tamano": 0.18888888888888888
+        },
+        {
+          "cuadrante": "FA",
+          "x": 8,
+          "y": 6,
+          "tamano": 0.32222222222222224
+        },
+        {
+          "cuadrante": "DO",
+          "x": 4,
+          "y": 2,
+          "tamano": 0.13333333333333333
+        },
+        {
+          "cuadrante": "DA",
+          "x": 8,
+          "y": 2,
+          "tamano": 0.35555555555555557
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "versionMotor": "1.0.0-fase4",
+    "versionCuestionario": "1.1.0",
+    "creadoEn": "2026-10-27T11:45:05.447Z"
+  }
+}

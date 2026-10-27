@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diagnóstico de viabilidad exportadora</title>
+<style id="estilos"></style>
+</head>
+<body>
+  <div class="barra-acciones">
+    <strong>Reporte</strong>
+    <button id="btn-imprimir" type="button">🖨 Imprimir / guardar como PDF</button>
+    <label>⬆ Abrir un JSON exportado<input id="archivo" type="file" accept="application/json" /></label>
+    <a href="./index.html" style="color:#fff;margin-left:auto;">← Volver a la app</a>
+  </div>
+  <main class="hoja" id="hoja"><p>Cargando…</p></main>
+
+  <script type="module">
+    import { construirReporte, reporteHTML, CSS_REPORTE, esc } from './src/report.js';
+
+    const CLAVE_LOCALSTORAGE = 'foda-export-misiones:draft-v1'; // misma que app.js
+    const hoja = document.getElementById('hoja');
+    document.getElementById('estilos').textContent = CSS_REPORTE;
+
+    const [q, dep] = await Promise.all([
+      fetch('./src/data/questionnaire.json').then((r) => r.json()),
+      fetch('./src/data/dependenciasFoda.json').then((r) => r.json()),
+    ]);
+
+    function desdeBorrador() {
+      try {
+        const d = JSON.parse(localStorage.getItem(CLAVE_LOCALSTORAGE) || 'null');
+        if (!d) return null;
+        const respuestas = Object.entries(d.respuestas || {})
+          .filter(([, r]) => r.situacion != null || r.impacto != null)
+          .map(([itemId, r]) => ({ itemId, situacion: r.situacion, impacto: r.impacto, observacion: r.observacion || '' }));
+        const e = d.empresa || {};
+        const mercados = Array.isArray(e.mercadosObjetivo) ? e.mercadosObjetivo
+          : String(e.mercadosObjetivo || '').split(',').map((s) => s.trim()).filter(Boolean);
+        return { id: d.assessmentId, empresa: { ...e, mercadosObjetivo: mercados }, respuestas, metadata: { versionCuestionario: q.version } };
+      } catch { return null; }
+    }
+
+    function mostrar(assessment) {
+      try {
+        hoja.innerHTML = reporteHTML(construirReporte(assessment, q, dep));
+      } catch (e) {
+        hoja.innerHTML = `<p class="aviso">No se pudo generar el reporte: ${esc(e.message || e)}</p>`;
+      }
+    }
+
+    const borrador = desdeBorrador();
+    if (borrador && borrador.respuestas.length > 0) mostrar(borrador);
+    else hoja.innerHTML = '<p class="aviso">No hay una evaluación cargada en este navegador. Completá el cuestionario en la app, o abrí un JSON exportado con el botón de arriba.</p>';
+
+    document.getElementById('btn-imprimir').addEventListener('click', () => window.print());
+    document.getElementById('archivo').addEventListener('change', (ev) => {
+      const f = ev.target.files[0];
+      if (!f) return;
+      const rd = new FileReader();
+      rd.onload = (e) => {
+        try { mostrar(JSON.parse(e.target.result)); }
+        catch { hoja.innerHTML = '<p class="aviso">El archivo no es un JSON válido de evaluación.</p>'; }
+      };
+      rd.readAsText(f);
+    });
+  </script>
+</body>
+</html>

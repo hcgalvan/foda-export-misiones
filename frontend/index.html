@@ -265,7 +265,8 @@
     <label class="btn-like">⬆ Importar JSON
       <input type="file" accept="application/json" @change="importarJSON($event)" />
     </label>
-    <button @click="imprimir()">🖨 Imprimir resumen</button>
+    <a class="btn-like" href="./reporte.html" target="_blank" rel="noopener" title="Informe completo: veredicto, áreas, matriz FODA y factores clave">📄 Reporte (imprimir / PDF)</a>
+    <button @click="imprimir()">🖨 Imprimir pantalla</button>
     <button @click="guardarEnServidor()" :disabled="guardandoEnServidor">☁ Guardar en servidor</button>
     <button @click="abrirGuardadas()">📂 Evaluaciones guardadas</button>
     <button x-show="pendientesEnCola > 0" @click="reintentarCola()" title="Evaluaciones que no se pudieron enviar todavía">
