@@ -22,9 +22,10 @@
     const hoja = document.getElementById('hoja');
     document.getElementById('estilos').textContent = CSS_REPORTE;
 
-    const [q, dep] = await Promise.all([
+    const [q, dep, causal] = await Promise.all([
       fetch('./src/data/questionnaire.json').then((r) => r.json()),
       fetch('./src/data/dependenciasFoda.json').then((r) => r.json()),
+      fetch('./src/data/relacionesCausales.json').then((r) => r.json()).catch(() => null),
     ]);
 
     function desdeBorrador() {
@@ -43,7 +44,7 @@
 
     function mostrar(assessment) {
       try {
-        hoja.innerHTML = reporteHTML(construirReporte(assessment, q, dep));
+        hoja.innerHTML = reporteHTML(construirReporte(assessment, q, dep, { causal }));
       } catch (e) {
         hoja.innerHTML = `<p class="aviso">No se pudo generar el reporte: ${esc(e.message || e)}</p>`;
       }

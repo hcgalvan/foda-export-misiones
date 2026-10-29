@@ -16,6 +16,7 @@
 import {
   calcularAssessment, calcularItem, clasificarFactor, UMBRALES_DEFAULT,
 } from './engine/calc.js';
+import { analizar, cadenasCriticas } from './analisis.js';
 
 // ---------------------------------------------------------------------------
 // Textos editoriales (decisión abierta del autor; ver ARCHITECTURE.md §9)
@@ -60,7 +61,7 @@ const CLASE_POR_AMBITO = {
   externo: { positivo: 'Oportunidad', negativo: 'Amenaza' },
 };
 
-export const MAX_FACTORES_DESTACADOS = 8;
+export const MAX_FACTORES_DESTACADOS = 6;
 
 // ---------------------------------------------------------------------------
 // Utilidades
@@ -167,7 +168,12 @@ export function construirReporte(assessment, questionnaire, dependenciasFoda, op
   const sinResponder = items.filter((i) => i.situacionIdx == null || i.impactoIdx == null);
   const noCorresponde = items.filter((i) => i.situacionIdx === 0 && i.impactoIdx != null);
 
-  return {
+  const analisis = analizar(questionnaire, dependenciasFoda, respuestasPorItem, res, umbrales);
+  const causal = opciones.causal ?? null;
+  const cadenas = causal ? cadenasCriticas(areas, causal) : [];
+  const veredictoInfo = { codigo: res.veredicto, ...(TEXTO_VEREDICTO[res.veredicto] || { titulo: res.veredicto, lectura: '' }) };
+
+  const modelo = {
     generadoEn: ahora,
     advertencias,
     empresa: {
@@ -184,7 +190,7 @@ export function construirReporte(assessment, questionnaire, dependenciasFoda, op
       id: assessment.id || null,
     },
     umbrales,
-    veredicto: { codigo: res.veredicto, ...(TEXTO_VEREDICTO[res.veredicto] || { titulo: res.veredicto, lectura: '' }) },
+    veredicto: veredictoInfo,
     indices: { interno: res.indiceInterno, externo: res.indiceExterno },
     progreso: {
       respondidos: items.length - sinResponder.length, // valorados (incluye "No corresponde", que el motor puntúa)
@@ -201,6 +207,58 @@ export function construirReporte(assessment, questionnaire, dependenciasFoda, op
     sinResponder,
     noCorresponde,
     observaciones: items.filter((i) => i.observacion.trim() !== ''),
+    analisis,
+    causal: causal ? { validado: !!causal.validado, nota: causal.nota || '', cadenas } : null,
+  };
+  modelo.resumen = analisis ? resumenEjecutivo(modelo) : null;
+  return modelo;
+}
+
+/** Resumen ejecutivo: frases armadas con los números del análisis (sin cálculo propio). */
+export function resumenEjecutivo(r) {
+  const a = r.analisis;
+  const titulo = (cod) => (TEXTO_VEREDICTO[cod]?.titulo || cod).toLowerCase();
+  const hallazgos = [];
+
+  // 1. margen del veredicto
+  const cand = [];
+  for (const [nombre, m] of [['interno', a.margenes.interno], ['externo', a.margenes.externo]]) {
+    if (m.distanciaAlInferior != null) cand.push({ nombre, d: m.distanciaAlInferior, umbral: m.umbralInferior, sentido: 'abajo', valor: m.valor });
+    if (m.distanciaAlSuperior != null) cand.push({ nombre, d: m.distanciaAlSuperior, umbral: m.umbralSuperior, sentido: 'arriba', valor: m.valor });
+  }
+  cand.sort((x, y) => x.d - y.d);
+  const c = cand[0];
+  if (c) {
+    hallazgos.push(c.sentido === 'abajo'
+      ? `El veredicto es sensible: el índice ${c.nombre} (${num(c.valor)}) está a solo ${num(c.d)} puntos de caer por debajo de ${c.umbral}.`
+      : `El índice ${c.nombre} (${num(c.valor)}) está a ${num(c.d)} puntos de alcanzar ${c.umbral}.`);
+  }
+  // 2. áreas críticas
+  const al = r.alarmantes;
+  if (al.length) {
+    const li = al.filter((x) => x.ambito === 'interno').map((x) => `${x.id} ${x.nombre}`);
+    const le = al.filter((x) => x.ambito === 'externo').map((x) => x.id);
+    hallazgos.push(`${al.length} de ${r.areas.length} áreas están en alarma (puntaje < 5)` +
+      `${li.length ? `; internas: ${li.join(', ')}` : ''}${le.length ? `; del entorno: ${le.join(', ')}` : ''}.`);
+  } else hallazgos.push('Ninguna área está en estado de alarma (puntaje < 5).');
+  // 3. matriz
+  const m = r.matriz;
+  if (m && m.totalCruces > 0) hallazgos.push(`El ${pct(m.porcentajes[m.cuadranteDominante], 0)} de los cruces entre factores internos y externos cae en el cuadrante ${m.cuadranteDominante}: ${m.orientacionEstrategica.toLowerCase()}`);
+
+  const prioridades = a.horizontes.ahora.slice(0, 3).map((p) =>
+    `${p.id} ${p.titulo} (${p.areaNombre}): pasar a Favorable suma ${num(p.mejoraIndice)} al índice interno` +
+    `${p.crucesDAResueltos ? ` y convierte ${p.crucesDAResueltos} cruce(s) debilidad-amenaza en fortaleza-amenaza` : ''}.`);
+
+  let riesgo = null;
+  const rr = a.riesgos[0];
+  if (rr) {
+    riesgo = rr.resultado.veredicto !== r.veredicto.codigo
+      ? `Si ${rr.nombre.charAt(0).toLowerCase() + rr.nombre.slice(1)}, el índice externo bajaría a ${num(rr.resultado.indiceExterno)} y el veredicto pasaría a ${(TEXTO_VEREDICTO[rr.resultado.veredicto]?.titulo || rr.resultado.veredicto)}.`
+      : `Aun si ${rr.nombre.charAt(0).toLowerCase() + rr.nombre.slice(1)}, el veredicto se mantendría (índice externo ${num(rr.resultado.indiceExterno)}).`;
+  }
+  return {
+    frase: `${r.veredicto.titulo}. Índice interno ${num(r.indices.interno)} y externo ${num(r.indices.externo)} (escala 0 a 10).`,
+    hallazgos, prioridades, riesgo,
   };
 }
 
@@ -270,19 +328,42 @@ function tablaFactores(lista, max, vacio) {
   return `<table class="t"><thead><tr><th>Ítem</th><th>Factor</th><th>Situación</th><th>Impacto</th><th class="n">Pts</th></tr></thead><tbody>${filas}</tbody></table>${resto}`;
 }
 
+function tablaPalancas(lista, conCriterio) {
+  if (!lista.length) return '<p class="vacio">Sin ítems en este grupo.</p>';
+  const filas = lista.map((p) => `<tr>
+    <td class="id">${esc(p.id)}</td>
+    <td>${esc(p.titulo)}<div class="sub">${esc(p.areaId)} · ${esc(p.areaNombre)} · hoy ${num(p.puntos, 1)} pts</div>${conCriterio ? `<div class="crit">Favorable si: ${esc(String(p.criterioFavorable || '').replace(/^Se considera favorable si\s*/i, ''))}</div>` : ''}</td>
+    <td class="n">+${num(p.mejoraIndice)}</td>
+    <td class="n">${p.crucesDAResueltos}</td>
+    <td class="n">${p.crucesDOResueltos}</td></tr>`).join('');
+  return `<table class="t"><thead><tr><th>Ítem</th><th>Qué mejorar</th><th class="n">Suma al índice interno</th><th class="n">Cruces DA → FA</th><th class="n">Cruces DO → FO</th></tr></thead><tbody>${filas}</tbody></table>`;
+}
+
+function tablaEscenarios(lista, base) {
+  if (!lista.length) return '<p class="vacio">Sin escenarios para simular.</p>';
+  const fila = (nombre, detalle, res, extra) => `<tr><td><b>${nombre}</b><div class="sub">${detalle}</div></td>
+    <td class="n">${num(res.indiceInterno)}</td><td class="n">${num(res.indiceExterno)}</td>
+    <td>${esc(TEXTO_VEREDICTO[res.veredicto]?.titulo || res.veredicto)}</td><td>${esc(res.cuadrante || '—')}</td><td class="n">${res.cruces ? res.cruces.DA : '—'}</td></tr>`;
+  return `<table class="t keep"><thead><tr><th>Escenario</th><th class="n">Índice interno</th><th class="n">Índice externo</th><th>Veredicto</th><th>Cuadrante</th><th class="n">Cruces DA</th></tr></thead><tbody>
+    ${fila('Situación actual', 'Respuestas cargadas', base)}
+    ${lista.map((e) => fila(`${esc(e.clave)}. ${esc(e.nombre)}`, `${esc(e.detalle)} (${e.itemsModificados} ítems)`, e.resultado)).join('')}
+  </tbody></table>`;
+}
+
 export function reporteHTML(r) {
-  const v = r.veredicto, m = r.matriz;
+  const v = r.veredicto, m = r.matriz, a = r.analisis, res = r.resumen;
   const colorV = COLOR_VEREDICTO[v.codigo] || '#6b7280';
   const f = r.factores;
+  const base = a ? { indiceInterno: r.indices.interno, indiceExterno: r.indices.externo, veredicto: v.codigo, cuadrante: m?.cuadranteDominante, cruces: m?.cruces } : null;
   const interpretacionUmbrales = `Índices de 0 a 10 (promedio de las áreas con datos). Viable: ambos ≥ ${r.umbrales.viable}. Viable con condiciones: ambos ≥ ${r.umbrales.viableConCondiciones}. Si uno solo está por debajo de ${r.umbrales.viableConCondiciones}, el veredicto señala cuál (empresa no lista o entorno desfavorable); si ambos, no viable.`;
 
   const tablaAreas = (amb, titulo) => `<h3>${titulo}</h3><table class="t"><thead><tr><th>Área</th><th class="n">Puntaje</th><th>Semáforo</th><th class="n">Alertas</th><th class="n">Ítems</th></tr></thead><tbody>${
-    r.areas.filter((a) => a.ambito === amb).map((a) => `<tr><td><b>${esc(a.id)}</b> ${esc(a.nombre)}</td><td class="n">${num(a.puntaje)}</td><td><span class="dot" style="background:${COLOR[a.semaforo] || '#9aa0a6'}"></span>${esc(a.semaforo)}</td><td class="n">${a.alertas}</td><td class="n">${a.respondidos}/${a.total}</td></tr>`).join('')
+    r.areas.filter((x) => x.ambito === amb).map((x) => `<tr><td><b>${esc(x.id)}</b> ${esc(x.nombre)}</td><td class="n">${num(x.puntaje)}</td><td><span class="dot" style="background:${COLOR[x.semaforo] || '#9aa0a6'}"></span>${esc(x.semaforo)}</td><td class="n">${x.alertas}</td><td class="n">${x.respondidos}/${x.total}</td></tr>`).join('')
   }</tbody></table>`;
 
   const lecturaAreas = (() => {
-    const baja = (l) => l.map((a) => `${esc(a.id)} ${esc(a.nombre)} (${num(a.puntaje)})`).join('; ') || '—';
-    return `<p><b>Áreas internas más bajas:</b> ${baja(r.areasMasBajas.internas)}.<br><b>Áreas externas más bajas:</b> ${baja(r.areasMasBajas.externas)}.<br><b>Áreas en estado Alarmante (&lt; 5):</b> ${r.alarmantes.length === 0 ? 'ninguna' : r.alarmantes.map((a) => esc(a.id)).join(', ')}.</p>`;
+    const baja = (l) => l.map((x) => `${esc(x.id)} ${esc(x.nombre)} (${num(x.puntaje)})`).join('; ') || '—';
+    return `<div class="bloque"><p><b>Áreas internas más bajas:</b> ${baja(r.areasMasBajas.internas)}.<br><b>Áreas externas más bajas:</b> ${baja(r.areasMasBajas.externas)}.<br><b>Áreas en estado Alarmante (&lt; 5):</b> ${r.alarmantes.length === 0 ? 'ninguna' : r.alarmantes.map((x) => esc(x.id)).join(', ')}.</p></div>`;
   })();
 
   const matrizHTML = m && m.totalCruces > 0 ? `
@@ -295,7 +376,7 @@ export function reporteHTML(r) {
           <tr><td>Sin considerar</td><td class="n">${m.sinConsiderar}</td><td></td></tr>
         </tbody></table>
         <p><b>Cuadrante dominante: ${esc(m.cuadranteDominante)}.</b> ${esc(m.orientacionEstrategica)}</p>
-        <p class="sub">Cada cruce combina un factor interno con un factor externo vinculado según la tabla fija del instrumento (VariablesFoda). "Sin considerar": cruces donde alguno de los dos factores quedó sin responder o como "No corresponde".</p>
+        <p class="sub">Cada cruce combina un factor interno con un factor externo vinculado según la tabla fija del instrumento (VariablesFoda). "Sin considerar": cruces donde alguno de los dos factores quedó sin responder o como "No corresponde". FO: fortaleza + oportunidad; FA: fortaleza + amenaza; DO: debilidad + oportunidad; DA: debilidad + amenaza.</p>
       </div>
     </div>` : '<p class="vacio">No hay cruces suficientes para construir la matriz FODA.</p>';
 
@@ -311,6 +392,101 @@ export function reporteHTML(r) {
     return `<table class="t compacta"><thead><tr><th>Ítem</th><th>Descripción</th><th>Situación</th><th>Impacto</th><th class="n">Pts</th><th>Clase</th></tr></thead><tbody>${html}</tbody></table>`;
   })();
 
+  // ---- bloques que dependen del análisis ----
+  const resumenHTML = res ? `
+<section class="resumen">
+  <h2>Resumen ejecutivo</h2>
+  <p class="frase">${esc(res.frase)}</p>
+  <div class="tres-col">
+    <div><h3>Lo que muestran los datos</h3><ul>${res.hallazgos.map((h) => `<li>${esc(h)}</li>`).join('')}</ul></div>
+    <div><h3>Qué atender primero</h3><ol>${res.prioridades.map((h) => `<li>${esc(h)}</li>`).join('')}</ol></div>
+    <div><h3>Principal riesgo</h3><p>${esc(res.riesgo || 'No se identificaron amenazas externas de impacto máximo para simular.')}</p></div>
+  </div>
+</section>` : '';
+
+  const comoLeer = a ? `
+  <h3>Cómo leer los puntajes</h3>
+  <p>Cada respuesta se convierte en puntos con la escala del instrumento: ${a.escalaPuntos.map((e) => `<b>${esc(e.nombre)} = ${e.puntos}</b>`).join(' · ')}. El puntaje de un área es el promedio de sus ítems ponderado por impacto, y cada índice es el promedio simple de sus áreas.</p>
+  <p><b>Atención con el semáforo:</b> un área con 5,0 equivale a ítems que, en promedio, están "Desfavorable". "Regular" (5 a menos de 8) incluye áreas cuya respuesta típica es desfavorable: no debe leerse como "aceptable".</p>
+  <h3>Qué tan firme es el veredicto</h3>
+  <table class="t"><thead><tr><th>Índice</th><th class="n">Valor</th><th class="n">Margen sobre el umbral inferior</th><th class="n">Falta para el umbral superior</th></tr></thead><tbody>
+    ${[['Interno (empresa)', a.margenes.interno], ['Externo (entorno)', a.margenes.externo]].map(([n, mm]) => `<tr><td>${n}</td><td class="n">${num(mm.valor)}</td><td class="n">${mm.distanciaAlInferior != null ? `${num(mm.distanciaAlInferior)} (sobre ${mm.umbralInferior})` : '—'}</td><td class="n">${mm.distanciaAlSuperior != null ? `${num(mm.distanciaAlSuperior)} (hasta ${mm.umbralSuperior})` : '—'}</td></tr>`).join('')}
+  </tbody></table>
+  <p class="sub">Un margen chico sobre el umbral inferior indica que el veredicto puede empeorar con pequeños cambios.${a.brechaViable.interno > 0 || a.brechaViable.externo > 0 ? ` Para alcanzar "Viable" (≥ ${r.umbrales.viable}) faltan ${num(a.brechaViable.interno)} puntos en el índice interno y ${num(a.brechaViable.externo)} en el externo. Como "Favorable" vale ${a.escalaPuntos[3]?.puntos}, llegar a Viable exige además ítems "Muy favorable" (${a.escalaPuntos[4]?.puntos}), no solo favorables.` : ''}</p>` : '';
+
+  const cascadaHTML = a ? `
+<section>
+  <h2>4. Cascada de efectos: dónde conviene actuar</h2>
+  <p>El modelo transmite los efectos en dos cadenas, y ambas se pueden simular con exactitud:</p>
+  <ol>
+    <li><b>Puntajes:</b> cada ítem pesa en su área según su impacto → cada área pesa en el índice (todas igual) → el índice, contra los umbrales, define el veredicto.</li>
+    <li><b>Matriz FODA:</b> cada ítem interno se cruza con los factores externos que lo condicionan. Una debilidad "contamina" todos sus cruces: corregirla traslada esos cruces de debilidad a fortaleza.</li>
+  </ol>
+  ${a.pesosDesiguales.map((p) => `<p class="sub">Efecto de la estructura: en el índice ${p.ambito}, las áreas pesan igual sin importar cuántos ítems tengan; un ítem de ${esc(p.areaPesada)} (${p.itemsPesada} ítems) pesa unas ${num(p.ratio, 0)} veces lo que uno de ${esc(p.areaLiviana)} (${p.itemsLiviana} ítems).</p>`).join('')}
+  <h3>Qué pasaría si se corrigen las debilidades (simulación)</h3>
+  ${tablaEscenarios(a.escenarios, base)}
+  ${(() => { const c = a.escenarios.find((e) => e.clave === 'C'); return c && c.resultado.indiceInterno < r.umbrales.viable ? `<p class="sub">Aun corrigiendo todas las debilidades internas, el índice interno llegaría a ${num(c.resultado.indiceInterno)}, por debajo de ${r.umbrales.viable}: el salto a "Viable" requiere además reforzar las fortalezas.</p>` : ''; })()}
+  <p class="sub">Escenarios = el motor recalcula el diagnóstico suponiendo que esos ítems pasan a "Favorable". Son ejercicios de sensibilidad, no pronósticos.</p>
+  <h3>Debilidades con mayor efecto</h3>
+  <p class="sub"><b>Regla de orden (criterio editorial):</b> 1.º cuánto sube el índice interno si el ítem pasa a Favorable; 2.º cuántos cruces DA se resuelven; 3.º impacto. Los ítems "No corresponde" quedan fuera (ver sección 7).</p>
+  ${tablaPalancas([...a.horizontes.ahora, ...a.horizontes.siguiente], false)}
+  ${a.horizontes.despues.length ? `<p class="sub">…y ${a.horizontes.despues.length} debilidad(es) de menor efecto (Anexo A).</p>` : ''}
+</section>` : '';
+
+  const causalHTML = r.causal && r.causal.cadenas.length ? `
+<section>
+  <h2>5. Cadenas causales entre las partes del negocio</h2>
+  <p class="sub">Para cada área en alarma: qué otras áreas condiciona y de cuáles depende. Entre paréntesis, el puntaje actual de esa área. ${esc(r.causal.validado ? '' : 'Lectura interpretativa (Canvas y PESTEL/Porter) que no forma parte del cálculo del modelo; borrador pendiente de validación del autor.')}</p>
+  ${r.causal.cadenas.map((c) => {
+    const li = (x) => `<li><b>${esc(x.id)} ${esc(x.nombre)}</b> (${num(x.puntaje)}${x.semaforo === 'Alarmante' ? ', alarma' : ''}): ${esc(x.texto)}</li>`;
+    return `<div class="cadena"><div class="cab"><span class="dot" style="background:${COLOR.Alarmante}"></span><b>${esc(c.area.id)} ${esc(c.area.nombre)}</b> (${num(c.area.puntaje)})</div>
+      ${c.origen.length || c.origenTransversal ? `<div class="sub">Depende de:</div><ul>${c.origen.map(li).join('')}${c.origenTransversal ? li(c.origenTransversal) : ''}</ul>` : ''}
+      ${c.arrastra.length || c.arrastraATodas ? `<div class="sub">Condiciona a:</div><ul>${c.arrastra.map(li).join('')}${c.arrastraATodas ? `<li>Todas las áreas internas: ${esc(c.arrastraATodas.texto)}</li>` : ''}</ul>` : ''}</div>`;
+  }).join('')}
+</section>` : '';
+
+  const entornoHTML = a ? `
+<section>
+  <h2>6. Exposición del entorno</h2>
+  <p>Los factores externos no se corrigen: se vigilan, se esquivan eligiendo otro mercado o se compensan desde la empresa.</p>
+  ${a.riesgos.length ? `<h3>Escenarios de deterioro</h3>${tablaEscenarios(a.riesgos, base)}` : ''}
+  <h3>Amenazas con más vínculos (a vigilar)</h3>
+  ${a.exposicion.amenazas.length ? `<table class="t"><thead><tr><th>Ítem</th><th>Factor</th><th>Situación</th><th class="n">Factores internos vinculados</th><th class="n">…que son debilidades</th></tr></thead><tbody>${
+    a.exposicion.amenazas.map((x) => `<tr><td class="id">${esc(x.id)}</td><td>${esc(x.titulo)}<div class="sub">${esc(x.areaNombre)}</div></td><td>${esc(r.items.find((i) => i.id === x.id)?.situacionTxt || '')}</td><td class="n">${x.internosVinculados}</td><td class="n">${x.internosDebiles}</td></tr>`).join('')
+  }</tbody></table>` : '<p class="vacio">Sin amenazas registradas.</p>'}
+  ${a.exposicion.sostienen.length ? `<h3>Factores favorables del entorno que conviene aprovechar</h3><p>${a.exposicion.sostienen.map((x) => `<b>${esc(x.id)}</b> ${esc(x.titulo)} (${x.internosVinculados} vínculos)`).join('; ')}.</p>` : ''}
+</section>` : '';
+
+  const planHTML = a ? `
+<section>
+  <h2>7. Plan de prioridades</h2>
+  <h3>Ahora — corregir primero</h3>
+  <p class="sub">Primeras ${a.horizontes.ahora.length} debilidades según la regla de la sección 4. Se muestra el criterio del instrumento para que el equipo defina la acción concreta con la empresa.</p>
+  ${tablaPalancas(a.horizontes.ahora, true)}
+  <h3>Siguiente</h3>
+  ${a.horizontes.siguiente.length ? tablaPalancas(a.horizontes.siguiente, false) : '<p class="vacio">Sin ítems en este grupo.</p>'}
+  <h3>Vigilar</h3>
+  <p>${a.exposicion.amenazas.length ? a.exposicion.amenazas.map((x) => `<b>${esc(x.id)}</b> ${esc(x.titulo)}`).join('; ') + '.' : 'Sin amenazas registradas.'}</p>
+  ${a.verificar.length ? `<h3>Verificar si realmente no aplican</h3>
+  <p class="sub">Ítems marcados "No corresponde". El cálculo los puntúa con el valor mínimo (${a.escalaPuntos[0].puntos}), por eso se excluyen de las prioridades hasta confirmar que no aplican a la empresa.</p>
+  <table class="t"><tbody>${a.verificar.map((x) => `<tr><td class="id">${esc(x.id)}</td><td>${esc(x.titulo)}<div class="sub">${esc(x.areaNombre)} · ${esc(x.ambito)}</div></td><td class="sub">${esc(x.lecturaSinExportar || '')}</td></tr>`).join('')}</tbody></table>` : ''}
+</section>` : '';
+
+  const calidadObs = `${r.observaciones.length} de ${r.items.length}`;
+  const alcancesHTML = `
+<section class="metodo">
+  <h2>Alcances y límites del estudio</h2>
+  <ul>
+    <li><b>Qué mide:</b> la preparación interna de la empresa (10 áreas, enfoque Business Model Canvas) y las condiciones del entorno y del mercado de destino (9 áreas, enfoque PESTEL y cinco fuerzas de Porter), a partir de ${r.items.length} ítems valorados por situación e impacto.</li>
+    <li><b>Qué no mide:</b> estados contables, rentabilidad por mercado, demanda concreta ni precios. Es un diagnóstico de viabilidad, no un estudio de mercado ni un plan de negocios.</li>
+    <li><b>Calidad de la información:</b> ${calidadObs} ítems tienen observación o evidencia registrada. Las valoraciones sin evidencia dependen del criterio de quien las cargó; conviene respaldar con documentos los ítems críticos.</li>
+    <li><b>Mercado de destino:</b> ${r.empresa.mercados === '—' ? 'no se declararon mercados objetivo; los factores externos pueden no ser comparables.' : `los factores externos se valoraron pensando en: ${esc(r.empresa.mercados)}. Si cambia el mercado, el entorno debe valorarse de nuevo.`}</li>
+    <li><b>Foto de un momento:</b> el resultado corresponde a la fecha del relevamiento y no es un pronóstico. Las simulaciones muestran sensibilidad, no probabilidad.</li>
+    <li><b>Sin multiplicadores monetarios:</b> los "efectos" que se informan son variaciones de puntaje, de índice y de cruces dentro del modelo; no estiman dinero ni ventas.</li>
+    <li><b>Estructura del índice:</b> todas las áreas pesan igual; las que tienen pocos ítems pesan más por ítem.</li>
+  </ul>
+</section>`;
+
   return `
 <header class="portada">
   <div class="kicker">FODA Export Misiones · Instituto Alfa</div>
@@ -322,7 +498,9 @@ export function reporteHTML(r) {
   </tbody></table>
 </header>
 
-${r.advertencias.map((a) => `<div class="aviso">⚠ ${esc(a)}</div>`).join('')}
+${r.advertencias.map((x) => `<div class="aviso">⚠ ${esc(x)}</div>`).join('')}
+
+${resumenHTML}
 
 <section>
   <h2>1. Veredicto</h2>
@@ -337,6 +515,7 @@ ${r.advertencias.map((a) => `<div class="aviso">⚠ ${esc(a)}</div>`).join('')}
   <p class="sub">${esc(interpretacionUmbrales)}</p>
   ${r.progreso.sinResponder > 0 ? `<p class="aviso">Atención: ${r.progreso.sinResponder} de ${r.progreso.total} ítems están sin responder y no entran en el cálculo. Ver Anexo B.</p>` : ''}
   ${r.progreso.noCorresponde > 0 ? `<p class="aviso">${r.progreso.noCorresponde} ítem(s) marcados "No corresponde" (${r.noCorresponde.map((i) => esc(i.id)).join(', ')}). Según el cálculo del instrumento, en el puntaje del área se computan con el valor mínimo de la escala y quedan fuera de la matriz FODA. Conviene revisar si realmente no aplican a la empresa.</p>` : ''}
+  ${comoLeer}
 </section>
 
 <section>
@@ -353,26 +532,25 @@ ${r.advertencias.map((a) => `<div class="aviso">⚠ ${esc(a)}</div>`).join('')}
   ${matrizHTML}
 </section>
 
+${cascadaHTML}
+${causalHTML}
+${entornoHTML}
+${planHTML}
+
 <section>
-  <h2>4. Factores clave</h2>
-  <p class="sub">Un factor se clasifica según su situación: Favorable o Muy favorable → Fortaleza (interno) u Oportunidad (externo); Desfavorable o Muy desfavorable → Debilidad o Amenaza. <b>Orden de presentación (criterio editorial, no del modelo):</b> mayor impacto primero y, entre iguales, menor puntaje primero en debilidades/amenazas y mayor puntaje primero en fortalezas/oportunidades. Se muestran hasta ${MAX_FACTORES_DESTACADOS} por tipo.</p>
-  <h3>Debilidades a atender (${f.debilidades.length})</h3>${tablaFactores(f.debilidades, MAX_FACTORES_DESTACADOS, 'No se registraron debilidades.')}
-  <h3>Amenazas del entorno (${f.amenazas.length})</h3>${tablaFactores(f.amenazas, MAX_FACTORES_DESTACADOS, 'No se registraron amenazas.')}
-  <h3>Fortalezas a aprovechar (${f.fortalezas.length})</h3>${tablaFactores(f.fortalezas, MAX_FACTORES_DESTACADOS, 'No se registraron fortalezas.')}
+  <h2>8. Factores clave</h2>
+  <p class="sub">Un factor se clasifica según su situación: Favorable o Muy favorable → Fortaleza (interno) u Oportunidad (externo); Desfavorable o Muy desfavorable → Debilidad o Amenaza. Orden de presentación (criterio editorial, no del modelo): mayor impacto primero y, entre iguales, menor puntaje primero en debilidades/amenazas y mayor puntaje primero en fortalezas/oportunidades. Hasta ${MAX_FACTORES_DESTACADOS} por tipo.</p>
+  <h3>Debilidades (${f.debilidades.length})</h3>${tablaFactores(f.debilidades, MAX_FACTORES_DESTACADOS, 'No se registraron debilidades.')}
+  <h3>Amenazas (${f.amenazas.length})</h3>${tablaFactores(f.amenazas, MAX_FACTORES_DESTACADOS, 'No se registraron amenazas.')}
+  <h3>Fortalezas (${f.fortalezas.length})</h3>${tablaFactores(f.fortalezas, MAX_FACTORES_DESTACADOS, 'No se registraron fortalezas.')}
   <h3>Oportunidades (${f.oportunidades.length})</h3>${tablaFactores(f.oportunidades, MAX_FACTORES_DESTACADOS, 'No se registraron oportunidades.')}
 </section>
 
-<section>
-  <h2>5. Qué se consideraría favorable en las principales debilidades</h2>
-  <p class="sub">Criterio del instrumento para cada ítem; sirve de guía para definir acciones. Las acciones concretas las define el equipo con la empresa.</p>
-  ${f.debilidades.length === 0 ? '<p class="vacio">Sin debilidades registradas.</p>' : `<table class="t"><thead><tr><th>Ítem</th><th>Se considera favorable si…</th></tr></thead><tbody>${
-    f.debilidades.slice(0, 5).map((i) => `<tr><td class="id">${esc(i.id)}<div class="sub">${esc(i.titulo)}</div></td><td>${esc(String(i.criterioFavorable || '').replace(/^Se considera favorable si\s*/i, ''))}</td></tr>`).join('')
-  }</tbody></table>`}
-</section>
-
-${r.observaciones.length ? `<section><h2>6. Observaciones del relevamiento</h2><table class="t"><tbody>${
+${r.observaciones.length ? `<section><h2>9. Observaciones del relevamiento</h2><table class="t"><tbody>${
   r.observaciones.map((i) => `<tr><td class="id">${esc(i.id)}</td><td>${esc(i.observacion)}</td></tr>`).join('')
 }</tbody></table></section>` : ''}
+
+${alcancesHTML}
 
 <section class="salto">
   <h2>Anexo A — Detalle por ítem</h2>
@@ -387,9 +565,9 @@ ${r.observaciones.length ? `<section><h2>6. Observaciones del relevamiento</h2><
 </section>
 
 <section class="metodo">
-  <h2>Nota metodológica y alcance</h2>
+  <h2>Nota metodológica</h2>
   <p>Instrumento de autodiagnóstico con fines educativos y de investigación; el resultado es <b>orientativo</b> y depende de la calidad de la información relevada. No reemplaza un estudio de mercado ni asesoramiento profesional.</p>
-  <p>Cálculo adaptado de la metodología FODA Matemático (Prof. Mario Héctor Vogel, Club Tablero de Comando): conversión de la valoración de cada ítem en puntaje 0–10 mediante pendiente discontinua, ponderación por impacto dentro de cada área, índices interno y externo, y cruce de factores en la matriz FODA. Los cuestionarios se estructuran con Business Model Canvas (internos) y PESTEL / cinco fuerzas de Porter (externos).</p>
+  <p>Cálculo adaptado de la metodología FODA Matemático (Prof. Mario Héctor Vogel, Club Tablero de Comando): conversión de la valoración de cada ítem en puntaje 0–10 mediante pendiente discontinua, ponderación por impacto dentro de cada área, índices interno y externo, y cruce de factores en la matriz FODA. Los cuestionarios se estructuran con Business Model Canvas (internos) y PESTEL / cinco fuerzas de Porter (externos). Las simulaciones de las secciones 4 y 6 usan ese mismo cálculo sobre respuestas hipotéticas.</p>
   <p class="sub">Motor v${esc(r.versiones.motor)} · Cuestionario v${esc(r.versiones.cuestionario)}${r.versiones.id ? ` · Evaluación ${esc(r.versiones.id)}` : ''} · Reporte generado el ${esc(fechaLarga(r.generadoEn))}.<br>
   Autor: Hugo César Galván (ORCID 0009-0008-0729-8969), Instituto Alfa, Posadas, Misiones. Código MIT; contenido metodológico CC BY-NC-SA 4.0.</p>
 </section>`;
@@ -412,6 +590,8 @@ table { border-collapse: collapse; width: 100%; }
 table.t th, table.t td { border-bottom: 1px solid var(--linea); padding: 4px 6px; text-align: left; vertical-align: top; }
 table.t th { background: #f3f5f7; font-size: 11px; }
 table.t tr { break-inside: avoid; }
+table.t.keep { break-inside: avoid; }
+h2 + .sub, h3 + .sub, h2 + p, h3 + p { break-after: avoid; }
 table.compacta td, table.compacta th { padding: 2px 5px; font-size: 11px; }
 tr.grupo td { background:#e8eef5; font-weight:700; }
 tr.dom td { background:#fff7e6; font-weight:700; }
@@ -429,7 +609,16 @@ table.ficha td { padding: 3px 6px; border-bottom: 1px solid var(--linea); }
 .barra-acciones button, .barra-acciones label { background:#fff; color:#1f4e79; border:0; border-radius:6px; padding:6px 12px; font-weight:600; cursor:pointer; }
 .barra-acciones input { display:none; }
 .metodo { font-size: 11.5px; margin-top: 18px; }
-@media (max-width: 640px) { .hoja { padding: 16px; } .dos-col { grid-template-columns: 1fr; } }
+.resumen { background:#f4f8fc; border:1px solid #c9d9ea; border-radius:10px; padding:10px 16px 12px; margin:14px 0; break-inside: avoid; }
+.resumen h2 { margin-top:4px; }
+.resumen .frase { font-size:15px; font-weight:700; margin:4px 0 8px; }
+.tres-col { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px; }
+.tres-col h3 { margin-top:0; } .tres-col ul, .tres-col ol { margin:0; padding-left:16px; } .tres-col li { margin-bottom:5px; }
+.crit { font-size:10.5px; color:#374151; margin-top:2px; }
+.cadena { border-left:3px solid #c0392b; padding:2px 0 2px 10px; margin:8px 0; break-inside: avoid; }
+.cadena ul { margin:2px 0 4px; padding-left:16px; } .cadena li { margin-bottom:2px; }
+.bloque { break-inside: avoid; }
+@media (max-width: 640px) { .hoja { padding: 16px; } .dos-col, .tres-col { grid-template-columns: 1fr; } }
 @page { size: A4; margin: 14mm 12mm; }
 @media print {
   body { background:#fff; font-size: 11.5px; }

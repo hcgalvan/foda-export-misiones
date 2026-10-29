@@ -691,4 +691,19 @@ Frontend: la cola de reintento guarda **una sola entrada por id** (la versión m
 1. *Textos de lectura por veredicto* (`TEXTO_VEREDICTO` en `report.js`) y los títulos de sección son redacción del asistente: el autor debe validarlos o reemplazarlos antes de publicar. No están en el Excel.
 2. *Orden de los factores clave*: impacto desc., luego puntaje asc. (debilidades/amenazas) o desc. (fortalezas/oportunidades); se muestran 8 por tipo. Es criterio de presentación, no del modelo, y el propio reporte lo declara.
 3. *"No corresponde" en el puntaje*: el motor (validado contra el Excel) computa un ítem con situación "No corresp." con peso 1 (≈1 punto, cuenta como alerta y entra en la ponderación del área), pero lo excluye de la matriz FODA ("sin considerar"). Es una rareza heredada del Excel; se reproduce y el reporte la advierte. Decidir si se mantiene o si "No corresponde" debe salir del promedio del área.
-4. El reporte no incluye aún recomendaciones de acción redactadas: lista el "criterio favorable" del instrumento como guía.
+4. El reporte no incluye recomendaciones de acción redactadas: lista el "criterio favorable" del instrumento como guía.
+
+### 9.1 Ampliación analítica (29/10/2026)
+
+Nuevo módulo `frontend/src/analisis.js` (puro, testeable) y datos `frontend/src/data/relacionesCausales.json`. El reporte pasa a: Resumen ejecutivo → Veredicto (cómo leer los puntajes, margen a los umbrales) → Áreas → Matriz FODA → **Cascada de efectos** (escenarios y debilidades con mayor efecto) → **Cadenas causales** → **Exposición del entorno** → **Plan de prioridades** (Ahora / Siguiente / Vigilar / Verificar) → Factores clave → Alcances y límites → Anexos. Tests: `tests/analisis.test.mjs` (12 casos); `node --test tests/*.mjs` → 46/46.
+
+**Principio:** todo número del análisis sale de simular respuestas hipotéticas con `calcularAssessment` (mismo motor validado contra el Excel). No hay parámetros propios ni multiplicadores monetarios; el reporte lo declara en "Alcances y límites".
+
+**Decisiones del autor (28/10/2026):**
+- Los ítems "No corresponde" se excluyen de las prioridades y se listan en "Verificar si realmente no aplican". El motor NO se modifica (la rareza §9 punto 3 sigue abierta).
+- Regla de prioridad de debilidades internas: (1) mejora del índice interno si el ítem pasa a Favorable, redondeada a 2 decimales; (2) cruces DA que se resuelven; (3) impacto; (4) id.
+- Se incluye la capa causal como borrador.
+
+**Pendiente de validación del autor:** `relacionesCausales.json` (`"validado": false`) es una lectura interpretativa Canvas/PESTEL-Porter redactada por el asistente; mientras no se valide, el reporte lo indica. Tampoco forman parte del Excel los escenarios A/B/C y R1/R2 (definiciones en `analisis.js`: A = debilidades de las áreas internas en alarma → Favorable; B = debilidades de impacto "Muy significante" → Favorable; C = todas las debilidades internas → Favorable; R1 = amenazas externas "Desfavorable" de impacto máximo → "Muy desfavorable"; R2 = todo factor externo baja un nivel).
+
+**Hallazgos del modelo que el reporte hace explícitos:** "Favorable" vale 7 puntos justos, por lo que corregir todas las debilidades puede no alcanzar "Viable" (≥ 7); el semáforo "Regular" arranca en 5 = "Desfavorable"; las áreas pesan igual en el índice sin importar su cantidad de ítems (un ítem de un área de 2 ítems pesa 4 veces lo de un área de 8).
