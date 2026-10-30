@@ -142,4 +142,4 @@ estructura.txt
 cython_debug/
 *creds.json
 #**/data/
-
+*.db
