@@ -116,6 +116,14 @@ export function analizar(q, dep, R, res, umbrales = UMBRALES_DEFAULT) {
       detalle: 'Todas las debilidades internas pasan a Favorable.',
       cambios: debilesInternas.map(([id]) => id) },
   ];
+  // C+ : además de todas las debilidades, los ítems internos "No corresponde" pasan a Favorable.
+  // Sirve para separar el efecto de esos ítems (que el cálculo puntúa con 1) del resto.
+  const noCorrInternos = Object.entries(R).filter(([id, r]) => areaDe[id]?.tipo === 'interno' && r.situacion === 0 && r.impacto != null).map(([id]) => id);
+  if (noCorrInternos.length) {
+    defs.push({ clave: 'C+', tipo: 'mejora', nombre: 'Corregir todas las debilidades y valorar los ítems "No corresponde"',
+      detalle: 'Como C, y además los ítems internos marcados "No corresponde" pasan a Favorable.',
+      cambios: [...debilesInternas.map(([id]) => id), ...noCorrInternos] });
+  }
   const escenarios = defs.filter((d) => d.cambios.length > 0).map((d) => ({
     ...d, itemsModificados: d.cambios.length,
     resultado: resumenEscenario(simular(q, R, dep, umbrales, Object.fromEntries(d.cambios.map((id) => [id, FAVORABLE])))),

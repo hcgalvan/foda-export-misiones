@@ -412,7 +412,7 @@ export function reporteHTML(r) {
   <table class="t"><thead><tr><th>Índice</th><th class="n">Valor</th><th class="n">Margen sobre el umbral inferior</th><th class="n">Falta para el umbral superior</th></tr></thead><tbody>
     ${[['Interno (empresa)', a.margenes.interno], ['Externo (entorno)', a.margenes.externo]].map(([n, mm]) => `<tr><td>${n}</td><td class="n">${num(mm.valor)}</td><td class="n">${mm.distanciaAlInferior != null ? `${num(mm.distanciaAlInferior)} (sobre ${mm.umbralInferior})` : '—'}</td><td class="n">${mm.distanciaAlSuperior != null ? `${num(mm.distanciaAlSuperior)} (hasta ${mm.umbralSuperior})` : '—'}</td></tr>`).join('')}
   </tbody></table>
-  <p class="sub">Un margen chico sobre el umbral inferior indica que el veredicto puede empeorar con pequeños cambios.${a.brechaViable.interno > 0 || a.brechaViable.externo > 0 ? ` Para alcanzar "Viable" (≥ ${r.umbrales.viable}) faltan ${num(a.brechaViable.interno)} puntos en el índice interno y ${num(a.brechaViable.externo)} en el externo. Como "Favorable" vale ${a.escalaPuntos[3]?.puntos}, llegar a Viable exige además ítems "Muy favorable" (${a.escalaPuntos[4]?.puntos}), no solo favorables.` : ''}</p>` : '';
+  <p class="sub">Un margen chico sobre el umbral inferior indica que el veredicto puede empeorar con pequeños cambios.${a.brechaViable.interno > 0 || a.brechaViable.externo > 0 ? ` Para alcanzar "Viable" (≥ ${r.umbrales.viable}) faltan ${num(a.brechaViable.interno)} puntos en el índice interno y ${num(a.brechaViable.externo)} en el externo. Como "Favorable" vale ${a.escalaPuntos[3]?.puntos}, una empresa con todos los ítems Favorables queda justo en ${r.umbrales.viable}; para superarlo hacen falta ítems "Muy favorable" (${a.escalaPuntos[4]?.puntos}) o compensar con ellos los ítems de menor puntaje.` : ''}</p>` : '';
 
   const cascadaHTML = a ? `
 <section>
@@ -425,7 +425,12 @@ export function reporteHTML(r) {
   ${a.pesosDesiguales.map((p) => `<p class="sub">Efecto de la estructura: en el índice ${p.ambito}, las áreas pesan igual sin importar cuántos ítems tengan; un ítem de ${esc(p.areaPesada)} (${p.itemsPesada} ítems) pesa unas ${num(p.ratio, 0)} veces lo que uno de ${esc(p.areaLiviana)} (${p.itemsLiviana} ítems).</p>`).join('')}
   <h3>Qué pasaría si se corrigen las debilidades (simulación)</h3>
   ${tablaEscenarios(a.escenarios, base)}
-  ${(() => { const c = a.escenarios.find((e) => e.clave === 'C'); return c && c.resultado.indiceInterno < r.umbrales.viable ? `<p class="sub">Aun corrigiendo todas las debilidades internas, el índice interno llegaría a ${num(c.resultado.indiceInterno)}, por debajo de ${r.umbrales.viable}: el salto a "Viable" requiere además reforzar las fortalezas.</p>` : ''; })()}
+  ${(() => {
+    const c = a.escenarios.find((e) => e.clave === 'C'), cp = a.escenarios.find((e) => e.clave === 'C+');
+    if (!c || c.resultado.indiceInterno >= r.umbrales.viable) return '';
+    if (cp && cp.resultado.indiceInterno >= r.umbrales.viable) return `<p class="sub">Aun corrigiendo todas las debilidades internas, el índice interno llegaría a ${num(c.resultado.indiceInterno)}, por debajo de ${r.umbrales.viable}. La diferencia se explica por los ítems "No corresponde": el cálculo los puntúa con ${a.escalaPuntos[0].puntos} punto. Si en realidad aplican y se valoran como Favorable (escenario C+), el índice interno sería ${num(cp.resultado.indiceInterno)}.</p>`;
+    return `<p class="sub">Aun corrigiendo todas las debilidades internas, el índice interno llegaría a ${num(c.resultado.indiceInterno)}, por debajo de ${r.umbrales.viable}: el resto de los factores internos tampoco alcanza para llegar a "Viable".</p>`;
+  })()}
   <p class="sub">Escenarios = el motor recalcula el diagnóstico suponiendo que esos ítems pasan a "Favorable". Son ejercicios de sensibilidad, no pronósticos.</p>
   <h3>Debilidades con mayor efecto</h3>
   <p class="sub"><b>Regla de orden (criterio editorial):</b> 1.º cuánto sube el índice interno si el ítem pasa a Favorable; 2.º cuántos cruces DA se resuelven; 3.º impacto. Los ítems "No corresponde" quedan fuera (ver sección 7).</p>

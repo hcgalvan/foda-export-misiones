@@ -21,6 +21,8 @@ test('escenarios = recálculo del motor (valores verificados a mano con calcular
   assert.equal(por.B.indiceInterno, 6.22);
   assert.equal(por.C.indiceInterno, 6.93); assert.equal(por.C.cruces.DA, 0); assert.equal(por.C.cruces.DO, 0);
   assert.equal(por.C.veredicto, 'VIABLE_CON_CONDICIONES'); // corregir todo no alcanza "Viable"
+  // el faltante de C se explica por los ítems "No corresponde" (puntuados con 1), no por falta de fortalezas
+  assert.equal(por['C+'].indiceInterno, 7.24);
   const r1 = an.riesgos.find((x) => x.clave === 'R1');
   assert.equal(r1.resultado.indiceExterno, 4.93); assert.equal(r1.resultado.veredicto, 'ENTORNO_DESFAVORABLE');
 });
@@ -117,4 +119,11 @@ test('resumen ejecutivo usa números del análisis', () => {
   assert.match(r.resumen.hallazgos[0], /externo.*5,34.*0,34.*5/);
   assert.match(r.resumen.prioridades[0], /IC5.*0,09.*3 cruce/);
   assert.match(r.resumen.riesgo, /4,93.*ENTORNO DESFAVORABLE/);
+});
+
+test('el reporte atribuye el faltante del escenario C a los ítems "No corresponde" (C+ alcanza 7)', () => {
+  const html = reporteHTML(construirReporte(ejemplo, q, dep, { causal, ahora: '2026-11-02T12:00:00Z' }));
+  assert.ok(html.includes('se explica por los ítems "No corresponde"'));
+  assert.ok(!html.includes('reforzar las fortalezas'));
+  assert.ok(html.includes('queda justo en 7'));
 });
