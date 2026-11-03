@@ -8,13 +8,13 @@ import {
   calcularAssessment,
   UMBRALES_DEFAULT,
 } from './engine/calc.js';
+import { VERSION_MOTOR, fechaLocalISO } from './comun.js';
 import {
   leerConfig, guardarConfig, configCompleta, leerCola, guardarEnServidor, vaciarCola,
   listarResumen, obtener, probarConexion,
 } from './api.js';
 
 const CLAVE_LOCALSTORAGE = 'foda-export-misiones:draft-v1';
-const VERSION_MOTOR = '1.0.0';
 
 const SITUACION_LABELS = ['No corresp.', 'Muy Desfav.', 'Desfavorable', 'Favorable', 'Muy Favorable'];
 const IMPACTO_LABELS = ['Muy insignif.', 'Insignificante', 'Significante', 'Muy Signific.'];
@@ -41,7 +41,7 @@ function vacio() {
       mercadosObjetivo: '',
       perfil: 'no_exporta_evalua_iniciar',
       relevadoPor: '',
-      fecha: new Date().toISOString().slice(0, 10),
+      fecha: fechaLocalISO(),
       autorizaRecontacto: false,
     },
     respuestas: {}, // { itemId: { situacion: 0-4|null, impacto: 0-3|null, observacion: '' } }

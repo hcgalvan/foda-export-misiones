@@ -86,3 +86,12 @@ test('formato numérico es-AR determinista', () => {
   assert.equal(num(6.9999, 1), '7,0');
   assert.equal(esc('a&b"<'), 'a&amp;b&quot;&lt;');
 });
+
+import { fechaLocalISO, VERSION_MOTOR } from '../frontend/src/comun.js';
+test('fechaLocalISO usa la fecha local, no la UTC (23:51 del 2/11 sigue siendo 2/11)', () => {
+  assert.equal(fechaLocalISO(new Date(2026, 10, 2, 23, 51)), '2026-11-02');
+});
+test('el reporte muestra la versión del motor aunque el assessment no la traiga', () => {
+  const r = construirReporte({ ...ejemplo, metadata: {} }, q, dep, { ahora: AHORA });
+  assert.equal(r.versiones.motor, VERSION_MOTOR);
+});

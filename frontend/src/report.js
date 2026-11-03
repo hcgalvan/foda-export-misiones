@@ -13,6 +13,7 @@
  * el propio reporte. Esos textos son decisión del autor: ver ARCHITECTURE.md §9.
  */
 
+import { VERSION_MOTOR, fechaLocalISO } from './comun.js';
 import {
   calcularAssessment, calcularItem, clasificarFactor, UMBRALES_DEFAULT,
 } from './engine/calc.js';
@@ -94,7 +95,7 @@ function fechaLarga(iso) {
 // ---------------------------------------------------------------------------
 
 export function construirReporte(assessment, questionnaire, dependenciasFoda, opciones = {}) {
-  const ahora = opciones.ahora ?? new Date().toISOString();
+  const ahora = opciones.ahora ?? fechaLocalISO();
   const umbrales = opciones.umbrales ?? UMBRALES_DEFAULT;
 
   const respuestasPorItem = {};
@@ -185,7 +186,7 @@ export function construirReporte(assessment, questionnaire, dependenciasFoda, op
       fecha: fechaLarga(assessment.empresa?.fecha),
     },
     versiones: {
-      motor: assessment.metadata?.versionMotor || '—',
+      motor: VERSION_MOTOR, // el reporte lo calcula el motor actual
       cuestionario: assessment.metadata?.versionCuestionario || questionnaire.version,
       id: assessment.id || null,
     },
