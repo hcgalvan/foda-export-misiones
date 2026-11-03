@@ -1,5 +1,5 @@
 ## Licencias
-
+> **English summary.** FODA Export Misiones is a web application for assessing the export feasibility of industrial SMEs in Misiones, Argentina. It scores 110 internal and external factors with a piecewise-linear conversion adapted from the FODA Matemático methodology (M. H. Vogel; no endorsement or certification implied). Code is MIT-licensed; the questionnaire and documentation are CC BY-NC-SA 4.0. See `CITATION.cff` to cite.
 Este repositorio usa licenciamiento dual:
 
 - **Código** (MIT, ver `LICENSE`): `frontend/` (excepto `frontend/src/data/`), `backend/`, `scripts/` y `tests/`.
