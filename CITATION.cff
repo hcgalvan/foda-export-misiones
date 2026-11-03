@@ -39,7 +39,7 @@ keywords:
   - cinco fuerzas de Porter
   - diagnóstico organizacional
 version: "1.0.0"
-date-released: "2026-11-02"
+date-released: "2026-11-03"
 # Después de que Zenodo emita el DOI, agregar en un commit posterior (no existe antes del Release):
 # identifiers:
 #   - type: doi
