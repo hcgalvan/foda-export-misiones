@@ -27,7 +27,7 @@ def _doc(resultados, respuestas):
                     "mercadosObjetivo": [], "autorizaRecontacto": False},
         "respuestas": respuestas,
         "resultados": resultados,
-        "metadata": {"versionMotor": "1.0.0-fase4", "versionCuestionario": "1.1.0",
+        "metadata": {"versionMotor": "1.0.0", "versionCuestionario": "1.1.0",
                      "creadoEn": "2026-10-14T10:00:00Z"},
     }
 

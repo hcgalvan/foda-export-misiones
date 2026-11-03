@@ -52,7 +52,7 @@ CORS_ORIGINS = _lista_desde_env(
     "FODA_CORS_ORIGINS", "http://localhost:8000,http://127.0.0.1:8000"
 )
 
-VERSION_MOTOR = os.environ.get("FODA_VERSION_MOTOR", "1.0.0-fase4")
+VERSION_MOTOR = os.environ.get("FODA_VERSION_MOTOR", "1.0.0")
 
 QUESTIONNAIRE_PATH = Path(
     os.environ.get(

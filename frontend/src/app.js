@@ -14,7 +14,7 @@ import {
 } from './api.js';
 
 const CLAVE_LOCALSTORAGE = 'foda-export-misiones:draft-v1';
-const VERSION_MOTOR = '1.0.0-fase4';
+const VERSION_MOTOR = '1.0.0';
 
 const SITUACION_LABELS = ['No corresp.', 'Muy Desfav.', 'Desfavorable', 'Favorable', 'Muy Favorable'];
 const IMPACTO_LABELS = ['Muy insignif.', 'Insignificante', 'Significante', 'Muy Signific.'];

@@ -1,22 +1,24 @@
 cff-version: 1.2.0
 message: >-
-  Si utilizás este software, por favor citalo como se indica
-  a continuación. Para citar la metodología y el instrumento
-  (110 preguntas, guía de entrevista), ver la cita separada
-  en docs/metodologia/ARCHITECTURE.md, sección 3.6, licenciada
-  bajo CC BY-NC-SA 4.0.
+  Si utilizás este software, por favor citalo como se indica a continuación.
+  Para citar la metodología y el instrumento (110 preguntas, guía de entrevista),
+  ver la cita separada en ARCHITECTURE.md, sección 3.6, licenciada bajo CC BY-NC-SA 4.0.
+  El modelo de ponderación de pendiente discontinua está adaptado de la metodología
+  FODA Matemático del Prof. Mario Héctor Vogel, quien autorizó por escrito (1/10/2026)
+  a citar su uso académico; esto no implica aval ni certificación del software.
+  Ver ARCHITECTURE.md sección 3.2.
 type: software
 title: "FODA Export Misiones"
 abstract: >-
-  Instrumento de diagnóstico de viabilidad exportadora para
-  pymes industriales de Misiones (Argentina), desarrollado en
-  el marco de investigación aplicada y docencia universitaria
-  en la Tecnicatura Superior en Comercio Exterior. Rediseña un
-  cuestionario FODA (110 factores internos y externos,
-  organizados según el modelo Canvas y el análisis PESTEL/Porter)
-  con un motor de cálculo situación×impacto que produce
-  puntajes ponderados 0-10, semáforos por área y una conclusión
-  automática de viabilidad exportadora.
+  Aplicación web de diagnóstico de viabilidad exportadora para pymes industriales de
+  Misiones (Argentina), desarrollada en el marco de investigación aplicada y docencia
+  en la carrera Tecnicatura Superior en Comercio Internacional y Despacho Aduanero
+  (cátedra Investigación de Mercados). Reemplaza una planilla de cálculo por una
+  herramienta interactiva con un cuestionario de 110 factores (64 internos, según el
+  modelo Canvas, y 46 externos, según PESTEL y las cinco fuerzas de Porter), un motor
+  de cálculo situación×impacto que produce puntajes ponderados de 0 a 10, semáforos
+  por área, índices interno y externo, un veredicto de viabilidad y una matriz FODA,
+  y un reporte imprimible con análisis de escenarios y prioridades.
 authors:
   - family-names: "Galván"
     given-names: "Hugo César"
@@ -36,5 +38,32 @@ keywords:
   - PESTEL
   - cinco fuerzas de Porter
   - diagnóstico organizacional
-version: "0.1.0"
-date-released: "2026-09-25"
+version: "1.0.0"
+date-released: "2026-11-02"
+# Después de que Zenodo emita el DOI, agregar en un commit posterior (no existe antes del Release):
+# identifiers:
+#   - type: doi
+#     value: 10.5281/zenodo.XXXXXXX
+#     description: "DOI de concepto (todas las versiones)"
+references:
+  - type: website
+    title: "Club Tablero de Comando"
+    authors:
+      - family-names: "Vogel"
+        given-names: "Mario Héctor"
+    url: "https://www.tablerodecomando.com"
+    notes: "Referencia secundaria del autor de la metodología FODA Matemático."
+  - type: article
+    title: "FODA Matemático, herramienta de diagnóstico estratégico en empresas agro industriales"
+    authors:
+      - family-names: "Granizo Paredes"
+        given-names: "Oscar Iván"
+      - family-names: "Arguello Mendoza"
+        given-names: "Carlos Patricio"
+    journal: "Reciena"
+    volume: "6"
+    issue: "1"
+    start: "19"
+    end: "23"
+    year: 2026
+    notes: "Fuente académica independiente sobre el FODA Matemático."
